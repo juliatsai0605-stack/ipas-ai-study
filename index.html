@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AI應用規劃師備考室</title>
+<meta name="description" content="經濟部 iPAS AI應用規劃師初級、中級備考：單元重點、官方公告試題即時解析、刷題、整卷模擬考與學習進度。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect x=%222%22 y=%222%22 width=%2228%22 height=%2228%22 rx=%225%22 fill=%22%23fffdf8%22 stroke=%22%23bf6534%22 stroke-width=%222.5%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%23bf6534%22%3E%E5%82%99%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: sticky top bar; collapsible outline (目次) on the left; reading column on the right. */
+:root{
+  --paper:#f6f2ea; --card:#fffdf8; --ink:#34302b; --muted:#7b7368; --line:#e4ddd0;
+  --matcha:#5f7d4b; --matcha-soft:#e7eedd; --kaki:#bf6534; --kaki-soft:#f7e6da; --ai:#46627e; --ai-soft:#e2e9f0;
+  --ok:#4f7d48; --ok-soft:#e3efdc; --ng:#b2493c; --ng-soft:#f6e2dd;
+  --f-display:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --f-body:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --paper:#1f1d1a; --card:#282521; --ink:#ece6db; --muted:#a69d90; --line:#3a3530;
+  --matcha:#9db585; --matcha-soft:#2e3828; --kaki:#e0936a; --kaki-soft:#43291c; --ai:#93b2cd; --ai-soft:#24303b;
+  --ok:#8fc285; --ok-soft:#263a24; --ng:#e48b7e; --ng-soft:#42241f; color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.8;letter-spacing:.01em;padding-top:env(safe-area-inset-top,0px)}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:700;line-height:1.4;margin:0;text-wrap:balance}
+h1{font-size:1.2rem} h2{font-size:1.4rem} h3{font-size:1.08rem} h4{font-size:.98rem}
+p{margin:0}
+a{color:var(--ai)}
+button,select,input,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--matcha);outline-offset:2px}
+.top{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+.top-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:10px 14px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:8px;margin-right:auto;min-width:0}
+.seal{display:inline-grid;place-items:center;width:26px;height:26px;border:1.5px solid var(--kaki);color:var(--kaki);border-radius:4px;font-family:var(--f-display);font-size:.8rem;flex:none}
+.brand small{color:var(--muted);font-size:.76rem}
+.iconbtn{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:.88rem;display:inline-flex;align-items:center;gap:6px}
+.iconbtn[aria-pressed="true"]{background:var(--matcha-soft);border-color:var(--matcha)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--card)}
+.seg button{border:0;background:none;padding:4px 14px;border-radius:999px;cursor:pointer;color:var(--muted);font-size:.92rem}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.tabs{display:flex;gap:2px;overflow-x:auto;max-width:100%}
+.tabs button{border:0;background:none;padding:6px 10px;border-radius:8px;cursor:pointer;color:var(--muted);white-space:nowrap;font-size:.94rem}
+.tabs button[aria-current="true"]{color:var(--ink);background:var(--matcha-soft);font-weight:500}
+.shell{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:280px minmax(0,1fr);gap:28px;padding:20px max(16px,env(safe-area-inset-right,0px)) 64px max(16px,env(safe-area-inset-left,0px))}
+.shell.noToc{grid-template-columns:minmax(0,1fr);max-width:900px}
+.toc{position:sticky;top:70px;align-self:start;max-height:calc(100vh - 90px);overflow:auto;padding-right:4px}
+.toc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.toc-head span{font-size:.8rem;letter-spacing:.12em;color:var(--muted)}
+.toc .subj{margin-bottom:14px}
+.toc .subj>div:first-child{font-family:var(--f-display);font-weight:700;font-size:.96rem;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.toc .ch{margin:6px 0 2px;color:var(--muted);font-size:.8rem}
+.toc button.sec{display:flex;gap:8px;width:100%;text-align:left;border:0;background:none;padding:4px 6px;border-radius:6px;cursor:pointer;font-size:.88rem;line-height:1.5;align-items:flex-start}
+.toc button.sec:hover{background:var(--card)}
+.toc button.sec[aria-current="true"]{background:var(--matcha-soft)}
+.toc .code{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.74rem;min-width:3.6em;padding-top:2px}
+.toc .nm{flex:1;min-width:0}
+.mark{font-size:.72rem;padding-top:2px;color:var(--muted);white-space:nowrap}
+.mark.ok{color:var(--ok)}
+.tag{font-size:.72rem;padding:1px 8px;border-radius:999px;background:var(--line);color:var(--muted);white-space:nowrap;font-family:var(--f-body);font-weight:500}
+.tag.pass{background:var(--ok-soft);color:var(--ok)}
+.tag.ai{background:var(--ai-soft);color:var(--ai)}
+main{min-width:0}
+.view{display:grid;gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0}
+.card>h3{margin-bottom:10px}
+.muted{color:var(--muted)} .small{font-size:.86rem} .note{font-size:.82rem;color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:500;font-size:.94rem}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.soft{background:var(--card);color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:4px 10px;font-size:.85rem}
+.btn:disabled{opacity:.45;cursor:default}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;list-style:none;padding:0;margin:0}
+.steps li{border-top:4px solid var(--line);padding-top:8px;font-size:.88rem;color:var(--muted)}
+.steps li.done{border-top-color:var(--ok);color:var(--ink)}
+.steps li.now{border-top-color:var(--kaki);color:var(--ink);font-weight:500}
+.steps b{display:block;font-size:.74rem;letter-spacing:.06em}
+.advice{background:var(--matcha-soft);border-radius:12px;padding:16px 18px;display:grid;gap:8px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{border-top:2px solid var(--ink);padding-top:8px}
+.stat span{display:block;font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.stat strong{font-family:var(--f-display);font-size:1.45rem;font-variant-numeric:tabular-nums}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--matcha)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:.8rem}
+.num{font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}
+.check{list-style:none;padding:0;margin:0;display:grid;gap:4px}
+.check li{display:flex;gap:8px}
+.check li::before{content:"○";color:var(--muted)}
+.check li.ok::before{content:"✓";color:var(--ok);font-weight:700}
+.unit-list{display:grid;gap:8px}
+.unit{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 14px;cursor:pointer}
+.unit:hover{border-color:var(--ink)}
+.unit .n{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.8rem;min-width:4em}
+.unit .t{flex:1;min-width:0}
+.pill{font-size:.75rem;padding:2px 8px;border-radius:999px;white-space:nowrap;background:var(--line);color:var(--muted)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.mid{background:var(--ai-soft);color:var(--ai)}
+.sec-head{display:grid;gap:4px}
+.sec-head .code{font-family:var(--f-display);color:var(--kaki);letter-spacing:.08em}
+.reading ol{padding-left:1.4em;margin:0;display:grid;gap:10px;max-width:70ch}
+.reading li::marker{color:var(--kaki);font-family:var(--f-display)}
+details.card summary{cursor:pointer;font-family:var(--f-display);font-weight:700;list-style:none}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after{content:"＋";float:right;color:var(--muted)}
+details.card[open] summary::after{content:"－"}
+.qa{display:grid;gap:8px;margin-top:10px}
+.qa button{text-align:left;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:10px 12px;cursor:pointer;line-height:1.65}
+.qa button .a{display:block;color:var(--ok);margin-top:4px}
+textarea{width:100%;min-height:110px;line-height:1.7;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--paper);resize:vertical}
+.keys{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.keys span{font-size:.8rem;padding:2px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.keys span.hit{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.q{display:grid;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0;padding-top:0}
+.q .meta{font-size:.78rem;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.q .stem{white-space:pre-wrap}
+.q .ctx{font-size:.86rem;color:var(--muted);border-left:3px solid var(--line);padding-left:10px;white-space:pre-wrap;max-height:9.5em;overflow:auto}
+.q figure{margin:0;border:1px solid var(--line);border-radius:8px;overflow:auto;background:#fff}
+.q figure img{display:block;max-width:100%;height:auto}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;line-height:1.65;align-items:flex-start}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt b{font-family:var(--f-display);color:var(--muted);min-width:1.2em}
+.opt.sel{border-color:var(--ai);background:var(--ai-soft)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--ng);background:var(--ng-soft)}
+.exp{font-size:.94rem;background:var(--paper);border-radius:10px;padding:10px 12px;border-left:3px solid var(--matcha)}
+.exp b.ok{color:var(--ok)} .exp b.ng{color:var(--ng)}
+.qnav{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
+.timer{font-family:var(--f-display);font-variant-numeric:tabular-nums;font-size:1.1rem}
+.pills{display:flex;gap:4px;flex-wrap:wrap}
+.pills button{width:30px;height:30px;border-radius:6px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:.76rem;font-variant-numeric:tabular-nums;padding:0}
+.pills button.ans{background:var(--ai-soft);border-color:var(--ai)}
+.pills button.cur{outline:2px solid var(--ink)}
+.hist{display:flex;gap:6px;flex-wrap:wrap}
+.hist span{font-size:.8rem;font-variant-numeric:tabular-nums;padding:2px 8px;border-radius:6px;background:var(--line)}
+.hist span.pass{background:var(--ok-soft);color:var(--ok)}
+select{padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);max-width:100%}
+.form{display:grid;gap:10px}
+.form label{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chart{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--f-body)}
+.legend{display:flex;gap:14px;font-size:.8rem;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.compare .card{border-top:3px solid var(--line)}
+.compare .card.win{border-top-color:var(--matcha)}
+.drawer-bg{display:none}
+footer{max-width:1200px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) calc(40px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));font-size:.8rem;color:var(--muted);display:grid;gap:6px}
+@media (max-width:900px){
+  .shell,.shell.noToc{grid-template-columns:minmax(0,1fr)}
+  .toc{position:fixed;inset:0 auto 0 0;width:min(86vw,330px);max-height:none;background:var(--paper);z-index:20;padding:calc(env(safe-area-inset-top,0px) + 14px) 14px 24px max(16px,env(safe-area-inset-left,0px));border-right:1px solid var(--line);transform:translateX(-105%);transition:transform .2s}
+  .toc.open{transform:none}
+  .toc[hidden]{display:block!important}
+  .drawer-bg.open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:15}
+  .compare{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.brand small{display:none}.steps{font-size:.8rem}}
+@media (prefers-reduced-motion:reduce){.toc{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <button class="iconbtn" id="tocBtn" aria-pressed="true" aria-controls="toc" title="顯示或隱藏目次">☰ 目次</button>
+    <div class="brand"><span class="seal">備</span><h1>AI應用規劃師備考室</h1><small>經濟部 iPAS・評鑑範圍 115.06 版</small></div>
+    <div class="seg" role="group" aria-label="級別">
+      <button data-lv="P" aria-pressed="true">初級</button>
+      <button data-lv="M" aria-pressed="false">中級</button>
+    </div>
+    <nav class="tabs" aria-label="功能">
+      <button data-v="home">總覽</button>
+      <button data-v="units">單元學習</button>
+      <button data-v="drill">刷題</button>
+      <button data-v="mock">模擬考</button>
+      <button data-v="me">我的進度</button>
+    </nav>
+  </div>
+</header>
+
+<div class="shell" id="shell">
+  <aside class="toc" id="toc" aria-label="目次"></aside>
+  <div class="drawer-bg" id="drawerBg"></div>
+  <main id="main"><div class="card">正在載入題庫與單元內容…</div></main>
+</div>
+
+<footer>
+  <span>題目來源：經濟部產業發展署 iPAS AI應用規劃師能力鑑定公告試題（114 年第二、四梯次；115 年第一至三次），答案依官方公告。單元重點、自我檢查與每題解析為本站整理，題目的單元歸類以關鍵字自動判定，僅供參考。</span>
+  <span>考試日期、報名與授證規定以 <a href="https://www.ipas.org.tw/" target="_blank" rel="noopener">iPAS 官網</a>最新公告為準。學習進度存在你目前使用的瀏覽器，換裝置請用「我的進度」匯出與匯入。</span>
+</footer>
+
+<script>
+(()=>{
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pct=x=>Math.round(x*100)+"%";
+const L="ABCD";
+const pad=n=>String(n).padStart(2,"0");
+const today=()=>{const d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());};
+const dayNum=s=>Math.floor(Date.parse(s+"T00:00:00Z")/864e5);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const SESS=x=>{const [y,n]=x.split("-");return `${y} 年第 ${n} 次`;};
+
+let COURSE=null,BANK=[],SECS={},ORDER=[];
+const KEY="ipas-ai-study-v4";
+const blank=()=>({v:4,lv:"P",toc:true,status:{},best:{},read:{},feyn:{},q:{},days:{},drills:{},mocks:[],diag:null});
+let S=blank();
+function load(){try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(blank(),JSON.parse(r));}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+load();
+
+// ---- progress helpers ----
+function logDay(ok){const k=today();const d=S.days[k]||{a:0,c:0};d.a++;if(ok)d.c++;S.days[k]=d;}
+function recordQ(q,ok){const r=S.q[q.id]||[0,0,0,0];ok?r[0]++:r[1]++;r[2]=dayNum(today());r[3]=ok?1:0;S.q[q.id]=r;logDay(ok);}
+const secQs=c=>BANK.filter(q=>q.sec===c);
+const subjQs=c=>BANK.filter(q=>q.sub===c);
+function lastAcc(qs){let n=0,c=0;for(const q of qs){const r=S.q[q.id];if(r){n++;c+=r[3];}}return n?c/n:null;}
+const seenN=qs=>qs.filter(q=>S.q[q.id]).length;
+function secDone(sec){const qs=secQs(sec.code);return qs.length?(S.best[sec.code]||0)>=0.8:!!S.read[sec.code];}
+function lvObj(){return COURSE.levels.find(l=>l.id===S.lv);}
+function subjSecs(s){return s.chapters.flatMap(c=>c.sections);}
+function openSubjects(){return lvObj().subjects.filter(s=>S.status[s.code]!=="pass");}
+
+// ---- view state ----
+let V={view:"home",sec:null,subj:null};
+let quiz=null, drill=null, mock=null, mockTimer=null, diag=null;
+function go(view,extra){Object.assign(V,{view},extra||{});closeDrawer();render();window.scrollTo(0,0);}
+function render(){
+  if(!COURSE)return;
+  document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lv===S.lv));
+  document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.v===V.view||(V.view==="unit"&&b.dataset.v==="units")||(V.view==="diag"&&b.dataset.v==="home")));
+  const wide=window.matchMedia("(min-width:901px)").matches;
+  $("#toc").hidden=wide&&!S.toc; $("#shell").classList.toggle("noToc",wide&&!S.toc);
+  $("#tocBtn").setAttribute("aria-pressed",wide?String(S.toc):"false");
+  renderToc();
+  ({home:vHome,units:vUnits,unit:vUnit,drill:vDrill,mock:vMock,me:vMe,diag:vDiag})[V.view]();
+}
+function renderToc(){
+  const lv=lvObj();
+  let h=`<div class="toc-head"><span>目次・${lv.name}</span><button class="iconbtn" id="tocHide" title="隱藏目次">隱藏</button></div>`;
+  for(const s of lv.subjects){
+    h+=`<div class="subj"><div><span>${s.code}　${esc(s.name)}</span>${S.status[s.code]==="pass"?'<span class="tag pass">已通過</span>':(s.note?`<span class="tag">${esc(s.note.replace(/（.*）/,""))}</span>`:"")}</div>`;
+    for(const ch of s.chapters){
+      h+=`<div class="ch">${ch.code}　${esc(ch.name)}</div>`;
+      for(const sec of ch.sections){
+        const b=S.best[sec.code]; const done=secDone(sec);
+        h+=`<button class="sec" data-sec="${sec.code}" aria-current="${V.view==="unit"&&V.sec===sec.code}"><span class="code">${sec.code}</span><span class="nm">${esc(sec.name)}</span><span class="mark ${done?"ok":""}">${done?"✓":(b!==undefined?pct(b):"")}</span></button>`;
+      }
+    }
+    h+=`</div>`;
+  }
+  $("#toc").innerHTML=h;
+  $("#toc").querySelectorAll("button.sec").forEach(b=>b.onclick=()=>openUnit(b.dataset.sec));
+  $("#tocHide").onclick=()=>{if(window.matchMedia("(min-width:901px)").matches){S.toc=false;save();render();}else closeDrawer();};
+}
+function closeDrawer(){$("#toc").classList.remove("open");$("#drawerBg").classList.remove("open");}
+
+// ---- readiness per subject ----
+function readiness(s){
+  const secs=subjSecs(s), qs=subjQs(s.code);
+  const done=secs.filter(secDone).length;
+  const seen=seenN(qs);
+  const d=(S.drills[s.code]||[]).slice(-3);
+  const drillOk=d.length===3&&d.every(x=>x>=0.85);
+  const ms=S.mocks.filter(m=>m.sub===s.code);
+  const mockOk=ms.length>0&&ms[ms.length-1].score>=85;
+  const coverOk=seen>=Math.ceil(qs.length*0.8);
+  return {secs:secs.length,done,qs:qs.length,seen,d,drillOk,mockOk,coverOk,ready:done===secs.length&&coverOk&&drillOk&&mockOk};
+}
+function phaseOf(r){return r.done<r.secs?1:(r.ready?3:2);}
+
+// ---- home ----
+const EXAM={P:"初級每科 50 題單選、75 分鐘、70 分及格。分次報考時每科皆須達 70 分；單科及格成績保留三年度。115 年初級考試：3/21、5/16、8/15、11/7（第四次報名已於 9/22 截止）。",
+M:"中級科目一必考，科目二或科目三擇一，每科 50 題、90 分鐘，科目二、三含程式題。科目一＋二取得「數據分析」證書，科目一＋三取得「機器學習」證書。115 年中級考試：5/23、11/14（第二次報名已於 9/22 截止）。"};
+function vHome(){
+  const lv=lvObj(); const subs=openSubjects();
+  if(!V.subj||!lv.subjects.some(s=>s.code===V.subj)) V.subj=(subs[0]||lv.subjects[0]).code;
+  const s=lv.subjects.find(x=>x.code===V.subj); const r=readiness(s); const ph=phaseOf(r);
+  const next=subjSecs(s).find(x=>!secDone(x));
+  let adv;
+  if(ph===1) adv=`<h3>現在：重點講解＋單元測驗</h3><p>下一個單元是「${next.code} ${esc(next.name)}」。每單元先讀重點，再做本單元的官方試題，答完立刻看解析；測驗達 80% 視為完成。</p><div class="row"><button class="btn" id="goNext">開始這個單元</button></div>`;
+  else if(ph===2) adv=`<h3>單元都完成了，開始大量刷題</h3><p>每回 20 題，答錯的題與沒做過的題會優先出現。目標是連續 3 回達 85%、題庫做過八成以上，再用整卷模擬考確認。</p><div class="row"><button class="btn" id="goDrill">刷 20 題</button><button class="btn ghost" id="goMock">整卷模擬考</button></div>`;
+  else adv=`<h3>建議報名 ${esc(s.name)}</h3><p>檢核表全部達成，已明顯高於及格線 70 分。請到 iPAS 官網查最近一梯次的報名時間；報名後每週維持 1 回模擬考保持手感。</p>`;
+  const steps=["重點講解＋單元測驗","大量刷題","報名考試"].map((t,i)=>`<li class="${i+1<ph?"done":(i+1===ph?"now":"")}"><b>階段 ${i+1}</b>${t}</li>`).join("");
+  const t=S.days[today()]||{a:0,c:0};
+  const la=lastAcc(subjQs(s.code));
+  let h=`<div class="card"><div class="row" style="justify-content:space-between"><h2>${esc(lv.name)}　準備科目</h2>
+    <select id="subjSel" aria-label="準備科目">${lv.subjects.map(x=>`<option value="${x.code}" ${x.code===s.code?"selected":""}>${x.code} ${esc(x.name)}${S.status[x.code]==="pass"?"（已通過）":""}</option>`).join("")}</select></div></div>
+  <ol class="steps">${steps}</ol>
+  <div class="advice">${adv}</div>
+  <div class="stats">
+    <div class="stat"><span>單元完成</span><strong>${r.done}/${r.secs}</strong><div class="bar"><i style="width:${r.done/r.secs*100}%"></i></div></div>
+    <div class="stat"><span>題庫已做</span><strong>${r.seen}/${r.qs}</strong><div class="bar"><i style="width:${r.qs?r.seen/r.qs*100:0}%"></i></div></div>
+    <div class="stat"><span>最近正確率</span><strong>${la===null?"—":pct(la)}</strong></div>
+    <div class="stat"><span>今日作答</span><strong>${t.a}</strong><span>${t.a?"正確率 "+pct(t.c/t.a):"今天還沒作答"}</span></div>
+  </div>
+  <div class="card"><h3>報名檢核表・${esc(s.name)}</h3><ul class="check">
+    <li class="${r.done===r.secs?"ok":""}">所有單元測驗達 80%（${r.done}/${r.secs}）</li>
+    <li class="${r.coverOk?"ok":""}">題庫至少做過八成（${r.seen}/${r.qs}）</li>
+    <li class="${r.drillOk?"ok":""}">刷題連續 3 回達 85%（近 3 回：${r.d.map(pct).join("、")||"尚無"}）</li>
+    <li class="${r.mockOk?"ok":""}">最近一次整卷模擬考達 85 分</li></ul>
+    <p class="note" style="margin-top:8px">及格線 70 分；門檻設高是因為正式考題每次不同、情境題比例高。</p></div>`;
+  if(S.lv==="M") h+=midCard();
+  h+=`<div class="card"><h3>考試資訊</h3><p class="small">${EXAM[S.lv]}</p><p class="note" style="margin-top:6px">資料來源：115 年度 AI 應用規劃師能力鑑定簡章。116 年日程以官網公告為準。</p></div>`;
+  $("#main").innerHTML=`<div class="view">${h}</div>`;
+  $("#subjSel").onchange=e=>{V.subj=e.target.value;render();};
+  const on=(id,f)=>{const e=$("#"+id);if(e)e.onclick=f;};
+  on("goNext",()=>openUnit(next.code));
+  on("goDrill",()=>startDrill(s.code,"smart",20));
+  on("goMock",()=>go("mock"));
+  on("goDiag",startDiag);
+}
+function midCard(){
+  const a=lastAcc(subjQs("L22")),b=lastAcc(subjQs("L23")),na=seenN(subjQs("L22")),nb=seenN(subjQs("L23"));
+  let rec="";
+  if(S.diag){const x=S.diag.L22,y=S.diag.L23;
+    rec=Math.abs(x-y)<0.1?`兩科接近（${pct(x)} 對 ${pct(y)}），可依興趣與工作需要決定。科目一成績可保留，之後再考另一科取得第二張證書。`
+    :`建議先準備<b>${x>y?"科目二 大數據處理分析與應用（數據分析證書）":"科目三 機器學習技術與應用（機器學習證書）"}</b>（${pct(Math.max(x,y))} 對 ${pct(Math.min(x,y))}）。`;}
+  return `<div class="card"><h3>科目二、科目三先考哪一科？</h3><p class="small">中級科目二、三擇一報考。做一次 30 題診斷（兩科各 15 題官方試題，不先讀單元），看哪一科你比較熟。</p>
+  <div class="compare" style="margin-top:12px">
+   <div class="card ${S.diag&&S.diag.L22>S.diag.L23?"win":""}"><h4>L22 大數據處理分析與應用</h4><p class="small muted">診斷 ${S.diag?pct(S.diag.L22):"—"}・刷題最近正確率 ${a===null?"—":pct(a)}（${na} 題）</p></div>
+   <div class="card ${S.diag&&S.diag.L23>S.diag.L22?"win":""}"><h4>L23 機器學習技術與應用</h4><p class="small muted">診斷 ${S.diag?pct(S.diag.L23):"—"}・刷題最近正確率 ${b===null?"—":pct(b)}（${nb} 題）</p></div>
+  </div>${rec?`<p style="margin-top:10px">${rec}</p>`:""}
+  <div class="row" style="margin-top:10px"><button class="btn" id="goDiag">${S.diag?"重新診斷":"開始 30 題診斷"}</button></div></div>`;
+}
+
+// ---- units list ----
+function vUnits(){
+  const lv=lvObj();
+  let h="";
+  for(const s of lv.subjects){
+    h+=`<div class="card"><div class="row" style="justify-content:space-between;margin-bottom:10px"><h3 style="margin:0">${s.code}　${esc(s.name)}</h3>${S.status[s.code]==="pass"?'<span class="tag pass">已通過</span>':(s.note?`<span class="tag">${esc(s.note)}</span>`:"")}</div><div class="unit-list">`;
+    for(const ch of s.chapters)for(const sec of ch.sections){
+      const b=S.best[sec.code]; const n=secQs(sec.code).length; const done=secDone(sec);
+      const p=done?`<span class="pill ok">完成${b!==undefined?" "+pct(b):""}</span>`:(b!==undefined?`<span class="pill mid">最佳 ${pct(b)}</span>`:`<span class="pill">${n?n+" 題":"重點"}</span>`);
+      h+=`<button class="unit" data-sec="${sec.code}"><span class="n">${sec.code}</span><span class="t">${esc(sec.name)}</span>${p}</button>`;
+    }
+    h+=`</div></div>`;
+  }
+  $("#main").innerHTML=`<div class="view">${h}</div>`;
+  document.querySelectorAll(".unit").forEach(b=>b.onclick=()=>openUnit(b.dataset.sec));
+}
+
+// ---- unit page ----
+function openUnit(code){
+  if(SECS[code]&&SECS[code].lv!==S.lv){S.lv=SECS[code].lv;save();}
+  quiz=null; go("unit",{sec:code});
+}
+function pickFor(pool,k){
+  const wrong=shuffle(pool.filter(q=>{const r=S.q[q.id];return r&&r[3]===0;}));
+  const unseen=shuffle(pool.filter(q=>!S.q[q.id]));
+  const old=pool.filter(q=>{const r=S.q[q.id];return r&&r[3]===1;}).sort((a,b)=>S.q[a.id][2]-S.q[b.id][2]);
+  const out=[],seen=new Set();for(const q of [...wrong,...unseen,...old]){if(!seen.has(q.id)){seen.add(q.id);out.push(q);}if(out.length>=k)break;}
+  return out;
+}
+function vUnit(){
+  const {sec,ch,subj}=SECS[V.sec];
+  const ord=ORDER.filter(c=>SECS[c].lv===S.lv); const i=ord.indexOf(sec.code); const prev=ord[i-1],nxt=ord[i+1];
+  const qs=secQs(sec.code);
+  if(!quiz||quiz.sec!==sec.code) quiz={sec:sec.code,list:pickFor(qs,8),ans:{},c:0};
+  const f=S.feyn[sec.code]||"";
+  let h=`<div class="sec-head"><span class="note">${subj.code} ${esc(subj.name)} ／ ${ch.code} ${esc(ch.name)}</span><span class="code">${sec.code}</span><h2>${esc(sec.name)}</h2></div>
+  <div class="card reading"><h3>重點</h3><ol>${sec.pts.map(p=>`<li>${esc(p)}</li>`).join("")}</ol></div>
+  <details class="card"><summary>自我檢查（${sec.cards.length} 題，點一下看答案）</summary><div class="qa">${sec.cards.map(c=>`<button><span>${esc(c[0])}</span><span class="a" hidden>${esc(c[1])}</span></button>`).join("")}</div></details>
+  <details class="card" ${f?"open":""}><summary>用自己的話說說看</summary><p class="small" style="margin-top:8px">${esc(sec.feyn)}</p><textarea id="feyn" aria-label="我的說明" placeholder="寫給完全不懂的人聽；卡住講不清楚的地方，就是要回頭重讀的地方。">${esc(f)}</textarea><div class="keys" id="keys"></div></details>`;
+  if(qs.length){
+    h+=`<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">單元測驗（${quiz.list.length} 題官方試題）</h3><span class="small muted">本單元題庫 ${qs.length} 題・已做 ${seenN(qs)}${S.best[sec.code]!==undefined?"・最佳 "+pct(S.best[sec.code]):""}</span></div><div style="display:grid;gap:18px;margin-top:12px" id="qbox">${quiz.list.map((q,k)=>qHTML(q,k)).join("")}</div><p id="res" class="small" style="margin-top:12px" hidden></p></div>`;
+  } else {
+    h+=`<div class="card"><p>本單元目前沒有歸入的官方試題。讀完重點並完成自我檢查後，標記為完成。</p><div class="row" style="margin-top:10px"><button class="btn" id="markRead">${S.read[sec.code]?"已完成":"標記為完成"}</button></div></div>`;
+  }
+  h+=`<div class="qnav">${prev?`<button class="btn soft sm" id="prevSec">← ${prev} ${esc(SECS[prev].sec.name)}</button>`:"<span></span>"}${nxt?`<button class="btn soft sm" id="nextSec">${nxt} ${esc(SECS[nxt].sec.name)} →</button>`:""}</div>`;
+  $("#main").innerHTML=`<div class="view">${h}</div>`;
+  document.querySelectorAll(".qa button").forEach(b=>b.onclick=()=>{const a=b.querySelector(".a");a.hidden=!a.hidden;});
+  const ta=$("#feyn"),keys=()=>{const t=ta.value;$("#keys").innerHTML=t?sec.keys.map(k=>`<span class="${t.includes(k)?"hit":""}">${esc(k)}</span>`).join("")+`<span style="border:0">涵蓋 ${sec.keys.filter(k=>t.includes(k)).length}/${sec.keys.length} 個關鍵詞</span>`:"";};
+  keys(); let tm; ta.oninput=()=>{keys();clearTimeout(tm);tm=setTimeout(()=>{S.feyn[sec.code]=ta.value;save();},600);};
+  const on=(id,fn)=>{const e=$("#"+id);if(e)e.onclick=fn;};
+  on("prevSec",()=>openUnit(prev)); on("nextSec",()=>openUnit(nxt));
+  on("markRead",()=>{S.read[sec.code]=Date.now();save();render();});
+  if(qs.length){
+    quiz.list.forEach(q=>{
+      const el=document.querySelector(`.q[data-id="${q.id}"]`);
+      if(quiz.ans[q.id]!==undefined){showAnswered(el,q,quiz.ans[q.id]);return;}
+      bindQ(el,q,(ok,j)=>{quiz.ans[q.id]=j;if(ok)quiz.c++;
+        if(Object.keys(quiz.ans).length===quiz.list.length){const sc=quiz.c/quiz.list.length;S.best[sec.code]=Math.max(S.best[sec.code]||0,sc);S.read[sec.code]=S.read[sec.code]||Date.now();save();renderToc();showRes();}});
+    });
+    if(Object.keys(quiz.ans).length===quiz.list.length)showRes();
+  }
+  function showRes(){const sc=quiz.c/quiz.list.length;const r=$("#res");r.hidden=false;
+    r.innerHTML=`<b>本次 ${quiz.c}/${quiz.list.length}（${pct(sc)}）</b>　${sc>=0.8?"本單元完成。":"未達 80%，請看錯題解析並回頭讀重點，再測一次。"}　<button class="btn sm" id="again">再測一次（換題）</button>${nxt?` <button class="btn ghost sm" id="goNx">下一單元</button>`:""}`;
+    $("#again").onclick=()=>{quiz=null;render();};const g=$("#goNx");if(g)g.onclick=()=>openUnit(nxt);}
+}
+
+// ---- question rendering ----
+function qHTML(q,idx){
+  const ctx=q.ctx?`<div class="ctx">${esc(q.ctx)}</div>`:"";
+  const fig=q.img?`<figure><img src="${q.img}" alt="${SESS(q.x)}第 ${q.n} 題原卷圖片（含圖表或程式碼）" loading="lazy"></figure>`:"";
+  const opts=q.o.map((o,j)=>`<button class="opt" data-j="${j}"><b>${L[j]}</b><span>${o?esc(o):'<span class="muted">見上方原卷圖片</span>'}</span></button>`).join("");
+  return `<div class="q" data-id="${q.id}"><div class="meta">${idx!=null?`<b>第 ${idx+1} 題</b>`:""}<span class="tag ai">${q.sub}</span><span>${SESS(q.x)}公告試題・第 ${q.n} 題</span></div>${ctx}<div class="stem">${esc(q.q)}</div>${fig}<div class="opts">${opts}</div><div class="after" hidden></div></div>`;
+}
+function expHTML(q,j){
+  const ok=j===q.a; const sec=q.sec&&SECS[q.sec]?SECS[q.sec].sec:null;
+  return `<div class="exp"><b class="${ok?"ok":"ng"}">${ok?"答對":(j<0?"未作答，":"答錯，")+"正解 "+L[q.a]}</b>　${esc(q.e)}${sec?`<div class="row" style="margin-top:6px"><button class="btn soft sm" data-goto="${sec.code}">回看 ${sec.code} ${esc(sec.name)}</button></div>`:""}</div>`;
+}
+function showAnswered(el,q,j){
+  el.querySelectorAll(".opt").forEach(x=>{x.disabled=true;const k=+x.dataset.j;if(k===q.a)x.classList.add("right");else if(k===j)x.classList.add("wrong");});
+  const af=el.querySelector(".after");af.hidden=false;af.innerHTML=expHTML(q,j);
+  const g=af.querySelector("[data-goto]");if(g)g.onclick=()=>openUnit(g.dataset.goto);
+}
+function bindQ(el,q,done){
+  el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const j=+b.dataset.j,ok=j===q.a;recordQ(q,ok);save();showAnswered(el,q,j);done&&done(ok,j);});
+}
+
+// ---- drill ----
+function startDrill(sub,mode,k){
+  const pool=subjQs(sub); let list;
+  if(mode==="wrong") list=shuffle(pool.filter(q=>{const r=S.q[q.id];return r&&r[3]===0;}));
+  else if(mode==="unseen") list=shuffle(pool.filter(q=>!S.q[q.id])).slice(0,k);
+  else list=shuffle(pickFor(pool,k));
+  drill={sub,mode,list,i:0,c:0,ans:null}; go("drill");
+}
+function vDrill(){
+  const lv=lvObj();
+  if(!drill||!lv.subjects.some(s=>s.code===drill.sub)){
+    const def=(openSubjects()[0]||lv.subjects[0]).code;
+    let h=`<div class="card"><h3>刷題・${esc(lv.name)}</h3><p class="small muted">題目全部是官方公告試題，答完立刻看解析。「智慧出題」優先出：最近一次答錯的題 → 沒做過的題 → 最久沒複習的題，並混合各單元。</p>
+    <div class="form" style="margin-top:12px"><label>科目 <select id="dSub">${lv.subjects.map(s=>`<option value="${s.code}" ${s.code===def?"selected":""}>${s.code} ${esc(s.name)}（${subjQs(s.code).length} 題）</option>`).join("")}</select></label>
+    <label>題數 <select id="dK"><option>10</option><option selected>20</option><option>30</option><option>50</option></select></label></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="dSmart">智慧出題</button><button class="btn ghost" id="dWrong">錯題本</button><button class="btn ghost" id="dUnseen">只做沒做過的</button></div></div>
+    <div class="card"><h3>各科概況</h3><div class="tbl"><table><thead><tr><th>科目</th><th class="num">已做</th><th class="num">目前答錯</th><th class="num">最近正確率</th><th>近期刷題</th></tr></thead><tbody>${lv.subjects.map(s=>{const qs=subjQs(s.code);const w=qs.filter(q=>S.q[q.id]&&S.q[q.id][3]===0).length;const la=lastAcc(qs);const d=(S.drills[s.code]||[]).slice(-5);return `<tr><td>${s.code} ${esc(s.name)}</td><td class="num">${seenN(qs)}/${qs.length}</td><td class="num">${w}</td><td class="num">${la===null?"—":pct(la)}</td><td><div class="hist">${d.map(x=>`<span class="${x>=0.85?"pass":""}">${pct(x)}</span>`).join("")||"—"}</div></td></tr>`;}).join("")}</tbody></table></div></div>`;
+    $("#main").innerHTML=`<div class="view">${h}</div>`;
+    const sub=()=>$("#dSub").value,k=()=>+$("#dK").value;
+    $("#dSmart").onclick=()=>startDrill(sub(),"smart",k());
+    $("#dWrong").onclick=()=>startDrill(sub(),"wrong",999);
+    $("#dUnseen").onclick=()=>startDrill(sub(),"unseen",k());
+    return;
+  }
+  const d=drill;
+  if(!d.list.length){$("#main").innerHTML=`<div class="view"><div class="card"><p>${d.mode==="wrong"?"目前沒有錯題。":"這一科的題目都做過了，改用智慧出題複習。"}</p><div class="row" style="margin-top:10px"><button class="btn" id="dBack">回刷題首頁</button></div></div></div>`;$("#dBack").onclick=()=>{drill=null;render();};return;}
+  if(d.i>=d.list.length){
+    const sc=d.c/d.list.length;
+    if(d.mode==="smart"&&d.list.length>=10&&!d.logged){(S.drills[d.sub]=S.drills[d.sub]||[]).push(sc);d.logged=true;save();}
+    $("#main").innerHTML=`<div class="view"><div class="card"><h3>本回 ${d.c}/${d.list.length}（${pct(sc)}）</h3><p>${sc>=0.85?"表現穩定，連續 3 回達 85% 就完成刷題條件。":sc>=0.7?"已過及格線 70%，答錯的題下回會優先出現。":"未達 70%，建議先回看錯題所屬單元的重點，再刷一回。"}</p>
+    <div class="row" style="margin-top:12px"><button class="btn" id="dAgain">再刷一回</button><button class="btn ghost" id="dBack">回刷題首頁</button></div></div></div>`;
+    $("#dAgain").onclick=()=>startDrill(d.sub,d.mode==="wrong"?"wrong":"smart",Math.max(d.list.length,10));
+    $("#dBack").onclick=()=>{drill=null;render();};return;
+  }
+  const q=d.list[d.i];
+  $("#main").innerHTML=`<div class="view"><div class="qnav"><span class="small muted">${d.sub}・第 ${d.i+1}/${d.list.length} 題・答對 ${d.c}</span><button class="btn soft sm" id="dQuit">結束這回</button></div><div class="bar"><i style="width:${d.i/d.list.length*100}%"></i></div><div class="card">${qHTML(q)}</div><div class="row"><button class="btn" id="dNext" hidden>${d.i+1<d.list.length?"下一題":"看結果"}</button></div></div>`;
+  const el=$(".q");
+  if(d.ans!==null){showAnswered(el,q,d.ans);$("#dNext").hidden=false;}
+  else bindQ(el,q,(ok,j)=>{d.ans=j;if(ok)d.c++;const n=$("#dNext");n.hidden=false;n.focus();});
+  $("#dNext").onclick=()=>{d.i++;d.ans=null;render();window.scrollTo(0,0);};
+  $("#dQuit").onclick=()=>{const n=d.i+(d.ans!==null?1:0);d.list=d.list.slice(0,n);d.i=n;d.ans=null;if(d.mode==="smart")d.mode="partial";if(!n){drill=null;}render();};
+}
+
+// ---- mock ----
+const sessionsOf=sub=>[...new Set(subjQs(sub).map(q=>q.x))].sort();
+function vMock(){
+  const lv=lvObj();
+  if(!mock||mock.lv!==S.lv){
+    let h=`<div class="card"><h3>整卷模擬考・${esc(lv.name)}</h3><p class="small muted">依官方梯次整卷 50 題、${S.lv==="P"?75:90} 分鐘計時，與正式考試相同。可跳題、回頭改答案，交卷後才顯示分數、錯題與解析。</p><div class="tbl" style="margin-top:12px"><table><thead><tr><th>科目</th><th>梯次</th><th class="num">最佳</th><th></th></tr></thead><tbody>`;
+    for(const s of lv.subjects)for(const x of sessionsOf(s.code)){
+      const best=S.mocks.filter(m=>m.sub===s.code&&m.x===x).reduce((a,m)=>Math.max(a,m.score),-1);
+      h+=`<tr><td>${s.code} ${esc(s.name)}</td><td>${SESS(x)}</td><td class="num">${best<0?"—":best}</td><td><button class="btn sm" data-sub="${s.code}" data-x="${x}">開始</button></td></tr>`;}
+    h+=`</tbody></table></div><p class="note" style="margin-top:8px">建議先練較早的梯次，最新一次梯次留到考前一週當實戰演練。</p></div>`;
+    const mine=S.mocks.filter(m=>lv.subjects.some(s=>s.code===m.sub));
+    if(mine.length)h+=`<div class="card"><h3>模擬考紀錄</h3><div class="tbl"><table><thead><tr><th>日期</th><th>科目</th><th>梯次</th><th class="num">分數</th></tr></thead><tbody>${mine.slice().reverse().slice(0,20).map(m=>`<tr><td>${m.d}</td><td>${m.sub}</td><td>${SESS(m.x)}</td><td class="num">${m.score}${m.score>=70?' <span class="tag pass">及格</span>':""}</td></tr>`).join("")}</tbody></table></div></div>`;
+    $("#main").innerHTML=`<div class="view">${h}</div>`;
+    document.querySelectorAll("[data-sub]").forEach(b=>b.onclick=()=>startMock(b.dataset.sub,b.dataset.x));return;
+  }
+  if(mock.done)return mockResult();
+  const m=mock,q=m.list[m.i],fmt=s=>pad(Math.floor(s/60))+":"+pad(s%60);
+  $("#main").innerHTML=`<div class="view"><div class="qnav"><span class="small">${m.sub}・${SESS(m.x)}・已作答 ${m.ans.filter(a=>a!=null).length}/${m.list.length}</span><span class="timer" id="tm">${fmt(m.left)}</span></div>
+  <div class="pills">${m.list.map((_,k)=>`<button data-k="${k}" class="${m.ans[k]!=null?"ans":""} ${k===m.i?"cur":""}" aria-label="第 ${k+1} 題">${k+1}</button>`).join("")}</div>
+  <div class="card">${qHTML(q,m.i)}</div>
+  <div class="qnav"><div class="row"><button class="btn soft" id="mPrev" ${m.i===0?"disabled":""}>上一題</button><button class="btn soft" id="mNext" ${m.i===m.list.length-1?"disabled":""}>下一題</button></div><div class="row" id="subBox"><button class="btn soft" id="mQuit">放棄</button><button class="btn" id="mSubmit">交卷</button></div></div></div>`;
+  const el=$(".q");
+  if(m.ans[m.i]!=null)el.querySelector(`.opt[data-j="${m.ans[m.i]}"]`).classList.add("sel");
+  el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{m.ans[m.i]=+b.dataset.j;if(m.i<m.list.length-1)m.i++;render();});
+  document.querySelectorAll(".pills button").forEach(b=>b.onclick=()=>{m.i=+b.dataset.k;render();});
+  $("#mPrev").onclick=()=>{m.i--;render();};$("#mNext").onclick=()=>{m.i++;render();};
+  $("#mQuit").onclick=()=>{$("#subBox").innerHTML=`<span class="small">放棄後不記錄成績，確定？</span><button class="btn" id="qy">放棄</button><button class="btn soft" id="qn">繼續作答</button>`;$("#qy").onclick=()=>{clearInterval(mockTimer);mock=null;render();};$("#qn").onclick=()=>render();};
+  $("#mSubmit").onclick=()=>{const b=m.ans.filter(a=>a==null).length;if(b){$("#subBox").innerHTML=`<span class="small">還有 ${b} 題未作答，確定交卷？</span><button class="btn" id="sy">交卷</button><button class="btn soft" id="sn">繼續作答</button>`;$("#sy").onclick=finishMock;$("#sn").onclick=()=>render();}else finishMock();};
+}
+function startMock(sub,x){
+  const list=subjQs(sub).filter(q=>q.x===x).sort((a,b)=>a.n-b.n);
+  mock={lv:S.lv,sub,x,list,ans:new Array(list.length).fill(null),i:0,left:(S.lv==="P"?75:90)*60,done:false};
+  clearInterval(mockTimer);
+  mockTimer=setInterval(()=>{if(!mock||mock.done){clearInterval(mockTimer);return;}mock.left--;const t=document.getElementById("tm");if(t)t.textContent=pad(Math.floor(mock.left/60))+":"+pad(mock.left%60);if(mock.left<=0)finishMock();},1000);
+  go("mock");
+}
+function finishMock(){
+  const m=mock;if(!m||m.done)return;clearInterval(mockTimer);m.done=true;
+  let c=0;m.list.forEach((q,k)=>{if(m.ans[k]!=null){const ok=m.ans[k]===q.a;if(ok)c++;recordQ(q,ok);}});
+  m.c=c;m.score=Math.round(c/m.list.length*100);
+  const d=new Date();S.mocks.push({d:`${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`,sub:m.sub,x:m.x,score:m.score});save();go("mock");
+}
+function mockResult(){
+  const m=mock; const wrong=m.list.map((q,k)=>({q,k})).filter(x=>m.ans[x.k]!==x.q.a);
+  const by={};wrong.forEach(x=>{const s=x.q.sec||"";if(s)by[s]=(by[s]||0)+1;});
+  const weak=Object.entries(by).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  let h=`<div class="card"><h3>${m.sub}・${SESS(m.x)}　${m.score} 分</h3><p>${m.score>=85?"已達穩定通過水準。":m.score>=70?"已過 70 分及格線，把錯題補起來會更穩。":"未達 70 分及格線，先補強下列單元。"}　答對 ${m.c}/${m.list.length}。</p>
+  ${weak.length?`<div class="row" style="margin-top:8px"><span class="small">錯最多的單元：</span>${weak.map(([s,n])=>`<button class="btn soft sm" data-goto="${s}">${s} ${esc(SECS[s].sec.name)}（${n}）</button>`).join("")}</div>`:""}
+  <div class="row" style="margin-top:12px"><button class="btn" id="mBack">回模擬考列表</button></div></div>
+  <div class="card"><h3>錯題與解析（${wrong.length} 題）</h3><div style="display:grid;gap:18px">${wrong.map(x=>qHTML(x.q,x.k)).join("")}</div></div>`;
+  $("#main").innerHTML=`<div class="view">${h}</div>`;
+  wrong.forEach(x=>{const el=document.querySelector(`.q[data-id="${x.q.id}"]`);showAnswered(el,x.q,m.ans[x.k]==null?-1:m.ans[x.k]);});
+  document.querySelectorAll(".card > .row [data-goto]").forEach(b=>b.onclick=()=>openUnit(b.dataset.goto));
+  $("#mBack").onclick=()=>{mock=null;render();};
+}
+
+// ---- mid diagnostic ----
+function startDiag(){
+  const a=shuffle(subjQs("L22").filter(q=>!q.img&&!q.ctx)).slice(0,15),b=shuffle(subjQs("L23").filter(q=>!q.img&&!q.ctx)).slice(0,15);
+  diag={list:shuffle([...a,...b]),i:0,res:{L22:[0,0],L23:[0,0]}};go("diag");
+}
+function vDiag(){
+  if(!diag){V.view="home";return vHome();}
+  const d=diag;
+  if(d.i>=d.list.length){S.diag={L22:d.res.L22[0]/d.res.L22[1],L23:d.res.L23[0]/d.res.L23[1],d:today()};diag=null;S.lv="M";save();V.view="home";return render();}
+  const q=d.list[d.i];
+  $("#main").innerHTML=`<div class="view"><div class="card"><h3>中級選考診斷</h3><p class="small muted">30 題，科目二、三各 15 題，題目隨機混合且不顯示科目。憑現有能力作答即可。</p></div>
+  <div class="qnav"><span class="small muted">第 ${d.i+1}/30 題</span></div><div class="bar"><i style="width:${d.i/30*100}%"></i></div>
+  <div class="card">${qHTML(q).replace(/<span class="tag ai">L2\d<\/span>/,"")}</div><div class="row"><button class="btn" id="gNext" hidden>${d.i<29?"下一題":"看診斷結果"}</button></div></div>`;
+  bindQ($(".q"),q,ok=>{const r=d.res[q.sub];r[1]++;if(ok)r[0]++;$("#gNext").hidden=false;});
+  $("#gNext").onclick=()=>{d.i++;render();window.scrollTo(0,0);};
+}
+
+// ---- me ----
+function curveSVG(n){
+  const W=560,H=200,pl=34,pr=36,pt=12,pb=26,base=dayNum(today()),days=[];
+  for(let i=n-1;i>=0;i--){const dt=new Date((base-i)*864e5);const k=dt.getUTCFullYear()+"-"+pad(dt.getUTCMonth()+1)+"-"+pad(dt.getUTCDate());days.push({k,d:S.days[k]||{a:0,c:0}});}
+  const top=Math.ceil(Math.max(10,...days.map(x=>x.d.a))/10)*10,bw=(W-pl-pr)/n,ih=H-pt-pb;
+  let g="";[0,.5,1].forEach(f=>{const y=pt+ih*(1-f);g+=`<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${W-pr+4}" y="${y+4}">${Math.round(f*100)}%</text><text x="${pl-4}" y="${y+4}" text-anchor="end">${Math.round(top*f)}</text>`;});
+  let bars="";const pts=[];
+  days.forEach((x,i)=>{const h=ih*x.d.a/top,X=pl+i*bw;bars+=`<rect x="${X+1}" y="${H-pb-h}" width="${Math.max(bw-2,1)}" height="${h}" fill="var(--ai-soft)" stroke="var(--ai)" stroke-width=".5"><title>${x.k}：${x.d.a} 題</title></rect>`;if(x.d.a)pts.push([X+bw/2,pt+ih*(1-x.d.c/x.d.a),x]);});
+  const line=pts.length>1?`<polyline points="${pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ")}" fill="none" stroke="var(--matcha)" stroke-width="2"/>`:"";
+  const dots=pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="var(--matcha)"><title>${p[2].k}：正確率 ${pct(p[2].d.c/p[2].d.a)}</title></circle>`).join("");
+  const lbl=[0,Math.floor(n/2),n-1].map(i=>`<text x="${pl+i*bw+bw/2}" y="${H-8}" text-anchor="middle">${days[i].k.slice(5).replace("-","/")}</text>`).join("");
+  const empty=pts.length?"":`<text x="${W/2}" y="${H/2}" text-anchor="middle">開始作答後，這裡會畫出每天的題數與正確率</text>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="近 ${n} 天每日作答題數與正確率">${g}${bars}${line}${dots}${lbl}${empty}</svg><div class="legend"><span><i style="background:var(--ai-soft);border:1px solid var(--ai)"></i>每日作答題數（左軸）</span><span><i style="background:var(--matcha)"></i>每日正確率（右軸）</span></div>`;
+}
+function vMe(){
+  const lv=lvObj();
+  let h=`<div class="card"><h3>學習曲線（近 30 天）</h3>${curveSVG(30)}</div>`;
+  h+=`<div class="card"><h3>${esc(lv.name)}各章掌握度</h3><div class="tbl"><table><thead><tr><th>章</th><th>單元完成</th><th class="num">已做題數</th><th class="num">最近正確率</th></tr></thead><tbody>`;
+  for(const s of lv.subjects)for(const ch of s.chapters){const qs=BANK.filter(q=>ch.sections.some(x=>x.code===q.sec));const dn=ch.sections.filter(secDone).length;const la=lastAcc(qs);
+    h+=`<tr><td>${ch.code} ${esc(ch.name)}</td><td style="min-width:110px"><div class="bar"><i style="width:${dn/ch.sections.length*100}%"></i></div><span class="note">${dn}/${ch.sections.length}</span></td><td class="num">${seenN(qs)}/${qs.length}</td><td class="num">${la===null?"—":pct(la)}</td></tr>`;}
+  h+=`</tbody></table></div></div>`;
+  h+=`<div class="card"><h3>科目狀態</h3><p class="small muted">標記為已通過的科目，總覽會改為建議下一科。</p><div class="tbl" style="margin-top:8px"><table><tbody>${COURSE.levels.map(l=>l.subjects.map(s=>`<tr><td>${l.name}　${s.code} ${esc(s.name)}</td><td><select data-st="${s.code}" aria-label="${esc(s.name)}狀態"><option value="">準備中</option><option value="pass" ${S.status[s.code]==="pass"?"selected":""}>已通過</option></select></td></tr>`).join("")).join("")}</tbody></table></div></div>`;
+  h+=`<div class="card"><h3>存檔與換裝置</h3><p class="small">進度自動存在這個瀏覽器，關閉網頁再打開仍會保留。要換手機或電腦時，先在這裡匯出備份檔，到新裝置的同一個網址匯入即可。清除瀏覽器資料或使用無痕視窗會讓進度消失，請定期匯出。</p>
+  <div class="row" style="margin-top:10px"><button class="btn" id="exp">匯出備份檔</button><label class="btn soft" for="impF" style="cursor:pointer">匯入備份檔</label><input type="file" id="impF" accept="application/json,.json" hidden></div><p class="small muted" id="bk" style="margin-top:6px"></p>
+  <div class="row" style="margin-top:14px" id="rst"><button class="btn ghost sm" id="rstB">清除全部進度</button></div></div>`;
+  $("#main").innerHTML=`<div class="view">${h}</div>`;
+  document.querySelectorAll("[data-st]").forEach(s=>s.onchange=()=>{if(s.value)S.status[s.dataset.st]="pass";else delete S.status[s.dataset.st];save();renderToc();});
+  $("#exp").onclick=()=>{const blob=new Blob([JSON.stringify(S)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`ipas-ai-progress-${today()}.json`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);$("#bk").textContent="已下載備份檔。";};
+  $("#impF").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o.q!=="object"||typeof o.days!=="object")throw 0;S=Object.assign(blank(),o,{v:4});save();$("#bk").textContent="已匯入備份。";render();}catch(x){$("#bk").textContent="檔案格式不符，請選擇本站匯出的備份檔。";}};r.readAsText(f);};
+  $("#rstB").onclick=()=>{$("#rst").innerHTML=`<span class="small">確定清除全部作答與紀錄？無法復原。</span><button class="btn sm" id="ry">清除</button><button class="btn soft sm" id="rn">取消</button>`;$("#ry").onclick=()=>{S=blank();save();render();};$("#rn").onclick=()=>render();};
+}
+
+// ---- boot ----
+document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{S.lv=b.dataset.lv;save();drill=null;quiz=null;V.subj=null;if(V.view==="unit"||V.view==="diag")V.view="units";render();});
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{if(b.dataset.v==="drill")drill=null;go(b.dataset.v);});
+$("#tocBtn").onclick=()=>{if(window.matchMedia("(min-width:901px)").matches){S.toc=!S.toc;save();render();}else{$("#toc").classList.add("open");$("#drawerBg").classList.add("open");}};
+$("#drawerBg").onclick=closeDrawer;
+window.matchMedia("(min-width:901px)").addEventListener("change",()=>{closeDrawer();render();});
+Promise.all([fetch("course.json").then(r=>r.json()),fetch("bank.json").then(r=>r.json())]).then(([c,b])=>{
+  COURSE=c;BANK=b;
+  for(const lv of COURSE.levels)for(const s of lv.subjects)for(const ch of s.chapters)for(const sec of ch.sections){SECS[sec.code]={sec,ch,subj:s,lv:lv.id};ORDER.push(sec.code);}
+  render();
+}).catch(()=>{$("#main").innerHTML=`<div class="card">題庫載入失敗，請重新整理頁面。</div>`;});
+})();
+</script>
+</body>
+</html>
