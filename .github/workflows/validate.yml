@@ -11,9 +11,28 @@ jobs:
   smoke:
     runs-on: ubuntu-24.04
     permissions:
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v4
+      - name: Import original lab background and map skyline
+        if: github.event_name == 'pull_request' && github.head_ref == 'feature/aiya-free-anime-v1'
+        env:
+          SCENE_URL: 'https://media.canva.com/v2/image-resize/format:JPG/height:43/quality:75/uri:ifs%3A%2F%2FM%2F087ae323-abfc-4c00-8457-d04e414b2dce/watermark:F/width:200?csig=AAAAAAAAAAAAAAAAAAAAANE3_ExUbxzlSqFLLU993CKWZvyb1tJ6Ss8UiLqE46_H&exp=1792939643&osig=AAAAAAAAAAAAAAAAAAAAAEQp83BLDU1HOJOeZevrkSFSvCAuuAtmsr3KAVWDmepe&signer=media-rpc&token=AAIAAU0AJDA4N2FlMzIzLWFiZmMtNGMwMC04NDU3LWQwNGU0MTRiMmRjZQAAAAABoXOH0Hg6spKXZUZVE5F0KpZ9yxdudo7tIeP_DkKNRG16ZkPdCQ&x-canva-quality=thumbnail'
+          MAP_URL: 'https://media.canva.com/v2/image-resize/format:JPG/height:41/quality:75/uri:ifs%3A%2F%2FM%2F6c1f7d83-2ef2-47c5-9ff0-9fbe197da95b/watermark:F/width:199?csig=AAAAAAAAAAAAAAAAAAAAABVougRriS1B_ylYHtCQXT9--Y20n4kLuq2Fu3hhxbNo&exp=1792939810&osig=AAAAAAAAAAAAAAAAAAAAAFPrcG88xZC64jbWOK4O_3Qkfjz8WvRjEf8sbF-omwea&signer=media-rpc&token=AAIAAU0AJDZjMWY3ZDgzLTJlZjItNDdjNS05ZmYwLTlmYmUxOTdkYTk1YgAAAAABoXOKXNDJpZxfOScsyymm1zR-9yaOEArSMO-KAH_TO-hHkmeUbg&x-canva-quality=thumbnail'
+        run: |
+          if [ ! -s img/lab-scene.png ]; then
+            curl --fail --location --silent --show-error "$SCENE_URL" -o img/lab-scene.png
+            curl --fail --location --silent --show-error "$MAP_URL" -o img/map-skyline.png
+            test "$(wc -c < img/lab-scene.png)" -gt 1000
+            test "$(wc -c < img/map-skyline.png)" -gt 1000
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add img/lab-scene.png img/map-skyline.png
+            git commit -m "assets: import original reference lab and skyline"
+            git fetch origin feature/aiya-free-anime-v1
+            git rebase origin/feature/aiya-free-anime-v1
+            git push origin HEAD:feature/aiya-free-anime-v1
+          fi
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
