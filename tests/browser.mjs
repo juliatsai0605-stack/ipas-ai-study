@@ -13,13 +13,14 @@ async function run(label,size){
   const art=await page.locator('.dash-character img').evaluate(img=>({src:img.getAttribute('src'),loaded:img.complete&&img.naturalWidth>0}));
   assert.equal(art.src,'img/aiya-reference.png',"hero must use original Aiya illustration");
   assert.ok(art.loaded,"reference Aiya illustration must load");
-  for(const asset of ['img/lab-scene.png','img/map-skyline.png','img/aiya-pose-1.png','img/aiya-pose-2.png','img/aiya-pose-3.png','img/aiya-pose-4.png','img/aiya-pose-5.png','img/aiya-pose-6.png','img/badge-1.svg','img/badge-2.svg','img/badge-3.svg','img/badge-4.svg']){
+  for(const asset of ['img/lab-scene.png','img/map-skyline.png','img/aiya-pose-1.png','img/aiya-pose-2.png','img/aiya-pose-3.png','img/aiya-pose-4.png','img/aiya-pose-5.png','img/aiya-pose-6.png','img/badge-1.svg','img/badge-2.svg','img/badge-3.svg','img/badge-4.svg','img/stat-1.svg','img/stat-2.svg','img/stat-3.svg','img/stat-4.svg']){
     const res=await page.request.get('http://127.0.0.1:4173/'+asset);
     assert.equal(res.status(),200,'missing original illustration '+asset);
     assert.match(res.headers()['content-type']||'',/image/,'invalid image MIME '+asset);
   }
   assert.equal(await page.locator(".dash-hero").count(),1,"research-lab hero missing");
   assert.equal(await page.locator(".dash-stats .dash-stat").count(),4,"four progress cards required");
+  assert.equal(await page.locator(".dash-stats img[src^='img/stat-']").count(),4,"all stat illustrations required");
   assert.equal(await page.locator(".dash-map .dash-node").count(),5,"five-step learning path required");
   assert.equal(await page.locator(".dash-map .dash-route").count(),1,"visual learning route missing");
   assert.equal(await page.locator(".dash-achievements .dash-medal").count(),4,"achievements must be visible");
