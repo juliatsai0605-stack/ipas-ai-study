@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - feature/aiya-free-anime-v1
+concurrency:
+  group: ipas-visual-asset-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 jobs:
   smoke:
     runs-on: ubuntu-24.04
@@ -38,6 +41,8 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add img/aiya-pose-*.png
             git commit -m "assets: add six Aiya poses from original character reference"
+            git fetch origin feature/aiya-free-anime-v1
+            git rebase origin/feature/aiya-free-anime-v1
             git push origin HEAD:feature/aiya-free-anime-v1
           fi
       - uses: actions/setup-node@v4
