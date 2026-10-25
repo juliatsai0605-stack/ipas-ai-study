@@ -503,6 +503,15 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
  .dash-hero h2{font-size:1.15rem!important}
  .dash-hero-copy{padding-left:10px!important}
 }
+
+/* Prevent 390px iPhone horizontal bleed found by browser regression test */
+@media(max-width:900px){
+ html,body{max-width:100%;overflow-x:clip!important}
+ .top,.top-in,.shell,.shell>div,.view,.dash,.dash-hero,.dash-map,.dash-grid,.dash-box{min-width:0;max-width:100%;box-sizing:border-box}
+ .dash-hero .dash-character{min-width:0}
+ .dash-hero .aiya-speech{right:0!important;max-width:115px!important}
+ .dash-map .dash-path{box-sizing:border-box;width:100%}
+}
 </style>
 </head>
 <body>
