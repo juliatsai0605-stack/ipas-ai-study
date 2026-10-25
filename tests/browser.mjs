@@ -10,8 +10,10 @@ async function run(label,size){
   await page.locator("#dashContinue").waitFor({timeout:20000});
   assert.match(await page.locator("body").innerText(),/iPAS AI 備考室/);
   assert.ok(await page.locator('img[src^="img/aiya"]').count()>0);
+  await page.screenshot({path:"home-"+label+".png",fullPage:true});
   await page.locator("#dashContinue").click();
   await page.locator(".sec-head h2").waitFor();
+  await page.screenshot({path:"lesson-"+label+".png",fullPage:true});
   await page.reload({waitUntil:"networkidle"});
   await page.locator("#dashContinue").waitFor();
   assert.ok((await page.locator("#ayiaReturn").innerText()).includes("繼續上次單元"));
