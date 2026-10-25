@@ -1,9 +1,6 @@
 name: Validate iPAS study website
 on:
   pull_request:
-  push:
-    branches:
-      - feature/aiya-free-anime-v1
 concurrency:
   group: ipas-visual-asset-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
