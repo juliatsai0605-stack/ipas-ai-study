@@ -16,3 +16,19 @@ jobs:
           node-version: '22'
       - name: Check site, courses, bank and cloud schemas
         run: node tests/smoke.mjs
+      - name: Set up browser tests
+        run: |
+          npm install --no-save playwright@1.57.0
+          npx playwright install --with-deps chromium
+      - name: Run browser tests
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/ipas-http.log 2>&1 &
+          sleep 2
+          node tests/browser.mjs
+      - name: Upload visual test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipas-browser-screenshots
+          path: test-*.png
+          if-no-files-found: ignore
