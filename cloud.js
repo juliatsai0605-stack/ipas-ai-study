@@ -14,7 +14,7 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
   try{
     const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2.57.0");
     const supabase=createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-    let user=null,syncTimer=null,busy=false,queued=false,filesBusy=false;
+    let user=null,syncTimer=null,busy=false,queued=false,filesBusy=false,syncReady=false;
     const button=document.createElement("button");
     button.className="iconbtn";
     button.textContent="登入／雲端續學";
@@ -47,7 +47,7 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
       else{button.textContent="登入／雲端續學";notice.textContent="本機進度（未登入）";}
     }
     async function push(){
-      if(!user||!window.IPAS_BRIDGE)return;
+      if(!user||!syncReady||!window.IPAS_BRIDGE)return;
       if(busy){queued=true;return;}
       busy=true;
       try{const state=window.IPAS_BRIDGE.snapshot();
@@ -56,19 +56,19 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
       }catch(e){notice.textContent="同步失敗（仍保留本機資料）";msg("同步失敗："+e.message);}
       finally{busy=false;if(queued){queued=false;queueSync();}}
     }
-    function queueSync(){if(!user)return;clearTimeout(syncTimer);syncTimer=setTimeout(push,1100);}
+    function queueSync(){if(!user||!syncReady)return;clearTimeout(syncTimer);syncTimer=setTimeout(push,1100);}
     document.addEventListener("ipas:save",queueSync);
     window.addEventListener("online",queueSync);
     async function handleAuth(session){
       const nextUser=session?.user||null,prevId=user?.id;
       if(!nextUser){
-        user=null;clearTimeout(syncTimer);queued=false;
+        user=null;syncReady=false;clearTimeout(syncTimer);queued=false;
         if(prevId)window.IPAS_BRIDGE?.signOut();
         q("cloudFiles").replaceChildren();present();return;
       }
       if(prevId===nextUser.id){present();return;}
       // Never display or upload the previous account's state while the new identity loads.
-      clearTimeout(syncTimer);queued=false;
+      clearTimeout(syncTimer);queued=false;syncReady=false;
       if(prevId)window.IPAS_BRIDGE?.signOut();
       user=nextUser;q("cloudFiles").replaceChildren();
       present();notice.textContent="正在載入雲端進度…";
@@ -77,7 +77,7 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
         if(user?.id!==nextUser.id)return; // stale response from an earlier session
         if(error)throw error;
         window.IPAS_BRIDGE?.attachUser(nextUser.id,data?.state||{});
-        present();queueSync();msg(data?"已載入並合併雲端學習進度":"已建立帳號，正在備份現有學習進度");
+        syncReady=true;present();queueSync();msg(data?"已載入並合併雲端學習進度":"已建立帳號，正在備份現有學習進度");
       }catch(e){
         if(user?.id!==nextUser.id)return;
         notice.textContent="登入成功，但資料同步失敗";
