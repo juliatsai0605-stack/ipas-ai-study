@@ -13,7 +13,8 @@ try{
  await page.locator("#dSmart").click();
  await page.locator(".q[data-id]").waitFor();
  const id=await page.locator(".q[data-id]").getAttribute("data-id");
- const correct=await page.evaluate(qid=>BANK.find(q=>String(q.id)===qid)?.a,id);
+ const officialBank=await (await page.request.get("http://127.0.0.1:4173/bank.json")).json();
+ const correct=officialBank.find(q=>String(q.id)===id)?.a;
  assert.ok(Number.isInteger(correct),"test question must exist in official bank");
  const wrong=(correct+1)%4;
  await page.locator(`.q .opt[data-j="${wrong}"]`).click();
