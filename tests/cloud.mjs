@@ -75,6 +75,7 @@ try{
  const state=await page.evaluate(()=>window.IPAS_BRIDGE.snapshot());
  assert.equal(state.vault?.some(n=>n.title==="甲的私人筆記")||false,false,"A notes leaked into B account");
  assert.ok(state.vault?.some(n=>n.title==="乙的私人筆記"),"B notes missing");
+ await page.screenshot({path:"cloud-mobile.png",fullPage:false});
  await page.locator("#cloudSignOut").click();
  await page.locator("#cloudAnonymous").waitFor({state:"visible",timeout:15000});
  await page.evaluate(()=>window.__cloudMock.failNextRead());
