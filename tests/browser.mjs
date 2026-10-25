@@ -56,6 +56,14 @@ async function run(label,size){
     assert.match(brand.text,/iPAS AI 備考室/);
     assert.ok(brand.needed<=brand.visible+2,"mobile brand name truncated");
   }
+  const geometryCheck=await page.evaluate(()=>{
+    const speech=document.querySelector(".dash-hero .aiya-speech");
+    const character=document.querySelector(".dash-character img");
+    const sb=speech?.getBoundingClientRect(),cb=character?.getBoundingClientRect();
+    return {viewport:innerWidth,documentWidth:document.documentElement.scrollWidth,speechRight:sb?.right,characterLeft:cb?.left};
+  });
+  assert.ok(geometryCheck.documentWidth<=geometryCheck.viewport+2,"horizontal page overflow: "+JSON.stringify(geometryCheck));
+  if(label!=="mobile")assert.ok(geometryCheck.speechRight<=geometryCheck.characterLeft+42,"Aiya speech obscures character: "+JSON.stringify(geometryCheck));
   const heroRect=await page.locator(".dash-hero").boundingBox();
   assert.ok(heroRect&&heroRect.width>0&&heroRect.height>0,"hero must be visible");
   const characterRect=await page.locator(".dash-character img").boundingBox();
