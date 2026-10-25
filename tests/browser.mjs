@@ -10,6 +10,14 @@ async function run(label,size){
   await page.locator("#dashContinue").waitFor({timeout:20000});
   assert.match(await page.locator("body").innerText(),/iPAS AI 備考室/);
   assert.ok(await page.locator('img[src^="img/aiya"]').count()>0);
+  const art=await page.locator('.dash-character img').evaluate(img=>({src:img.getAttribute('src'),loaded:img.complete&&img.naturalWidth>0}));
+  assert.equal(art.src,'img/aiya-reference.png',"hero must use original Aiya illustration");
+  assert.ok(art.loaded,"reference Aiya illustration must load");
+  for(const asset of ['img/lab-scene.png','img/map-skyline.png','img/aiya-pose-1.png','img/aiya-pose-2.png','img/aiya-pose-3.png','img/aiya-pose-4.png','img/aiya-pose-5.png','img/aiya-pose-6.png']){
+    const res=await page.request.get('http://127.0.0.1:4173/'+asset);
+    assert.equal(res.status(),200,'missing original illustration '+asset);
+    assert.match(res.headers()['content-type']||'',/image/,'invalid image MIME '+asset);
+  }
   assert.equal(await page.locator(".dash-hero").count(),1,"research-lab hero missing");
   assert.equal(await page.locator(".dash-stats .dash-stat").count(),4,"four progress cards required");
   assert.equal(await page.locator(".dash-map .dash-node").count(),5,"five-step learning path required");
