@@ -476,7 +476,7 @@ function renderToc(){
   }
   $("#toc").innerHTML=h;
   $("#toc").querySelectorAll("button.sec").forEach(b=>b.onclick=()=>openUnit(b.dataset.sec));
-  $("#toc").querySelectorAll("[data-go]").forEach(b=>{b.setAttribute("aria-current",String((b.dataset.go===V.view)||(b.dataset.go==="badges"&&V.view==="home")));b.onclick=()=>{const d=b.dataset.go;if(d==="review")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"review",20);if(d==="badges")return go("home");if(d==="mentor"){ayiaState("welcome");document.getElementById("ayiaPanel").scrollIntoView({behavior:"smooth",block:"start"});closeDrawer();return;}if(d==="drill")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"smart",20);go(d);};});
+  $("#toc").querySelectorAll("[data-go]").forEach(b=>{b.setAttribute("aria-current",String((b.dataset.go===V.view)));b.onclick=()=>{const d=b.dataset.go;if(d==="review")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"review",20);if(d==="badges"){go("home");requestAnimationFrame(()=>document.querySelector(".dash-achievements")?.scrollIntoView({block:"center",behavior:"smooth"}));return;}if(d==="mentor"){ayiaState("welcome");closeDrawer();if(V.view==="home"){document.getElementById("dashContinue")?.scrollIntoView({behavior:"smooth",block:"center"});}else{document.getElementById("ayiaPanel")?.scrollIntoView({behavior:"smooth",block:"start"});}return;}if(d==="drill")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"smart",20);go(d);};});
   $("#tocHide").onclick=()=>{if(window.matchMedia("(min-width:901px)").matches){S.toc=false;save();render();}else closeDrawer();};
 }
 function closeDrawer(){$("#toc").classList.remove("open");$("#drawerBg").classList.remove("open");}
