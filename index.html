@@ -322,6 +322,69 @@ body{background:#f5f7ff}
 .dash-last small{font-weight:800;color:#645fc2}.dash-last h3{font-size:1.04rem;color:#273567;line-height:1.5}.dash-last p{color:#62718f;font-size:.77rem}.dash-last button{font-size:.84rem}
 @media(max-width:1170px){.dash-hero{grid-template-columns:minmax(0,1fr) minmax(150px,.6fr)}.dash-last{grid-column:1/-1;margin:0 15px 16px;padding:15px}.dash-character{width:210px}.aiya-speech{right:-7px}}
 @media(max-width:650px){.dash-hero{grid-template-columns:minmax(0,1fr) 145px}.dash-hero-copy{padding:17px 8px 15px 17px}.dash-character{height:200px;width:145px;align-self:end}.dash-character img{width:140px;height:185px}.aiya-speech{display:none}.dash-last{grid-column:1/-1}}
+
+/* Anime Study Lab v2 — illustrated glass research-room language */
+:root{--paper:#edf4ff;--card:#ffffff;--ink:#23336e;--muted:#66779d;--line:#dce6ff;--matcha:#585af4;--matcha-soft:#e8e9ff;--kaki:#ef8aaf;--kaki-soft:#ffedf5;--ai:#455be5;--ai-soft:#e5efff;--ok:#2a9c91;--ok-soft:#e4fbf7;--ng:#dc6d84;--ng-soft:#fff0f4;--f-display:"Noto Sans TC","PingFang TC",sans-serif}
+body{background:radial-gradient(circle at 8% 15%,#fff3fc 0,transparent 29%),radial-gradient(circle at 92% 9%,#d8e8ff 0,transparent 35%),linear-gradient(135deg,#f4f8ff,#e7efff 55%,#f8efff);color:var(--ink)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.55;background-image:radial-gradient(#a7c6ff 1px,transparent 1px),radial-gradient(#ffd0ed 1px,transparent 1px);background-size:85px 85px,133px 133px;background-position:10px 18px,65px 44px}
+.top{background:#ffffffd9!important;backdrop-filter:blur(18px);border-bottom:1px solid #dbe4ff;box-shadow:0 6px 24px #708bc113}
+.brand h1{color:#23398c!important;font-family:var(--f-display)!important;font-weight:900!important;letter-spacing:.04em}
+.brand .seal{color:#5e6df0;background:#e6efff;border:1px solid #c8d6ff}
+.free-tag{background:#e5fff5!important;color:#087d6e!important;border:1px solid #a7e6d4!important}
+.top .iconbtn,.top .tabs button,.top .seg button{border-radius:12px}
+.shell{gap:15px}
+.toc{background:linear-gradient(170deg,#ffffffed,#f3f5ffef)!important;border:1px solid #dbe5ff!important;border-radius:20px!important;box-shadow:0 12px 30px #647cb11a}
+.studio-nav button{color:#364b98!important;border-radius:13px!important;font-weight:800}
+.studio-nav button.active,.studio-nav button[aria-current="page"]{background:linear-gradient(100deg,#dde7ff,#e9dfff)!important;color:#304ac4!important;border-left:4px solid #5b65ee!important}
+.studio-nav button:hover{background:#eaf0ff!important}
+.view{max-width:1560px}
+.card,.dash-box,.dash-stat{border-color:#dce5ff!important;box-shadow:0 8px 26px #6d80c516!important;background:#fffffff5!important}
+.dash-heading{padding:8px 7px 4px}
+.dash-heading h2{color:#273f9b;font-weight:900;letter-spacing:.04em}
+.dash-eyebrow{color:#7b66ce!important;font-weight:900}
+.dash-hero{min-height:335px!important;border:2px solid #cbd9ff!important;border-radius:25px!important;background:
+linear-gradient(90deg,#eef4fff5 0%,#e8f2ffcf 32%,#e8e9ff45 70%,#f7e9ffad 100%),
+radial-gradient(circle at 48% 9%,#fff 0 2%,transparent 2.4%),
+linear-gradient(90deg,transparent 0 63%,#fff9 63% 64%,transparent 64%),
+linear-gradient(0deg,#c3dcff 0 2%,transparent 2% 100%),
+repeating-linear-gradient(90deg,#e1eaff 0 22px,#f6f8ff 22px 26px,#d6e5ff 26px 52px);
+box-shadow:0 18px 35px #7799d32b!important}
+.dash-hero:before{content:"✧  ✦  ✧";top:18px;right:14%;font-size:33px;color:#fefeff;text-shadow:0 0 13px #92b7ff}
+.dash-hero-copy{padding:30px 12px 28px 29px!important}
+.dash-hero h2{font-size:clamp(1.45rem,2.4vw,2.45rem);color:#263e91!important;font-weight:900;line-height:1.55}
+.dash-hero h2 span{color:#6751d4!important}
+.dash-label{background:#ffffffeb!important;color:#6557bb!important;border:1px solid #c9c9ff!important}
+.dash-hero p{color:#3f5490!important;font-weight:600}
+.dash-primary,.dash-last .btn,.dash-review .btn{background:linear-gradient(115deg,#7588ff,#514ce9 60%,#7561ed)!important;color:#fff!important;box-shadow:0 7px 17px #5755da45!important;border:0!important}
+.dash-character{filter:drop-shadow(0 12px 13px #7289df55)}
+.aiya-speech{background:#ffffffed!important;border:1px solid #ccd9ff!important;color:#4b55a9!important;box-shadow:0 8px 19px #778cbe2b}
+.dash-last{background:#ffffffed!important;border:1px solid #cdd9fb!important;box-shadow:0 12px 26px #687dbb25!important}
+.dash-last h3{color:#3044a3}
+.dash-stats{gap:12px}
+.dash-stat{border-radius:19px!important;background:linear-gradient(140deg,#fff,#f6f9ff)!important}
+.dash-stat strong{color:#1f388e!important}
+.dash-stat-icon{box-shadow:inset 0 0 0 1px #ffffffaf}
+.dash-box{border-radius:20px!important}
+.dash-box-title h3{color:#243a92!important;font-weight:900}
+.dash-map{background:linear-gradient(165deg,#fff,#f1f7ff)!important}
+.dash-path{background:linear-gradient(180deg,#f2f8ff,#eaf0ff)!important;border:1px solid #dbe5ff!important;border-radius:16px}
+.dash-node{border:1px solid #cbd9fa!important;background:#ffffffdd!important;border-radius:16px!important;box-shadow:0 4px 12px #879dd31c}
+.dash-node.finished{background:linear-gradient(145deg,#e1fff8,#effcff)!important;border-color:#93d9d2!important}
+.dash-node.current{background:linear-gradient(145deg,#fff6d7,#fff9ee)!important;border-color:#ffd88e!important;box-shadow:0 4px 17px #f4ca7b4d}
+.dash-node-icon{background:linear-gradient(130deg,#a7b9ff,#7569ed)!important;color:white!important}
+.dash-node.finished .dash-node-icon{background:linear-gradient(120deg,#4bc9b5,#1da598)!important}
+.dash-medal{background:linear-gradient(150deg,#fff,#f3f4ff)!important;border:1px solid #e0e6ff!important;border-radius:15px}
+.dash-medal.earned{background:linear-gradient(155deg,#fff9df,#f9f2ff)!important;border-color:#f5dc9d!important}
+.dash-medal span{filter:drop-shadow(0 4px 4px #8b83b633)}
+.dash-files>div{background:#f1f6ff!important;border:1px solid #e0e9ff!important;border-radius:12px}
+.dash-task{border-color:#e5eaff!important}
+.dash-check.complete{background:#dcfaf2!important;color:#139c83!important}
+.dash-link{color:#5465e9!important;font-weight:800}
+.dash-tag,.dash-count{background:#efedff!important;color:#6352cb!important}
+.ayia-panel{background:linear-gradient(100deg,#f5f6ff,#eef6ff)!important;border:1px solid #d5dfff!important;border-radius:17px!important}
+.ayia-panel strong{color:#4d53b5}
+@media(max-width:650px){.dash-hero{min-height:260px!important}.dash-hero-copy{padding:18px 8px 18px 18px!important}.dash-hero h2{font-size:1.4rem}.dash-character{filter:drop-shadow(0 6px 8px #8297d944)}}
+
 </style>
 </head>
 <body>
@@ -351,7 +414,7 @@ body{background:#f5f7ff}
 
 <footer>
   <span>題目來源：經濟部產業發展署 iPAS AI應用規劃師能力鑑定公告試題（114 年第二、四梯次；115 年第一至三次），答案依官方公告。單元重點、自我檢查與每題解析為本站整理，題目的單元歸類以關鍵字自動判定，僅供參考。</span>
-  <span>考試日期、報名與授證規定以 <a href="https://www.ipas.org.tw/" target="_blank" rel="noopener">iPAS 官網</a>最新公告為準。學習進度存在你目前使用的瀏覽器，換裝置請用「我的進度」匯出與匯入。</span>
+  <span>考試日期、報名與授證規定以 <a href="https://www.ipas.org.tw/" target="_blank" rel="noopener">iPAS 官網</a>最新公告為準。未登入時進度保存在目前瀏覽器；免費帳號登入後可同步個人學習進度，亦可使用「我的進度」備份。</span>
 </footer>
 
 <script>
@@ -531,7 +594,7 @@ function vHome(){
     <div class="dash-grid"><section class="dash-box dash-map"><div class="dash-box-title"><h3>✦ 學習章節地圖</h3><button class="dash-link" id="dashUnits">查看全部單元 →</button></div><p class="dash-sub">完成單元測驗、收集星星，逐步解鎖自己的學習成果。</p><div class="dash-path">${nodes.map((sec,i)=>`<button class="dash-node ${secDone(sec)?"finished":(lesson&&lesson.sec.code===sec.code?"current":"")}" data-dash-sec="${sec.code}"><span class="dash-node-icon">${secDone(sec)?"✓":i+1}</span><small>${esc(sec.code)}</small><b>${esc(sec.name)}</b></button>`).join("")}</div><div class="dash-map-foot"><span>已完成 ${r.done} 個單元　·　完成率 ${progress}%</span><span class="dash-tag">✦ 持續累積中</span></div></section>
     <section class="dash-box"><div class="dash-box-title"><h3>☑ 今日學習計畫</h3><span class="dash-count">${mission.filter(m=>m.done).length} / ${mission.length}</span></div><div class="dash-tasks">${mission.map(m=>`<div class="dash-task"><span class="dash-check ${m.done?"complete":""}">${m.done?"✓":"○"}</span><div><b>${m.title}</b><small>${m.sub}</small></div></div>`).join("")}</div><p class="dash-tip">愛芽小提醒：今天只要比昨天多懂一點就好 ♡</p></section>
     <section class="dash-box"><div class="dash-box-title"><h3>↻ 錯題複習</h3><span class="dash-tag">精準練習</span></div><div class="dash-review"><div><small>今日到期的複習題目</small><strong>${dueReviewCount(subjQs(subj.code))}<em> 題</em></strong><p>依 1、3、7、14、30、60 天間隔安排已做過的題目。</p></div><button class="btn" id="dashDrill">開始練習 →</button></div></section>
-    <section class="dash-box"><div class="dash-box-title"><h3>▣ 我的學習檔案</h3><span class="dash-tag">本機儲存</span></div><div class="dash-files"><div>▤<b>費曼筆記</b><small>${Object.values(S.feyn).filter(Boolean).length} 份</small></div><div>▧<b>完成單元</b><small>${r.done} 個</small></div><div>▣<b>歷次模擬考</b><small>${S.mocks.length} 次</small></div></div><button class="dash-link" id="dashMe">查看進度與匯出備份 →</button><p class="dash-disclaimer">目前僅儲存於這台裝置；雲端登入與私人上傳尚未開放。</p></section>
+    <section class="dash-box"><div class="dash-box-title"><h3>▣ 我的學習檔案</h3><span class="dash-tag">本機儲存</span></div><div class="dash-files"><div>▤<b>費曼筆記</b><small>${Object.values(S.feyn).filter(Boolean).length} 份</small></div><div>▧<b>完成單元</b><small>${r.done} 個</small></div><div>▣<b>歷次模擬考</b><small>${S.mocks.length} 次</small></div></div><button class="dash-link" id="dashMe">查看進度與匯出備份 →</button><p class="dash-disclaimer">本機資料可離線使用；完成免費雲端登入後可同步進度，私人附件需登入後使用。</p></section>
     <section class="dash-box dash-achievements"><div class="dash-box-title"><h3>✧ 成就徽章</h3><span class="dash-count">${achievements.filter(a=>a.ok).length} / ${achievements.length}</span></div><div class="dash-medals">${achievements.map(a=>`<div class="dash-medal ${a.ok?"earned":"locked"}" title="${a.desc}"><span>${a.icon}</span><b>${a.name}</b><small>${a.ok?"已獲得":"尚未達成"}</small></div>`).join("")}</div></section>
     <section class="dash-box"><div class="dash-box-title"><h3>▤ 備考建議</h3><span class="dash-tag">依實際進度</span></div><p class="dash-sub">${ph===1?"先讀單元重點、再完成測驗；單元達 80% 才算完成。":ph===2?"已完成單元階段，建議大量刷題並練習整卷模擬考。":"準備狀態良好，記得持續做模擬考並查詢官方報名公告。"}</p><div class="dash-actions"><button id="dashMock" class="btn ghost">整卷模擬考</button><button id="dashDiag" class="btn soft" ${S.lv==="M"?"":"hidden"}>中級診斷</button></div></section></div></div>`;
   if(S.lv==="M")h+=midCard();
