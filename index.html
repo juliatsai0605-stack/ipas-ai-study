@@ -664,6 +664,20 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+@media(min-width:901px){
+.shell:has(.dash) .toc{background:linear-gradient(#fff,#f3f5ff)!important;color:#30468e!important;border-color:#e5eafb!important;box-shadow:0 12px 30px #5e76b01a!important}
+.shell:has(.dash) .toc .studio-nav button{color:#344b99!important}
+.shell:has(.dash) .toc .studio-nav button[aria-current=true]{background:#e6e8ff!important;color:#3544a7!important;box-shadow:inset 4px 0 0 #7478ef!important}
+.shell:has(.dash) .toc .studio-nav-icon{stroke:#6573c3!important}
+.shell:has(.dash) .toc .studio-free{background:#eff5ff!important;color:#4155a4!important;border-color:#d7e5ff!important}
+.shell:has(.dash) .toc .studio-free p{color:#6172a6!important}
+.shell:has(.dash) .toc .toc-head span,.shell:has(.dash) .toc .ch,.shell:has(.dash) .toc button.sec{color:#586c9d!important}
+.shell:has(.dash) .toc .subj>div:first-child{color:#32488e!important}
+.shell:has(.dash) .dash-hero{grid-template-columns:minmax(0,.94fr) minmax(300px,1.12fr) minmax(230px,.88fr)!important;min-height:375px!important}
+.shell:has(.dash) .dash-hero .dash-character{width:100%!important;height:375px!important;transform:none!important;margin:0!important}
+.shell:has(.dash) .dash-hero .dash-character img{width:100%!important;height:375px!important;object-fit:contain!important;object-position:center bottom!important}
+}
 </style>
 </head>
 <body>
