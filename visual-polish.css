@@ -1,0 +1,107 @@
+/* iPAS dashboard desktop density aligned to the supplied 1672x941 reference.
+   Responsive layouts below 1200px retain their independent stacking rules. */
+@media (min-width:1200px) {
+  .shell:has(.dash) .dash-hero {
+    min-height:262px!important;
+    max-height:280px!important;
+    grid-template-columns:minmax(0,1.03fr) minmax(235px,.82fr) minmax(220px,.78fr)!important;
+  }
+  .shell:has(.dash) .dash-hero .dash-character {
+    height:260px!important;
+    width:248px!important;
+  }
+  .shell:has(.dash) .dash-hero .dash-character img {
+    height:255px!important;
+    width:248px!important;
+    max-height:260px!important;
+  }
+  .shell:has(.dash) .dash-hero .dash-last {
+    min-height:190px!important;
+    max-height:235px!important;
+  }
+  .shell:has(.dash) .dash-stats .dash-stat {
+    min-height:88px!important;
+    padding:9px 11px!important;
+  }
+  .shell:has(.dash) .dash-grid {
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+  .shell:has(.dash) .dash-grid>.dash-map {
+    grid-column:1 / span 2!important;
+    min-height:236px!important;
+    padding:11px!important;
+  }
+  .shell:has(.dash) .dash-grid>:nth-child(2) {
+    grid-column:3!important;
+    min-height:236px!important;
+    padding:11px!important;
+  }
+  .shell:has(.dash) .dash-grid>:nth-child(3),
+  .shell:has(.dash) .dash-grid>:nth-child(4),
+  .shell:has(.dash) .dash-grid>:nth-child(5) {
+    grid-column:auto!important;
+    min-width:0!important;
+    min-height:152px!important;
+    padding:11px!important;
+  }
+  .shell:has(.dash) .dash-grid>:nth-child(6) {
+    grid-column:1/-1!important;
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:center!important;
+    gap:8px 20px!important;
+    min-height:70px!important;
+    padding:10px 15px!important;
+  }
+  .shell:has(.dash) .dash-grid>:nth-child(6) .dash-box-title {
+    margin:0!important;
+    min-width:145px;
+  }
+  .shell:has(.dash) .dash-grid>:nth-child(6) .dash-sub {
+    flex:1 1 340px;
+    margin:0!important;
+  }
+  .shell:has(.dash) .dash-grid>:nth-child(6) .dash-actions {
+    margin:0!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-path {
+    margin-top:5px!important;
+    padding-top:3px!important;
+    padding-bottom:4px!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-node {
+    min-height:106px!important;
+    padding:6px 4px!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-node-icon {
+    height:46px!important;
+    width:46px!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-map-aide {
+    margin-top:1px!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-map-aide img {
+    width:40px!important;
+    height:40px!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-mentor-note {
+    min-height:68px!important;
+    margin-top:6px!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-mentor-note img {
+    width:65px!important;
+    height:65px!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-medals {
+    gap:4px!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-medal {
+    padding:5px 2px!important;
+  }
+  .shell:has(.dash) .dash-grid .dash-medal img {
+    width:48px!important;
+    height:48px!important;
+  }
+}
