@@ -2,6 +2,22 @@ import {chromium} from "playwright";
 import assert from "node:assert/strict";
 const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
 const failures=[];
+async function checkLayout(page,label,view){
+ const result=await page.evaluate(()=>{
+  const viewport=innerWidth,doc=document.documentElement.scrollWidth;
+  const selectors=".dash-stat,.dash-medal,.dash-node,.dash-last,.dash-mentor-note,.dash-map-aide,.sec-head,.vault-list,.card";
+  const clipped=[...document.querySelectorAll(selectors)].filter(el=>{
+   const rect=el.getBoundingClientRect(),style=getComputedStyle(el);
+   return style.display!=="none"&&rect.width>0&&(rect.left<-2||rect.right>viewport+2);
+  }).map(el=>el.className);
+  const broken=[...document.images].filter(img=>img.getBoundingClientRect().width>0&&(!img.complete||img.naturalWidth===0)).map(img=>img.src);
+  return {viewport,doc,clipped,broken};
+ });
+ assert.ok(result.doc<=result.viewport+2,label+" "+view+" horizontal overflow: "+JSON.stringify(result));
+ assert.deepEqual(result.clipped,[],label+" "+view+" clipped visible content");
+ assert.deepEqual(result.broken,[],label+" "+view+" broken visible images");
+}
+
 async function run(label,size){
  const page=await browser.newPage({viewport:size,acceptDownloads:true});
  page.on("pageerror",e=>failures.push(label+": JS "+e.message));
@@ -25,6 +41,13 @@ async function run(label,size){
   assert.equal(await page.locator(".dash-stats img[src^='img/stat-']").count(),4,"all stat illustrations required");
   assert.equal(await page.locator(".dash-map .dash-node").count(),5,"five-step learning path required");
   assert.equal(await page.locator(".dash-map .dash-route").count(),1,"visual learning route missing");
+  assert.equal(await page.locator(".dash-mentor-note img[src='img/aiya-pose-4.png']").count(),1,"Aiya must accompany the daily learning plan");
+  assert.equal(await page.locator(".dash-map-aide img[src='img/aiya-pose-6.png']").count(),1,"Aiya must accompany the chapter map");
+  const illustrations=await page.evaluate(()=>({
+   lab:getComputedStyle(document.querySelector(".dash-hero")).backgroundImage.includes("lab-room.svg"),
+   skyline:getComputedStyle(document.querySelector(".dash-map"),"::before").backgroundImage.includes("map-skyline.png")
+  }));
+  assert.ok(illustrations.lab&&illustrations.skyline,"illustrated research-room/map backgrounds missing: "+JSON.stringify(illustrations));
   assert.equal(await page.locator(".dash-achievements .dash-medal").count(),4,"achievements must be visible");
   assert.equal(await page.locator(".dash-achievements img[src^='img/badge-']").count(),4,"illustrated achievement badges must render");
   assert.equal(await page.getByText("升級 Gold 會員").count(),0,"no paid membership prompts");
@@ -47,7 +70,8 @@ async function run(label,size){
     assert.ok(geometry.mapWidth>450,"desktop map too narrow: "+JSON.stringify(geometry));
     assert.ok(geometry.heroHeight<340,"desktop hero excessively tall: "+JSON.stringify(geometry));
   }
-  await page.screenshot({path:"home-"+label+".png",fullPage:true});
+  await checkLayout(page,label,"home");
+  await page.screenshot({path:"home-"+label+".png",fullPage:true,animations:"disabled"});
   await page.screenshot({path:"home-fold-"+label+".png",fullPage:false});
   const broken=await page.locator("img").evaluateAll(images=>images.filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.getAttribute("src")));
   assert.deepEqual(broken,[],"broken site illustrations");
@@ -76,15 +100,18 @@ async function run(label,size){
   });
   assert.deepEqual(clipped,[],"dashboard card clipped outside viewport");
   // The learning map must be actionable, not just visually complete.
-  await page.locator('.dash-node[data-dash-sec]').first().click();
+  await page.locator('.dash-node[data-dash-sec]').first().focus();
+  await page.keyboard.press("Enter");
   await page.locator('.sec-head h2').waitFor();
+  await checkLayout(page,label,"lesson");
   await page.locator('.tabs [data-v="home"]').click();
   await page.locator("#dashContinue").waitFor();
   // All five chapter nodes remain available after returning from a lesson.
   assert.equal(await page.locator(".dash-node[data-dash-sec]").count(),5);
   await page.locator("#dashContinue").click();
   await page.locator(".sec-head h2").waitFor();
-  await page.screenshot({path:"lesson-"+label+".png",fullPage:true});
+  await checkLayout(page,label,"continue-lesson");
+  await page.screenshot({path:"lesson-"+label+".png",fullPage:true,animations:"disabled"});
   await page.reload({waitUntil:"networkidle"});
   await page.locator("#dashContinue").waitFor();
   assert.ok((await page.locator("#ayiaReturn").innerText()).includes("繼續上次單元"));
@@ -103,7 +130,8 @@ async function run(label,size){
   await page.locator('.tabs [data-v="me"]').click();
   assert.equal(await page.locator("#localName").inputValue(),"測試學習者");
   assert.equal(await page.locator("[data-attachment-get]").count(),1);
-  await page.screenshot({path:"test-"+label+".png",fullPage:true});
+  await checkLayout(page,label,"personal-vault");
+  await page.screenshot({path:"test-"+label+".png",fullPage:true,animations:"disabled"});
   console.log("PASS "+label);
  }finally{await page.close();}
 }
