@@ -125,9 +125,18 @@ async function runAccountIsolation(){
   assert.ok(restored.state.vault?.some(n=>n.title==="A-private-note"),"account A notes must survive account B reset");
   assert.ok(restored.attachments.some(f=>f.name==="anonymous-note.txt"),"account A attachment must survive account B reset");
   await page.locator('.tabs [data-v="me"]').click();
+  const storedBlob=await page.evaluate(async()=>{
+    const record=JSON.parse(localStorage.getItem("ipas-ai-study-v4-account-test-account-a")||"{}").attachments?.[0];
+    if(!record)return {record:false};
+    const data=await attachmentAction("get",record.id);
+    return {record:true,stored:!!data,blob:!!data?.blob,size:data?.blob?.size||0};
+  });
+  assert.ok(storedBlob.stored&&storedBlob.blob,"account A binary file lost during B reset: "+JSON.stringify(storedBlob));
+  const dialogs=[];
+  page.on("dialog",async d=>{dialogs.push(d.message());await d.dismiss();});
   const download=page.waitForEvent("download",{timeout:10000});
   await page.locator('[data-attachment-get]').first().click();
-  const file=await download;
+  const file=await download.catch(e=>{throw Error("A download did not start; dialogs="+JSON.stringify(dialogs)+" stored="+JSON.stringify(storedBlob)+" "+e.message);});
   assert.equal(file.suggestedFilename(),"anonymous-note.txt","A file must remain retrievable after B reset");
   console.log("PASS account-isolation");
  }finally{await context.close();}
