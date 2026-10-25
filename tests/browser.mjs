@@ -41,6 +41,11 @@ async function run(label,size){
   await page.screenshot({path:"home-fold-"+label+".png",fullPage:false});
   const broken=await page.locator("img").evaluateAll(images=>images.filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.getAttribute("src")));
   assert.deepEqual(broken,[],"broken site illustrations");
+  if(label==="mobile"){
+    const brand=await page.locator(".brand h1").evaluate(el=>({visible:el.getBoundingClientRect().width,needed:el.scrollWidth,text:el.textContent}));
+    assert.match(brand.text,/iPAS AI 備考室/);
+    assert.ok(brand.needed<=brand.visible+2,"mobile brand name truncated");
+  }
   const heroRect=await page.locator(".dash-hero").boundingBox();
   assert.ok(heroRect&&heroRect.width>0&&heroRect.height>0,"hero must be visible");
   const characterRect=await page.locator(".dash-character img").boundingBox();
