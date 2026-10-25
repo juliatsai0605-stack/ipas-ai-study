@@ -594,7 +594,7 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
 <div class="shell" id="shell">
   <aside class="toc" id="toc" aria-label="目次"></aside>
   <div class="drawer-bg" id="drawerBg"></div>
-  <div style="min-width:0"><section class="ayia-panel" id="ayiaPanel" aria-live="polite"><div class="ayia-face" id="ayiaFace" role="img" aria-label="愛芽 AI 學習小導師"><img src="img/aiya.svg" alt="" width="64" height="84"></div><div><strong>✦ 愛芽 Aiya｜你的免費學習小導師</strong><p id="ayiaText">歡迎來到研究所！我們一起穩穩地準備 iPAS。</p><div class="ayia-actions"><button id="ayiaEncourage" type="button">給我鼓勵</button><button id="ayiaReturn" type="button" hidden>繼續上次單元</button></div></div></section><main id="main"><div class="card">正在載入題庫與單元內容…</div></main></div>
+  <div style="min-width:0"><section class="ayia-panel" id="ayiaPanel" aria-live="polite"><div class="ayia-face" id="ayiaFace" role="img" aria-label="愛芽 AI 學習小導師"><img src="img/aiya-pose-1.png" alt="愛芽 Aiya 角色原始設定姿態" width="64" height="84"></div><div><strong>✦ 愛芽 Aiya｜你的免費學習小導師</strong><p id="ayiaText">歡迎來到研究所！我們一起穩穩地準備 iPAS。</p><div class="ayia-actions"><button id="ayiaEncourage" type="button">給我鼓勵</button><button id="ayiaReturn" type="button" hidden>繼續上次單元</button></div></div></section><main id="main"><div class="card">正在載入題庫與單元內容…</div></main></div>
 </div>
 
 <footer>
@@ -634,7 +634,7 @@ const AYIA_LINES={
   retry:"答錯也是有效的學習。先看解析，再想想為什麼其他選項不對。",
   celebrate:"完成一個單元了！恭喜你，今天又離目標更近一步。"
 };
-function ayiaState(state){const faces={standby:"👩🏻‍🔬",welcome:"😊",thinking:"🤔",encourage:"💪",retry:"🫶",celebrate:"🎉"};const t=document.getElementById("ayiaText"),a=document.getElementById("ayiaFace");if(t)t.textContent=AYIA_LINES[state]||AYIA_LINES.standby;if(a){a.dataset.state=state;const im=a.querySelector("img");if(im){im.src="img/aiya"+(state==="standby"?"":"-"+state)+".svg";im.style.transform=state==="celebrate"?"translateY(-5px) rotate(-5deg)":state==="thinking"?"rotate(4deg)":"";}else a.textContent=faces[state]||faces.standby;}}
+function ayiaState(state){const faces={standby:"待機",welcome:"歡迎",thinking:"思考",encourage:"鼓勵",retry:"答錯引導",celebrate:"完成慶祝"};const t=document.getElementById("ayiaText"),a=document.getElementById("ayiaFace");if(t)t.textContent=AYIA_LINES[state]||AYIA_LINES.standby;if(a){a.dataset.state=state;const im=a.querySelector("img");if(im){im.src="img/aiya-pose-"+({standby:1,welcome:2,thinking:3,encourage:4,retry:5,celebrate:6}[state]||1)+".png";im.style.transform=state==="celebrate"?"translateY(-5px) rotate(-5deg)":state==="thinking"?"rotate(4deg)":"";}else a.textContent=faces[state]||faces.standby;}}
 function latestSection(){const code=S.lastSec;return code&&SECS[code]&&SECS[code].lv===S.lv?SECS[code]:null;}
 function restoreLast(){const x=latestSection();if(x)go("unit",{sec:x.sec.code,subj:x.subj.code});}
 function updateMentor(){const x=latestSection(),b=document.getElementById("ayiaReturn");if(b){b.hidden=!x;b.textContent=x?"繼續上次單元："+x.sec.code:"繼續上次單元";}}
