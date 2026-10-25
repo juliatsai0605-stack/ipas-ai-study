@@ -42,4 +42,7 @@ jobs:
             lesson-*.png
             cloud-*.png
             exam-*.png
+            img/lab-scene.png
+            img/map-skyline.png
+            img/aiya-reference.png
           if-no-files-found: ignore
