@@ -35,4 +35,6 @@ assert.match(conf,/configured:false/);
 const sql=read("supabase-schema.sql");
 assert.match(sql,/enable row level security/);
 assert.match(sql,/auth\.uid\(\)/);
+assert.match(sql,/on conflict \(id\) do update set/,"existing bucket must be re-hardened on rerun");
+assert.match(sql,/public = excluded\.public/,"storage bucket must remain private");
 console.log("PASS: HTML, JS parse, "+bank.length+" questions, "+codes.size+" sections, six Aiya assets and RLS setup");
