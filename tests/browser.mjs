@@ -38,6 +38,20 @@ async function run(label,size){
     }
   }
   await page.screenshot({path:"home-"+label+".png",fullPage:true});
+  await page.screenshot({path:"home-fold-"+label+".png",fullPage:false});
+  const broken=await page.locator("img").evaluateAll(images=>images.filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.getAttribute("src")));
+  assert.deepEqual(broken,[],"broken site illustrations");
+  const heroRect=await page.locator(".dash-hero").boundingBox();
+  assert.ok(heroRect&&heroRect.width>0&&heroRect.height>0,"hero must be visible");
+  const characterRect=await page.locator(".dash-character img").boundingBox();
+  assert.ok(characterRect&&characterRect.height>=100,"Aiya character must not collapse");
+  const clipped=await page.evaluate(()=>{
+    const vw=innerWidth;
+    return [...document.querySelectorAll(".dash-stat,.dash-medal,.dash-node,.dash-last")].filter(e=>{
+      const r=e.getBoundingClientRect();return r.width>0&&(r.left<-2||r.right>vw+2);
+    }).map(e=>e.className);
+  });
+  assert.deepEqual(clipped,[],"dashboard card clipped outside viewport");
   await page.locator("#dashContinue").click();
   await page.locator(".sec-head h2").waitFor();
   await page.screenshot({path:"lesson-"+label+".png",fullPage:true});
@@ -63,4 +77,4 @@ async function run(label,size){
   console.log("PASS "+label);
  }finally{await page.close();}
 }
-try{await run("desktop",{width:1440,height:900});await run("mobile",{width:390,height:844});if(failures.length)throw Error(failures.join("\n"));}finally{await browser.close();}
+try{await run("desktop",{width:1440,height:900});await run("mobile",{width:390,height:844});await run("tablet",{width:768,height:1024});if(failures.length)throw Error(failures.join("\n"));}finally{await browser.close();}
