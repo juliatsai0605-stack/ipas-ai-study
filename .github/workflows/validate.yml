@@ -29,6 +29,7 @@ jobs:
           sleep 2
           node tests/browser.mjs
           node tests/cloud.mjs
+          node tests/exams.mjs
       - name: Upload visual test screenshots
         if: always()
         uses: actions/upload-artifact@v4
