@@ -30,7 +30,7 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     <div id="cloudSignedIn" hidden><p>已登入：<strong id="cloudUserName"></strong></p><p class="small muted">學習進度將保存於你的帳號。附件只允許本人讀取，單檔不得超過 10 MB。</p>
     <label class="study-field">顯示名稱<input id="cloudDisplayName" maxlength="35" placeholder="你的名稱"></label>
     <div class="row"><button type="button" class="btn soft" id="cloudSaveName">儲存名稱</button><button type="button" class="btn ghost" id="cloudSyncNow">立即同步</button><button type="button" class="btn ghost" id="cloudSignOut">登出</button></div>
-    <h3 style="margin-top:20px">私人雲端附件庫</h3><p class="small muted">限 PDF、Word、文字及 PNG/JPG 圖片，最多列出 100 份。</p>
+    <h3 style="margin-top:20px">私人雲端附件庫</h3><p class="small muted">限 PDF、Word、文字及 PNG/JPG 圖片，上傳前檢查每帳號最多 100 份、合計 100 MB。</p>
     <label class="study-field">選擇檔案<input id="cloudUpload" type="file" accept=".pdf,.docx,.txt,.md,.png,.jpg,.jpeg"></label>
     <div class="row"><button type="button" class="btn" id="cloudUploadBtn">上傳私人檔案</button><button type="button" class="btn soft" id="cloudRefreshFiles">重新整理清單</button></div>
     <div id="cloudFiles" style="margin-top:12px;display:grid;gap:8px"></div></div><p class="note" id="cloudMessage" role="status" aria-live="polite" style="margin-top:12px"></p></form>`;
@@ -122,7 +122,13 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
       if(!user)return;const file=q("cloudUpload").files?.[0];if(!file){msg("請先選擇檔案");return;}
       if(file.size>10485760){msg("單檔上限 10 MB");return;}
       if(!/\.(pdf|docx|txt|md|png|jpe?g)$/i.test(file.name)){msg("不支援此檔案格式");return;}
-      const safe=file.name.replace(/[^\p{L}\p{N}._-]/gu,"_").slice(0,90),path=user.id+"/"+crypto.randomUUID()+"-"+safe;
+      const uploadOwner=user.id;
+      const {data:existing,error:quotaError}=await supabase.storage.from("study-files").list(uploadOwner,{limit:100});
+      if(user?.id!==uploadOwner)return;
+      if(quotaError){msg("無法檢查雲端容量，暫停上傳："+quotaError.message);return;}
+      const stored=(existing||[]).filter(x=>x.id),total=stored.reduce((n,x)=>n+Number(x.metadata?.size||0),0);
+      if(stored.length>=100||total+file.size>100*1024*1024){msg("每帳號最多 100 份附件、合計 100 MB，請先刪除舊檔案。");return;}
+      const safe=file.name.replace(/[^\p{L}\p{N}._-]/gu,"_").slice(0,90),path=uploadOwner+"/"+crypto.randomUUID()+"-"+safe;
       const ext=(file.name.split(".").pop()||"").toLowerCase();
       const mimeMap={pdf:"application/pdf",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",txt:"text/plain",md:"text/markdown",png:"image/png",jpg:"image/jpeg",jpeg:"image/jpeg"};
       const {error}=await supabase.storage.from("study-files").upload(path,file,{cacheControl:"0",upsert:false,contentType:mimeMap[ext]||file.type||"application/octet-stream"});
