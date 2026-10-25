@@ -108,7 +108,7 @@ async function runAccountIsolation(){
     const bState=b.snapshot();
     return {aHasNote:a.vault?.some(n=>n.title==="A-private-note"),aHasFile:a.attachments?.some(f=>f.name==="anonymous-note.txt"),bHasA:bState.vault?.some(n=>n.title==="A-private-note"),bHasFile:(bState.attachments||[]).length,bName:bState.localName};
   });
-  assert.ok(initial.aHasNote&&initial.aHasFile,"first login must migrate anonymous attachment and preserve notes");
+  assert.ok(initial.aHasNote&&initial.aHasFile,"first login must migrate anonymous attachment and preserve notes: "+JSON.stringify(initial));
   assert.equal(initial.bHasA,false,"second account must not see first account notes");
   assert.equal(initial.bHasFile,0,"second account must not see first account attachments");
   assert.equal(initial.bName,"B-private-name","second account should retain own cloud profile");
