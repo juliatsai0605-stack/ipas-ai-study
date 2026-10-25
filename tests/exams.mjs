@@ -41,6 +41,7 @@ try{
  const confirm=page.locator("#sy");
  if(await confirm.count())await confirm.click();
  await page.locator("#mBack").waitFor({timeout:15000});
+ await page.screenshot({path:"exam-mobile.png",fullPage:false});
  const result=await page.locator("#main").innerText();
  assert.match(result,/分/,"mock score must render");
  const snapshot=await page.evaluate(()=>window.IPAS_BRIDGE.snapshot());
