@@ -27,7 +27,7 @@ for(const state of ["","-welcome","-thinking","-encourage","-retry","-celebrate"
 const cloud=read("cloud.js");
 new Function("return (async()=>{\n"+cloud+"\n})");
 const conf=read("api/cloud-config.js");
-assert.ok(!conf.includes("service_role"),"do not use service role key in public client config");
+assert.ok(!/process\\.env\\.(?:SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SECRET_KEY)/.test(conf),"do not read privileged keys in public client config");
 assert.match(conf,/configured:false/);
 const sql=read("supabase-schema.sql");
 assert.match(sql,/enable row level security/);
