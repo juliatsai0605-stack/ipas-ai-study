@@ -36,5 +36,6 @@ jobs:
           path: |
             test-*.png
             home-*.png
+            home-fold-*.png
             lesson-*.png
           if-no-files-found: ignore
