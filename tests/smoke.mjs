@@ -10,6 +10,7 @@ assert.match(html,/學習章節地圖/);
 assert.match(html,/我的成就徽章|成就徽章/);
 assert.match(html,/img\/aiya-reference\.png/);
 assert.ok(existsSync("img/aiya-reference.png"),"original-reference character art must be present");
+for(const asset of ["img/lab-scene.png","img/map-skyline.png"])assert.ok(existsSync(asset),`reference artwork ${asset} missing`);
 for(let i=1;i<=6;i++)assert.ok(existsSync(`img/aiya-pose-${i}.png`),`Aiya reference pose ${i} missing`);
 assert.match(html,/cloud\.js/);
 const match=html.match(/<script>([\s\S]*?)<\/script>/);
