@@ -40,4 +40,6 @@ jobs:
             home-*.png
             home-fold-*.png
             lesson-*.png
+            cloud-*.png
+            exam-*.png
           if-no-files-found: ignore
