@@ -1209,7 +1209,7 @@ function vMe(){
   $("#savePersonal").onclick=()=>{S.localName=$("#localName").value.trim();S.localPlan=$("#localPlan").value.trim();save();$("#personalMessage").textContent="已儲存於此裝置";};
   $("#exp").onclick=()=>{const blob=new Blob([JSON.stringify({...S,attachments:[]})],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`ipas-ai-progress-${today()}.json`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);$("#bk").textContent="已下載學習進度及筆記備份；本機二進位附件不包含在備份中，請另行保存原始檔。";};
   $("#impF").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o.q!=="object"||typeof o.days!=="object")throw 0;S=Object.assign(blank(),o,{v:4,attachments:[]});save();$("#bk").textContent="已匯入備份。";render();}catch(x){$("#bk").textContent="檔案格式不符，請選擇本站匯出的備份檔。";}};r.readAsText(f);};
-  $("#rstB").onclick=()=>{$("#rst").innerHTML=`<span class="small">確定清除全部作答與紀錄？無法復原。</span><button class="btn sm" id="ry">清除</button><button class="btn soft sm" id="rn">取消</button>`;$("#ry").onclick=async()=>{try{await attachmentAction("clear");}catch(e){alert("本機附件可能未完全清除："+e.message);}S=blank();save();render();};$("#rn").onclick=()=>render();};
+  $("#rstB").onclick=()=>{$("#rst").innerHTML=`<span class="small">確定清除全部作答與紀錄？無法復原。</span><button class="btn sm" id="ry">清除</button><button class="btn soft sm" id="rn">取消</button>`;$("#ry").onclick=async()=>{try{for(const file of S.attachments||[])await attachmentAction("delete",file.id);}catch(e){alert("本機附件可能未完全清除："+e.message);}S=blank();save();render();};$("#rn").onclick=()=>render();};
 }
 
 
