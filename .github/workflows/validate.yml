@@ -11,40 +11,9 @@ jobs:
   smoke:
     runs-on: ubuntu-24.04
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
-      - name: Import six original-reference Aiya expressions
-        if: github.event_name == 'pull_request' && github.head_ref == 'feature/aiya-free-anime-v1'
-        env:
-          POSE1: 'https://media.canva.com/v2/image-resize/format:PNG/height:155/quality:100/uri:ifs%3A%2F%2FM%2Fbc795bfb-5dab-41e5-ac3c-a64259c15134/watermark:F/width:128?csig=AAAAAAAAAAAAAAAAAAAAANHCTV21JTEmatD225urHQSpgCayD6hD9gO7z4Ph3s4l&exp=1792939086&osig=AAAAAAAAAAAAAAAAAAAAAPwKsr_XEcOvn5sgykY3qwcXumto3ZSFE-Sp6YrZJoXM&signer=media-rpc&token=AAIAAU0AJGJjNzk1YmZiLTVkYWItNDFlNS1hYzNjLWE2NDI1OWMxNTEzNAAAAAABoXN_ULCmWwXP14kTdaTEiGYzj0Y4TnKLgywKsGJPwv0WA99Z1g&x-canva-quality=thumbnail'
-          POSE2: 'https://media.canva.com/v2/image-resize/format:PNG/height:155/quality:100/uri:ifs%3A%2F%2FM%2F9c4f7076-213c-44cc-a550-945c82105869/watermark:F/width:128?csig=AAAAAAAAAAAAAAAAAAAAABlJWKOqwEFCpuYFOIFEGXcF5sDW11A6htt4zYWRWp6e&exp=1792941147&osig=AAAAAAAAAAAAAAAAAAAAANlNMnwscSJn57IlD4AeeQ2V7BLWhO2RBaKamQKxRgb8&signer=media-rpc&token=AAIAAU0AJDljNGY3MDc2LTIxM2MtNDRjYy1hNTUwLTk0NWM4MjEwNTg2OQAAAAABoXOew3h99sHRye3uIVBX0EaNfSr_G5d8RjjRQDGJCmBw8xfvIw&x-canva-quality=thumbnail'
-          POSE3: 'https://media.canva.com/v2/image-resize/format:PNG/height:155/quality:100/uri:ifs%3A%2F%2FM%2F59695daa-8322-4b21-ba82-71c872de1739/watermark:F/width:128?csig=AAAAAAAAAAAAAAAAAAAAAHsuvS8C2OSL2Nq7kVVTEylYCF6R8CBAXll22VGKHzOm&exp=1792938859&osig=AAAAAAAAAAAAAAAAAAAAABaUqcrf-AhPF5g29-7qMIB7_-imA1jNQaQCXtWMlYWV&signer=media-rpc&token=AAIAAU0AJDU5Njk1ZGFhLTgzMjItNGIyMS1iYTgyLTcxYzg3MmRlMTczOQAAAAABoXN72fjLYdrRZViVRyBHYtCJrMrEqlTgQWCWgEjj9wMExSNzaA&x-canva-quality=thumbnail'
-          POSE4: 'https://media.canva.com/v2/image-resize/format:PNG/height:155/quality:100/uri:ifs%3A%2F%2FM%2F85ab16c1-5f90-43dd-9b5e-f7e15f5e00d5/watermark:F/width:128?csig=AAAAAAAAAAAAAAAAAAAAAKVnvClJzbIiYtFy_N52ySpnp1pTa14dDjRle7SpNv6G&exp=1792942079&osig=AAAAAAAAAAAAAAAAAAAAAA2DREfhGmIMYCiOpXk5J5pqXEWSf4HyGcSE59JTXy5k&signer=media-rpc&token=AAIAAU0AJDg1YWIxNmMxLTVmOTAtNDNkZC05YjVlLWY3ZTE1ZjVlMDBkNQAAAAABoXOs_BiYe97-HsDu6k3OF7_wAy5m1KVVzU63yKyX6Uuu4FvTFw&x-canva-quality=thumbnail'
-          POSE5: 'https://media.canva.com/v2/image-resize/format:PNG/height:155/quality:100/uri:ifs%3A%2F%2FM%2Fe7d634bb-5f24-4d3f-9a63-3f8bff7e7ea0/watermark:F/width:128?csig=AAAAAAAAAAAAAAAAAAAAAFQtXa7V5KVLt8vlUnFYEtDqvj7Z-4Q4dtN_iJQpHuUU&exp=1792940387&osig=AAAAAAAAAAAAAAAAAAAAAOmr3V6JSjAx1hQ7_uEyJx9OxojrUga3trJgMNhSYu0E&signer=media-rpc&token=AAIAAU0AJGU3ZDYzNGJiLTVmMjQtNGQzZi05YTYzLTNmOGJmZjdlN2VhMAAAAAABoXOTKrh61prIZzQMuEP8-PaYXtiwFqVozEn_o4Jyo4qbnKzNNQ&x-canva-quality=thumbnail'
-          POSE6: 'https://media.canva.com/v2/image-resize/format:PNG/height:155/quality:100/uri:ifs%3A%2F%2FM%2Fc4dbf2e9-d426-4337-9571-bd8b01e234b3/watermark:F/width:128?csig=AAAAAAAAAAAAAAAAAAAAAC5noUAfKypZkHl98ybYX_W5FjSBNLODUov2wcwWp7fu&exp=1792940655&osig=AAAAAAAAAAAAAAAAAAAAAOmUDosAG5GZkMJZ18tJi5GvF-hkrZkpQGrGx5EyLeFB&signer=media-rpc&token=AAIAAU0AJGM0ZGJmMmU5LWQ0MjYtNDMzNy05NTcxLWJkOGIwMWUyMzRiMwAAAAABoXOXQZgos97aoEKMTGCx0nh-i1Vg496IG6M0n5MLyK8PTEYPPw&x-canva-quality=thumbnail'
-        run: |
-          if [ ! -s img/aiya-pose-6.png ]; then
-          curl --fail --location --retry 3 --silent --show-error "$POSE1" -o img/aiya-pose-1.png
-          test "$(wc -c < img/aiya-pose-1.png)" -gt 2000
-          curl --fail --location --retry 3 --silent --show-error "$POSE2" -o img/aiya-pose-2.png
-          test "$(wc -c < img/aiya-pose-2.png)" -gt 2000
-          curl --fail --location --retry 3 --silent --show-error "$POSE3" -o img/aiya-pose-3.png
-          test "$(wc -c < img/aiya-pose-3.png)" -gt 2000
-          curl --fail --location --retry 3 --silent --show-error "$POSE4" -o img/aiya-pose-4.png
-          test "$(wc -c < img/aiya-pose-4.png)" -gt 2000
-          curl --fail --location --retry 3 --silent --show-error "$POSE5" -o img/aiya-pose-5.png
-          test "$(wc -c < img/aiya-pose-5.png)" -gt 2000
-          curl --fail --location --retry 3 --silent --show-error "$POSE6" -o img/aiya-pose-6.png
-          test "$(wc -c < img/aiya-pose-6.png)" -gt 2000
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add img/aiya-pose-*.png
-            git commit -m "assets: add six Aiya poses from original character reference"
-            git fetch origin feature/aiya-free-anime-v1
-            git rebase origin/feature/aiya-free-anime-v1
-            git push origin HEAD:feature/aiya-free-anime-v1
-          fi
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
