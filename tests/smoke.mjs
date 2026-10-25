@@ -1,0 +1,35 @@
+import {readFileSync,existsSync} from "node:fs";
+import {Script} from "node:vm";
+import assert from "node:assert/strict";
+const read=(p)=>readFileSync(p,"utf8");
+const html=read("index.html");
+assert.match(html,/lang="zh-Hant-TW"/);
+assert.match(html,/iPAS AI 備考室/);
+assert.match(html,/完全免費/);
+assert.match(html,/學習章節地圖/);
+assert.match(html,/我的成就徽章|成就徽章/);
+assert.match(html,/img\/aiya-welcome\.svg/);
+assert.match(html,/cloud\.js/);
+const match=html.match(/<script>([\s\S]*?)<\/script>/);
+assert.ok(match,"missing application script");
+new Script(match[1],{filename:"index.inline.js"});
+const course=JSON.parse(read("course.json"));
+const bank=JSON.parse(read("bank.json"));
+assert.ok(Array.isArray(course.levels)&&course.levels.length>=2,"no levels");
+assert.ok(Array.isArray(bank)&&bank.length>50,"question bank too small");
+const codes=new Set();
+for(const level of course.levels)for(const subject of level.subjects)for(const chapter of subject.chapters)for(const sec of chapter.sections)codes.add(sec.code);
+assert.ok(codes.size>20,"missing course sections");
+for(const state of ["","-welcome","-thinking","-encourage","-retry","-celebrate"]){
+  const path="img/aiya"+state+".svg";assert.ok(existsSync(path),path+" not found");
+  assert.match(read(path),/<svg\b/);
+}
+const cloud=read("cloud.js");
+new Function("return (async()=>{\n"+cloud+"\n})");
+const conf=read("api/cloud-config.js");
+assert.ok(!conf.includes("service_role"),"do not use service role key in public client config");
+assert.match(conf,/configured:false/);
+const sql=read("supabase-schema.sql");
+assert.match(sql,/enable row level security/);
+assert.match(sql,/auth\.uid\(\)/);
+console.log("PASS: HTML, JS parse, "+bank.length+" questions, "+codes.size+" sections, six Aiya assets and RLS setup");
