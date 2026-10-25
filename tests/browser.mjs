@@ -52,6 +52,13 @@ async function run(label,size){
     }).map(e=>e.className);
   });
   assert.deepEqual(clipped,[],"dashboard card clipped outside viewport");
+  // The learning map must be actionable, not just visually complete.
+  await page.locator('.dash-node[data-dash-sec]').first().click();
+  await page.locator('.sec-head h2').waitFor();
+  await page.locator('.tabs [data-v="home"]').click();
+  await page.locator("#dashContinue").waitFor();
+  // All five chapter nodes remain available after returning from a lesson.
+  assert.equal(await page.locator(".dash-node[data-dash-sec]").count(),5);
   await page.locator("#dashContinue").click();
   await page.locator(".sec-head h2").waitFor();
   await page.screenshot({path:"lesson-"+label+".png",fullPage:true});
