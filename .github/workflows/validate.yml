@@ -1,0 +1,18 @@
+name: Validate iPAS study website
+on:
+  pull_request:
+  push:
+    branches:
+      - feature/aiya-free-anime-v1
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check site, courses, bank and cloud schemas
+        run: node tests/smoke.mjs
