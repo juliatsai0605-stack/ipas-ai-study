@@ -726,6 +726,21 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
  .dash-hero .dash-last button{font-size:.83rem!important}
 }
 @media(max-width:650px){.top-in{grid-template-columns:38px minmax(0,1fr) auto!important;gap:5px!important;padding-left:10px!important;padding-right:10px!important}.top-in>#tocBtn{width:38px!important;min-width:38px!important;font-size:0!important;padding:0!important}.top-in>#tocBtn:before{content:"☰";font-size:20px!important}.top-in>.brand .free-tag{display:none!important}.top-in>.brand h1{font-size:14px!important;white-space:nowrap!important;overflow:visible!important;text-overflow:clip!important}.top-in>.brand .seal,.top-in>.brand .seal img{width:24px!important;height:24px!important;flex-basis:24px!important}.top-in>.seg button{font-size:12px!important;padding:5px!important}}
+
+/* Reference-image color audit: keep original research-lab scenery visible. */
+.dash-hero{
+ background-image:linear-gradient(90deg,rgba(246,249,255,.82) 0%,rgba(245,249,255,.43) 35%,rgba(243,247,255,.17) 60%,rgba(249,248,255,.57) 100%),url("img/lab-scene.png")!important;
+}
+.dash-map:before{
+ opacity:.84!important;
+ mask-image:linear-gradient(to top,#000 0%,#000 62%,transparent 100%)!important;
+}
+@media(max-width:650px){
+ .dash-hero{
+  background-image:linear-gradient(90deg,rgba(246,249,255,.91) 0%,rgba(246,249,255,.76) 42%,rgba(244,248,255,.28) 100%),url("img/lab-scene.png")!important;
+ }
+ .dash-map:before{opacity:.7!important}
+}
 </style>
 </head>
 <body>
