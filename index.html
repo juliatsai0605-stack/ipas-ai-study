@@ -313,6 +313,15 @@ body{background:#f5f7ff}
 .ayia-face{height:84px;width:72px;border-radius:17px;overflow:hidden;align-self:start;background:#f3f4ff}
 .ayia-face img{height:83px;width:65px;object-fit:cover;object-position:top}
 @media(max-width:650px){.dash-character{width:230px;height:180px;transform:none;margin:0;justify-self:end}.dash-character img{width:170px;height:195px}.aiya-speech{right:125px;top:8px;width:145px;max-width:145px}}
+
+/* Design-reference layout: mascot with a separate actionable continue-learning card */
+.dash-hero{grid-template-columns:minmax(0,1.3fr) 250px minmax(205px,.74fr);align-items:stretch}
+.dash-hero-copy{padding:27px 12px 22px 26px}
+.dash-character{align-self:end}
+.dash-last{margin:24px 21px 24px 0;background:#fffefaed;border:1px solid #d8dcf3;border-radius:19px;padding:18px;box-shadow:0 9px 23px #41437c14;display:grid;align-content:center;gap:13px;z-index:1}
+.dash-last small{font-weight:800;color:#645fc2}.dash-last h3{font-size:1.04rem;color:#273567;line-height:1.5}.dash-last p{color:#62718f;font-size:.77rem}.dash-last button{font-size:.84rem}
+@media(max-width:1170px){.dash-hero{grid-template-columns:minmax(0,1fr) minmax(150px,.6fr)}.dash-last{grid-column:1/-1;margin:0 15px 16px;padding:15px}.dash-character{width:210px}.aiya-speech{right:-7px}}
+@media(max-width:650px){.dash-hero{grid-template-columns:minmax(0,1fr) 145px}.dash-hero-copy{padding:17px 8px 15px 17px}.dash-character{height:200px;width:145px;align-self:end}.dash-character img{width:140px;height:185px}.aiya-speech{display:none}.dash-last{grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -408,6 +417,25 @@ function lvObj(){return COURSE.levels.find(l=>l.id===S.lv);}
 function subjSecs(s){return s.chapters.flatMap(c=>c.sections);}
 function openSubjects(){return lvObj().subjects.filter(s=>S.status[s.code]!=="pass");}
 
+
+// Study time is counted only while the tab is visible, focused and recently active.
+// Counts are device-local until authenticated cloud sync is configured.
+let lastStudyTick=Date.now(),lastActivity=Date.now();
+["pointerdown","keydown","scroll","pointermove"].forEach(name=>document.addEventListener(name,()=>{lastActivity=Date.now();},{passive:true}));
+setInterval(()=>{const now=Date.now(),diff=Math.max(0,Math.min(now-lastStudyTick,60000));lastStudyTick=now;
+  if(!COURSE||document.visibilityState!=="visible"||!document.hasFocus()||now-lastActivity>300000)return;
+  if(!S.studySeconds)S.studySeconds={};
+  S.studySeconds[today()]=(S.studySeconds[today()]||0)+Math.floor(diff/1000);save();
+},60000);
+function learningStreak(){let days=0,day=new Date();const activity=k=>(S.days[k]?.a||0)>0||(S.studySeconds?.[k]||0)>=60;
+  const key=()=>day.getFullYear()+"-"+pad(day.getMonth()+1)+"-"+pad(day.getDate());
+  if(!activity(key()))day.setDate(day.getDate()-1);
+  for(let i=0;i<366&&activity(key());i++){days++;day.setDate(day.getDate()-1);}
+  return days;
+}
+function bestMockScore(){const scores=(S.mocks||[]).map(m=>Number(m.score)).filter(Number.isFinite);return scores.length?Math.max(...scores):null;}
+function todayStudyLabel(){const seconds=S.studySeconds?.[today()]||0;const minutes=Math.floor(seconds/60),h=Math.floor(minutes/60);return h?h+" 小時 "+(minutes%60)+" 分":" "+minutes+" 分";}
+
 // ---- view state ----
 let V={view:"home",sec:null,subj:null};
 let quiz=null, drill=null, mock=null, mockTimer=null, diag=null;
@@ -479,6 +507,8 @@ function vHome(){
   const todayLog=S.days[today()]||{a:0,c:0};
   const acc=lastAcc(subjQs(subj.code));
   const totalAnswered=Object.values(S.q).reduce((n,q)=>n+(q[0]||0)+(q[1]||0),0);
+  const chapterList=subj.chapters,chapterDone=chapterList.filter(ch=>ch.sections.every(secDone)).length;
+  const bestMock=bestMockScore();
   const lastMock=S.mocks.length?S.mocks[S.mocks.length-1]:null;
   const achievements=[
     {icon:"✦",name:"初探研究員",ok:r.done>=1,desc:"完成首個單元"},
@@ -491,12 +521,13 @@ function vHome(){
   const continueText=lesson?"接續 "+lesson.sec.code+" · "+lesson.sec.name:"挑選課程開始學習";
   let h=`<div class="dash">
     <div class="dash-heading"><div><span class="dash-eyebrow">✦ AI STUDY LAB · 免費學習空間</span><h2>我的學習研究室 <span class="dash-spark">✧</span></h2><p>${S.localName?"歡迎回來，"+esc(S.localName)+"！":"在這裡累積知識、練習與每一次的小進步。"}</p></div><label class="dash-switch">學習科目 <select id="subjSel" aria-label="選擇準備科目">${lv.subjects.map(x=>`<option value="${x.code}" ${x.code===subj.code?"selected":""}>${x.code} ${esc(x.name)}</option>`).join("")}</select></label></div>
-    <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" role="img" aria-label="愛芽 Aiya，藍紫髮白袍的動漫風學習導師"><img src="img/aiya-welcome.svg" width="270" height="360" alt="" loading="eager"><span class="aiya-speech">每次練習，都是靠近目標的一步。一起加油！ ✦</span></div></section>
+    <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" role="img" aria-label="愛芽 Aiya，藍紫髮白袍的動漫風學習導師"><img src="img/aiya-welcome.svg" width="270" height="360" alt="" loading="eager"><span class="aiya-speech">每次練習，都是靠近目標的一步。一起加油！ ✦</span></div>
+    <div class="dash-last"><small>✦ 上次學習</small><h3>${lesson?esc(lesson.sec.name):"開始你的第一個單元"}</h3><p>${lesson?esc(lesson.ch.name)+" ／ "+esc(lesson.sec.code):"選擇課程，建立第一筆進度"}</p><div class="bar"><i style="width:${lesson&&secDone(lesson.sec)?100:lesson?50:0}%"></i></div><button class="btn" id="dashResume">▶ 繼續學習</button></div></section>
     <section class="dash-stats" aria-label="學習紀錄摘要">
-    <div class="dash-stat"><span class="dash-stat-icon lavender">◈</span><div><small>單元完成度</small><strong>${r.done}<em> / ${r.secs}</em></strong><div class="bar"><i style="width:${progress}%"></i></div></div></div>
-    <div class="dash-stat"><span class="dash-stat-icon blue">◎</span><div><small>題庫已做</small><strong>${r.seen}<em> / ${r.qs}</em></strong><div class="bar"><i style="width:${r.qs?r.seen/r.qs*100:0}%"></i></div></div></div>
-    <div class="dash-stat"><span class="dash-stat-icon pink">✦</span><div><small>最近正確率</small><strong>${acc===null?"—":pct(acc)}</strong><small>依已作答題目計算</small></div></div>
-    <div class="dash-stat"><span class="dash-stat-icon mint">◷</span><div><small>今日作答題數</small><strong>${todayLog.a} <em>題</em></strong><small>${todayLog.a?"今日正確 "+todayLog.c+" 題":"從第一題開始！"}</small></div></div></section>
+    <div class="dash-stat"><span class="dash-stat-icon pink">♨</span><div><small>連續學習天數</small><strong>${learningStreak()} <em>天</em></strong><small>持續努力，累積習慣</small></div></div>
+    <div class="dash-stat"><span class="dash-stat-icon blue">◈</span><div><small>章節完成度</small><strong>${chapterDone}<em> / ${chapterList.length} 章</em></strong><div class="bar"><i style="width:${chapterList.length?chapterDone/chapterList.length*100:0}%"></i></div></div></div>
+    <div class="dash-stat"><span class="dash-stat-icon lavender">◎</span><div><small>模擬考最佳成績</small><strong>${bestMock===null?"—":bestMock+" 分"}</strong><small>依實際模擬考成績</small></div></div>
+    <div class="dash-stat"><span class="dash-stat-icon mint">◷</span><div><small>今日學習時數</small><strong>${todayStudyLabel()}</strong><small>統計前景活躍閱讀時間</small></div></div></section>
     <div class="dash-grid"><section class="dash-box dash-map"><div class="dash-box-title"><h3>✦ 學習章節地圖</h3><button class="dash-link" id="dashUnits">查看全部單元 →</button></div><p class="dash-sub">完成單元測驗、收集星星，逐步解鎖自己的學習成果。</p><div class="dash-path">${nodes.map((sec,i)=>`<button class="dash-node ${secDone(sec)?"finished":(lesson&&lesson.sec.code===sec.code?"current":"")}" data-dash-sec="${sec.code}"><span class="dash-node-icon">${secDone(sec)?"✓":i+1}</span><small>${esc(sec.code)}</small><b>${esc(sec.name)}</b></button>`).join("")}</div><div class="dash-map-foot"><span>已完成 ${r.done} 個單元　·　完成率 ${progress}%</span><span class="dash-tag">✦ 持續累積中</span></div></section>
     <section class="dash-box"><div class="dash-box-title"><h3>☑ 今日學習計畫</h3><span class="dash-count">${mission.filter(m=>m.done).length} / ${mission.length}</span></div><div class="dash-tasks">${mission.map(m=>`<div class="dash-task"><span class="dash-check ${m.done?"complete":""}">${m.done?"✓":"○"}</span><div><b>${m.title}</b><small>${m.sub}</small></div></div>`).join("")}</div><p class="dash-tip">愛芽小提醒：今天只要比昨天多懂一點就好 ♡</p></section>
     <section class="dash-box"><div class="dash-box-title"><h3>↻ 錯題複習</h3><span class="dash-tag">精準練習</span></div><div class="dash-review"><div><small>今日到期的複習題目</small><strong>${dueReviewCount(subjQs(subj.code))}<em> 題</em></strong><p>依 1、3、7、14、30、60 天間隔安排已做過的題目。</p></div><button class="btn" id="dashDrill">開始練習 →</button></div></section>
@@ -507,6 +538,7 @@ function vHome(){
   $("#main").innerHTML='<div class="view">'+h+'</div>';
   $("#subjSel").onchange=e=>{V.subj=e.target.value;render();};
   $("#dashContinue").onclick=()=>{if(lesson)openUnit(lesson.sec.code);else go("units");};
+  $("#dashResume").onclick=()=>$("#dashContinue").click();
   $("#dashUnits").onclick=()=>go("units");
   $("#dashDrill").onclick=()=>startDrill(subj.code,"review",20);
   $("#dashMe").onclick=()=>go("me");
