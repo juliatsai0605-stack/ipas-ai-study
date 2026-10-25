@@ -377,7 +377,7 @@ const AYIA_LINES={
   retry:"答錯也是有效的學習。先看解析，再想想為什麼其他選項不對。",
   celebrate:"完成一個單元了！恭喜你，今天又離目標更近一步。"
 };
-function ayiaState(state){const faces={standby:"👩🏻‍🔬",welcome:"😊",thinking:"🤔",encourage:"💪",retry:"🫶",celebrate:"🎉"};const t=document.getElementById("ayiaText"),a=document.getElementById("ayiaFace");if(t)t.textContent=AYIA_LINES[state]||AYIA_LINES.standby;if(a){a.dataset.state=state;const im=a.querySelector("img");if(im){im.style.transform=state==="celebrate"?"translateY(-5px) rotate(-5deg)":state==="thinking"?"rotate(4deg)":"";}else a.textContent=faces[state]||faces.standby;}}
+function ayiaState(state){const faces={standby:"👩🏻‍🔬",welcome:"😊",thinking:"🤔",encourage:"💪",retry:"🫶",celebrate:"🎉"};const t=document.getElementById("ayiaText"),a=document.getElementById("ayiaFace");if(t)t.textContent=AYIA_LINES[state]||AYIA_LINES.standby;if(a){a.dataset.state=state;const im=a.querySelector("img");if(im){im.src="img/aiya"+(state==="standby"?"":"-"+state)+".svg";im.style.transform=state==="celebrate"?"translateY(-5px) rotate(-5deg)":state==="thinking"?"rotate(4deg)":"";}else a.textContent=faces[state]||faces.standby;}}
 function latestSection(){const code=S.lastSec;return code&&SECS[code]&&SECS[code].lv===S.lv?SECS[code]:null;}
 function restoreLast(){const x=latestSection();if(x)go("unit",{sec:x.sec.code,subj:x.subj.code});}
 function updateMentor(){const x=latestSection(),b=document.getElementById("ayiaReturn");if(b){b.hidden=!x;b.textContent=x?"繼續上次單元："+x.sec.code:"繼續上次單元";}}
@@ -491,7 +491,7 @@ function vHome(){
   const continueText=lesson?"接續 "+lesson.sec.code+" · "+lesson.sec.name:"挑選課程開始學習";
   let h=`<div class="dash">
     <div class="dash-heading"><div><span class="dash-eyebrow">✦ AI STUDY LAB · 免費學習空間</span><h2>我的學習研究室 <span class="dash-spark">✧</span></h2><p>${S.localName?"歡迎回來，"+esc(S.localName)+"！":"在這裡累積知識、練習與每一次的小進步。"}</p></div><label class="dash-switch">學習科目 <select id="subjSel" aria-label="選擇準備科目">${lv.subjects.map(x=>`<option value="${x.code}" ${x.code===subj.code?"selected":""}>${x.code} ${esc(x.name)}</option>`).join("")}</select></label></div>
-    <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" role="img" aria-label="愛芽 Aiya，藍紫髮白袍的動漫風學習導師"><img src="img/aiya.svg" width="270" height="360" alt="" loading="eager"><span class="aiya-speech">每次練習，都是靠近目標的一步。一起加油！ ✦</span></div></section>
+    <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" role="img" aria-label="愛芽 Aiya，藍紫髮白袍的動漫風學習導師"><img src="img/aiya-welcome.svg" width="270" height="360" alt="" loading="eager"><span class="aiya-speech">每次練習，都是靠近目標的一步。一起加油！ ✦</span></div></section>
     <section class="dash-stats" aria-label="學習紀錄摘要">
     <div class="dash-stat"><span class="dash-stat-icon lavender">◈</span><div><small>單元完成度</small><strong>${r.done}<em> / ${r.secs}</em></strong><div class="bar"><i style="width:${progress}%"></i></div></div></div>
     <div class="dash-stat"><span class="dash-stat-icon blue">◎</span><div><small>題庫已做</small><strong>${r.seen}<em> / ${r.qs}</em></strong><div class="bar"><i style="width:${r.qs?r.seen/r.qs*100:0}%"></i></div></div></div>
@@ -586,7 +586,7 @@ function vUnit(){
       const el=document.querySelector(`.q[data-id="${q.id}"]`);
       if(quiz.ans[q.id]!==undefined){showAnswered(el,q,quiz.ans[q.id]);return;}
       bindQ(el,q,(ok,j)=>{quiz.ans[q.id]=j;if(ok)quiz.c++;
-        if(Object.keys(quiz.ans).length===quiz.list.length){const sc=quiz.c/quiz.list.length;S.best[sec.code]=Math.max(S.best[sec.code]||0,sc);S.read[sec.code]=S.read[sec.code]||Date.now();save();renderToc();showRes();}});
+        if(Object.keys(quiz.ans).length===quiz.list.length){const sc=quiz.c/quiz.list.length;S.best[sec.code]=Math.max(S.best[sec.code]||0,sc);S.read[sec.code]=S.read[sec.code]||Date.now();save();if(sc>=.8)ayiaState("celebrate");renderToc();showRes();}});
     });
     if(Object.keys(quiz.ans).length===quiz.list.length)showRes();
   }
