@@ -512,6 +512,64 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
  .dash-hero .aiya-speech{right:0!important;max-width:115px!important}
  .dash-map .dash-path{box-sizing:border-box;width:100%}
 }
+
+/* Full design-system pass: the reference's dark indigo navigation and luminous lab canvas */
+@media(min-width:901px){
+ .top{position:sticky;z-index:15;top:0;background:linear-gradient(90deg,#fff 0,#f8faff 60%,#f0f2ff 100%)!important}
+ .top-in{max-width:1580px!important;min-height:63px!important;padding:8px 24px!important}
+ .top .brand h1{font-size:1.2rem!important;letter-spacing:.07em}
+ .top .brand small{display:none}
+ .top .tabs{margin-left:auto}
+ .top .tabs button{font-weight:700;font-size:.85rem;padding:9px 13px}
+ .shell:has(.dash){max-width:1560px!important;grid-template-columns:222px minmax(0,1fr)!important;gap:20px!important;padding:16px 24px 65px!important}
+ .shell:has(.dash) .toc{position:sticky;top:81px;max-height:calc(100vh - 94px);overflow-y:auto;scrollbar-width:thin;padding:20px 12px!important;border:1px solid #3d4d9d!important;background:linear-gradient(165deg,#273e96 0%,#242b76 52%,#3c2e83 100%)!important;box-shadow:0 14px 36px #24346b30!important;border-radius:21px!important;color:#f4f6ff!important}
+ .shell:has(.dash) .toc-head span,.shell:has(.dash) .toc .ch{color:#c0cafa!important}
+ .shell:has(.dash) .toc .subj>div:first-child{color:#f4f6ff!important}
+ .shell:has(.dash) .toc button.sec{color:#d9e4ff!important}
+ .shell:has(.dash) .toc button.sec:hover{background:#ffffff1b!important}
+ .shell:has(.dash) .toc button.sec.active{background:#ffffff2b!important;color:white!important}
+ .shell:has(.dash) .toc .studio-nav button{color:#e1e8ff!important;padding:11px 13px!important;letter-spacing:.01em}
+ .shell:has(.dash) .toc .studio-nav button:hover{background:#ffffff1d!important}
+ .shell:has(.dash) .toc .studio-nav button[aria-current=true]{background:linear-gradient(110deg,#6d73d5,#8372d9)!important;color:white!important;box-shadow:0 4px 12px #161e5c77}
+ .shell:has(.dash) .toc .studio-free{background:#ffffff18!important;border:1px solid #ffffff35!important;color:#fff!important;border-radius:15px!important}
+ .shell:has(.dash) .toc .studio-free p{color:#e1e4ff!important}
+ .shell:has(.dash) .toc .iconbtn{background:#ffffff25!important;color:#fff!important;border:1px solid #ffffff4a!important}
+ .shell:has(.dash) .ayia-panel{display:none!important}
+ .shell:has(.dash) .dash-heading{padding:10px 6px 12px}
+ .shell:has(.dash) .dash-heading h2{font-size:1.8rem!important;color:#253b8c!important}
+ .shell:has(.dash) .dash-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)!important}
+ .shell:has(.dash) .dash-hero{min-height:305px!important}
+ .shell:has(.dash) .dash-stats{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+.dash-heading h2:after{content:" ✧";font-size:.6em;color:#9b8be8}
+.dash-hero{background:
+ radial-gradient(circle at 75% 12%,#fdfcff 0 5%,transparent 17%),
+ radial-gradient(ellipse at 70% 95%,#b2d5ff 0,transparent 50%),
+ linear-gradient(110deg,#f5f3ff 0%,#d9e9ff 54%,#f5eaff 100%)!important}
+.dash-hero:before{content:"✦    ✧       ✦    ✧";position:absolute;inset:10px 0 auto auto;width:52%;text-align:center;letter-spacing:22px;font-size:23px;color:#fff;text-shadow:0 0 9px #8caaff;z-index:0;pointer-events:none}
+.dash-hero .dash-hero-copy{position:relative}
+.dash-hero .dash-label{box-shadow:0 3px 8px #8292ca25}
+.dash-box-title{border-bottom:1px solid #e9edff;padding-bottom:11px}
+.dash-map{background:linear-gradient(155deg,#fbfdff,#f1f4ff)!important}
+.dash-map .dash-node{box-shadow:0 8px 17px #768bc325!important}
+.dash-map .dash-node-icon{box-shadow:0 4px 12px #777ac756!important}
+.dash-map .dash-node.current .dash-node-icon{background:linear-gradient(135deg,#ffdd87,#f2a54f)!important}
+.dash-map .dash-node.finished .dash-node-icon{background:linear-gradient(135deg,#76d8c8,#2ba7a3)!important}
+.dash-stats .dash-stat:nth-child(1){background:linear-gradient(125deg,#f3f0ff,#fff)!important}
+.dash-stats .dash-stat:nth-child(2){background:linear-gradient(125deg,#eaf3ff,#fff)!important}
+.dash-stats .dash-stat:nth-child(3){background:linear-gradient(125deg,#fff1f7,#fff)!important}
+.dash-stats .dash-stat:nth-child(4){background:linear-gradient(125deg,#fff9e9,#fff)!important}
+.dash-medals .dash-medal.earned{box-shadow:inset 0 0 0 1px #ffe4a0,0 6px 12px #e3c7882b!important}
+@media(max-width:900px){
+ .top{box-shadow:0 4px 12px #4d5d9e13}
+ .top .brand h1{font-size:clamp(.95rem,4.4vw,1.1rem)!important}
+ .dash-heading{gap:8px!important}
+ .dash-hero{box-shadow:0 10px 23px #718dd52b!important}
+ .dash-map .dash-path{background:linear-gradient(150deg,#eef6ff,#f2edff)!important}
+ .dash-map .dash-node{background:linear-gradient(150deg,#fff,#f8f9ff)!important}
+ .dash-map .dash-node:nth-of-type(5){background:linear-gradient(140deg,#f9f4ff,#eef5ff)!important}
+ .dash-hero .dash-last{box-shadow:0 5px 17px #7589b52d!important}
+}
 </style>
 </head>
 <body>
