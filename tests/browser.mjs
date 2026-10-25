@@ -89,4 +89,47 @@ async function run(label,size){
   console.log("PASS "+label);
  }finally{await page.close();}
 }
-try{await run("desktop",{width:1440,height:900});await run("mobile",{width:390,height:844});await run("tablet",{width:768,height:1024});if(failures.length)throw Error(failures.join("\n"));}finally{await browser.close();}
+
+async function runAccountIsolation(){
+ const context=await browser.newContext({viewport:{width:390,height:844},acceptDownloads:true});
+ const page=await context.newPage();
+ try{
+  await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
+  await page.locator("#dashContinue").waitFor();
+  await page.locator('.tabs [data-v="me"]').click();
+  await page.locator("#attachmentInput").setInputFiles({name:"anonymous-note.txt",mimeType:"text/plain",buffer:Buffer.from("anonymous attachment")});
+  await page.locator('[data-attachment-get]').waitFor();
+  const initial=await page.evaluate(()=>{
+    const b=window.IPAS_BRIDGE;
+    b.attachUser("test-account-a",{vault:[{title:"A-private-note",body:"private A",date:"2026-10-25"}]});
+    const a=b.snapshot();
+    b.signOut();
+    b.attachUser("test-account-b",{localName:"B-private-name",vault:[{title:"B-private-note",body:"private B",date:"2026-10-25"}]});
+    const bState=b.snapshot();
+    return {aHasNote:a.vault?.some(n=>n.title==="A-private-note"),aHasFile:a.attachments?.some(f=>f.name==="anonymous-note.txt"),bHasA:bState.vault?.some(n=>n.title==="A-private-note"),bHasFile:(bState.attachments||[]).length,bName:bState.localName};
+  });
+  assert.ok(initial.aHasNote&&initial.aHasFile,"first login must migrate anonymous attachment and preserve notes");
+  assert.equal(initial.bHasA,false,"second account must not see first account notes");
+  assert.equal(initial.bHasFile,0,"second account must not see first account attachments");
+  assert.equal(initial.bName,"B-private-name","second account should retain own cloud profile");
+  await page.locator('.tabs [data-v="me"]').click();
+  await page.locator("#attachmentInput").setInputFiles({name:"account-b.txt",mimeType:"text/plain",buffer:Buffer.from("B attachment")});
+  await page.locator('[data-attachment-get]').waitFor();
+  await page.locator("#rstB").click();
+  await page.locator("#ry").click();
+  const restored=await page.evaluate(()=>{
+    const b=window.IPAS_BRIDGE;
+    b.signOut();b.attachUser("test-account-a",{});
+    return b.snapshot();
+  });
+  assert.ok(restored.vault?.some(n=>n.title==="A-private-note"),"account A notes must survive account B reset");
+  assert.ok(restored.attachments?.some(f=>f.name==="anonymous-note.txt"),"account A attachment must survive account B reset");
+  await page.locator('.tabs [data-v="me"]').click();
+  const download=page.waitForEvent("download",{timeout:10000});
+  await page.locator('[data-attachment-get]').first().click();
+  const file=await download;
+  assert.equal(file.suggestedFilename(),"anonymous-note.txt","A file must remain retrievable after B reset");
+  console.log("PASS account-isolation");
+ }finally{await context.close();}
+}
+try{await run("desktop",{width:1440,height:900});await run("mobile",{width:390,height:844});await run("tablet",{width:768,height:1024});await runAccountIsolation();if(failures.length)throw Error(failures.join("\n"));}finally{await browser.close();}
