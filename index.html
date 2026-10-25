@@ -828,9 +828,28 @@ function mergeStudyState(a,b){
 }
 window.IPAS_BRIDGE={
   snapshot:()=>{const data=JSON.parse(JSON.stringify(S));delete data.attachments;return data;},
-  attachUser:(uid,remote)=>{const old=S;const userKey=KEY+"-account-"+uid;let cached=null;try{const raw=localStorage.getItem(userKey);if(raw)cached=JSON.parse(raw);}catch(e){}
-    S=mergeStudyState(mergeStudyState(old,cached||{}),remote||{});activeSaveKey=userKey;save();render();},
-  signOut:()=>{activeSaveKey=KEY;S=blank();save();render();},
+  attachUser:(uid,remote)=>{
+    // Account isolation: never import another signed-in account's live state.
+    const userKey=KEY+"-account-"+uid;
+    const claimKey=KEY+"-anonymous-claimed-by";
+    let cached=null,anonymous=null,claim=null;
+    try{const raw=localStorage.getItem(userKey);if(raw)cached=JSON.parse(raw);
+      const localRaw=localStorage.getItem(KEY);if(localRaw)anonymous=JSON.parse(localRaw);
+      claim=localStorage.getItem(claimKey);
+    }catch(e){}
+    // Migrate anonymous history at most once, only to the first signed-in identity.
+    const permittedAnonymous=!claim||claim===uid;
+    const starting=mergeStudyState(cached||{},remote||{});
+    S=permittedAnonymous?mergeStudyState(anonymous||{},starting):mergeStudyState({},starting);
+    if(!claim&&anonymous){try{localStorage.setItem(claimKey,uid);}catch(e){}}
+    activeSaveKey=userKey;save();render();
+  },
+  signOut:()=>{
+    // Keep the anonymous progress intact for this device; never erase prior work.
+    activeSaveKey=KEY;
+    try{const raw=localStorage.getItem(KEY);S=raw?Object.assign(blank(),JSON.parse(raw)):blank();}catch(e){S=blank();}
+    render();
+  },
   updateCloudName:(name)=>{S.localName=String(name||"").slice(0,35);save();render();}
 };
 
