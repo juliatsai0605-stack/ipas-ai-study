@@ -642,6 +642,28 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
 .studio-nav button{display:flex!important;align-items:center!important;gap:12px!important;text-align:left!important}
 .studio-nav-icon{display:block;flex:0 0 21px;stroke-width:1.85}
 @media(min-width:901px){.shell:has(.dash) .studio-nav-icon{stroke:#d7d9ff}}
+
+/* Responsive navigation: visible dashboard first, scroll-free chapter map */
+@media(max-width:900px){
+ .top-in{grid-template-columns:auto minmax(0,1fr) auto!important}
+ .top .brand{min-width:0!important}
+ .top .brand h1{overflow:hidden;text-overflow:ellipsis}
+ .top .tabs{min-width:0!important}
+ .top .tabs button{min-width:0!important;overflow-wrap:anywhere}
+ .top .study-search{min-width:0!important}
+ .dash-heading{flex-wrap:wrap!important}
+ .dash-heading>div{min-width:0}
+ .dash-switch{max-width:100%}
+ .dash-hero{overflow:hidden}
+ .dash-hero .dash-hero-copy{min-width:0!important}
+ .dash-hero .dash-character{min-width:0!important;overflow:visible}
+ .dash-map .dash-path{max-width:100%;overflow:visible!important}
+ .dash-map .dash-node{box-sizing:border-box;min-width:0!important;overflow-wrap:anywhere}
+ .dash-map .dash-node b,.dash-map .dash-node small{overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
@@ -843,7 +865,7 @@ function vHome(){
   const continueText=lesson?"接續 "+lesson.sec.code+" · "+lesson.sec.name:"挑選課程開始學習";
   let h=`<div class="dash">
     <div class="dash-heading"><div><span class="dash-eyebrow">✦ AI STUDY LAB · 免費學習空間</span><h2>我的學習研究室 <span class="dash-spark">✧</span></h2><p>${S.localName?"歡迎回來，"+esc(S.localName)+"！":"在這裡累積知識、練習與每一次的小進步。"}</p></div><label class="dash-switch">學習科目 <select id="subjSel" aria-label="選擇準備科目">${lv.subjects.map(x=>`<option value="${x.code}" ${x.code===subj.code?"selected":""}>${x.code} ${esc(x.name)}</option>`).join("")}</select></label></div>
-    <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-hero-greeting">下午好，${esc(S.localName||"學習夥伴")}！ <span>♡</span><small>一起繼續加油吧！</small></div><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" role="img" aria-label="愛芽 Aiya，藍紫髮白袍的動漫風學習導師"><img src="img/aiya-reference.png" width="205" height="305" alt="愛芽 Aiya 原始角色設定圖中的藍紫髮研究員" loading="eager" decoding="async"><span class="aiya-speech">每次練習，都是靠近目標的一步。一起加油！ ✦</span></div>
+    <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-hero-greeting">${new Date().getHours()<11?"早安":new Date().getHours()<17?"午安":"晚安"}，${esc(S.localName||"學習夥伴")}！ <span>♡</span><small>一起繼續加油吧！</small></div><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" role="img" aria-label="愛芽 Aiya，藍紫髮白袍的動漫風學習導師"><img src="img/aiya-reference.png" width="205" height="305" alt="愛芽 Aiya 原始角色設定圖中的藍紫髮研究員" loading="eager" decoding="async"><span class="aiya-speech">每次練習，都是靠近目標的一步。一起加油！ ✦</span></div>
     <div class="dash-last"><small>✦ 上次學習</small><h3>${lesson?esc(lesson.sec.name):"開始你的第一個單元"}</h3><p>${lesson?esc(lesson.ch.name)+" ／ "+esc(lesson.sec.code):"選擇課程，建立第一筆進度"}</p><div class="bar"><i style="width:${lesson&&secDone(lesson.sec)?100:lesson?50:0}%"></i></div><button class="btn" id="dashResume">▶ 繼續學習</button></div></section>
     <section class="dash-stats" aria-label="學習紀錄摘要">
     <div class="dash-stat"><span class="dash-stat-icon pink"><img src="img/stat-1.svg" alt="" width="60" height="60"></span><div><small>連續學習天數</small><strong>${learningStreak()} <em>天</em></strong><small>持續努力，累積習慣</small></div></div>
