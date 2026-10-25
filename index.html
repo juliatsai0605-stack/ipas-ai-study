@@ -295,6 +295,16 @@ body{background:#f5f7ff}
 .studio-free b{font-size:.88rem}.studio-free p{font-size:.78rem;line-height:1.6;margin:5px 0}
 .shell:has(.dash) .toc{max-height:calc(100vh - 98px)}
 @media(max-width:800px){.study-search{order:3;max-width:none;min-width:100%;flex-basis:100%}}
+
+.study-field{display:grid;gap:6px;margin:14px 0;font-weight:700;color:#38456d}
+.study-field input,.study-field textarea{width:100%;padding:10px 12px;border:1px solid #cbd4ed;border-radius:10px;background:white;font-weight:400;color:#263154}
+.study-field textarea{min-height:100px;resize:vertical}
+.study-calendar{margin-top:18px}
+.study-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:9px}
+.study-day{background:#f1f3fc;border:1px solid #dfe3f3;border-radius:10px;padding:8px 4px;display:grid;text-align:center;line-height:1.4}
+.study-day.active{background:#e5e8ff;border-color:#b1b9f1;color:#363991}
+.study-day b{font-size:.76rem}.study-day span{font-size:.7rem}
+@media(max-width:500px){.study-days{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -417,7 +427,7 @@ function renderToc(){
   }
   $("#toc").innerHTML=h;
   $("#toc").querySelectorAll("button.sec").forEach(b=>b.onclick=()=>openUnit(b.dataset.sec));
-  $("#toc").querySelectorAll("[data-go]").forEach(b=>{b.setAttribute("aria-current",String((b.dataset.go===V.view)||(b.dataset.go==="badges"&&V.view==="home")));b.onclick=()=>{const d=b.dataset.go;if(d==="review")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"smart",20);if(d==="badges")return go("home");if(d==="mentor"){ayiaState("welcome");document.getElementById("ayiaPanel").scrollIntoView({behavior:"smooth",block:"start"});closeDrawer();return;}if(d==="drill")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"smart",20);go(d);};});
+  $("#toc").querySelectorAll("[data-go]").forEach(b=>{b.setAttribute("aria-current",String((b.dataset.go===V.view)||(b.dataset.go==="badges"&&V.view==="home")));b.onclick=()=>{const d=b.dataset.go;if(d==="review")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"wrong",20);if(d==="badges")return go("home");if(d==="mentor"){ayiaState("welcome");document.getElementById("ayiaPanel").scrollIntoView({behavior:"smooth",block:"start"});closeDrawer();return;}if(d==="drill")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"smart",20);go(d);};});
   $("#tocHide").onclick=()=>{if(window.matchMedia("(min-width:901px)").matches){S.toc=false;save();render();}else closeDrawer();};
 }
 function closeDrawer(){$("#toc").classList.remove("open");$("#drawerBg").classList.remove("open");}
@@ -459,7 +469,7 @@ function vHome(){
   const lesson=last|| (next?SECS[next.code]:null);
   const continueText=lesson?"接續 "+lesson.sec.code+" · "+lesson.sec.name:"挑選課程開始學習";
   let h=`<div class="dash">
-    <div class="dash-heading"><div><span class="dash-eyebrow">✦ AI STUDY LAB · 免費學習空間</span><h2>我的學習研究室 <span class="dash-spark">✧</span></h2><p>在這裡累積知識、練習與每一次的小進步。</p></div><label class="dash-switch">學習科目 <select id="subjSel" aria-label="選擇準備科目">${lv.subjects.map(x=>`<option value="${x.code}" ${x.code===subj.code?"selected":""}>${x.code} ${esc(x.name)}</option>`).join("")}</select></label></div>
+    <div class="dash-heading"><div><span class="dash-eyebrow">✦ AI STUDY LAB · 免費學習空間</span><h2>我的學習研究室 <span class="dash-spark">✧</span></h2><p>${S.localName?"歡迎回來，"+esc(S.localName)+"！":"在這裡累積知識、練習與每一次的小進步。"}</p></div><label class="dash-switch">學習科目 <select id="subjSel" aria-label="選擇準備科目">${lv.subjects.map(x=>`<option value="${x.code}" ${x.code===subj.code?"selected":""}>${x.code} ${esc(x.name)}</option>`).join("")}</select></label></div>
     <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" aria-label="愛芽 Aiya，小小 AI 學習導師" role="img"><div class="dash-halo"></div><div class="dash-hair"></div><div class="dash-face"><i class="eye left"></i><i class="eye right"></i><i class="mouth"></i><i class="blush left"></i><i class="blush right"></i></div><div class="dash-coat"><span>AI</span></div><div class="dash-orb">✦</div><div class="dash-star">✧</div></div></section>
     <section class="dash-stats" aria-label="學習紀錄摘要">
     <div class="dash-stat"><span class="dash-stat-icon lavender">◈</span><div><small>單元完成度</small><strong>${r.done}<em> / ${r.secs}</em></strong><div class="bar"><i style="width:${progress}%"></i></div></div></div>
@@ -477,7 +487,7 @@ function vHome(){
   $("#subjSel").onchange=e=>{V.subj=e.target.value;render();};
   $("#dashContinue").onclick=()=>{if(lesson)openUnit(lesson.sec.code);else go("units");};
   $("#dashUnits").onclick=()=>go("units");
-  $("#dashDrill").onclick=()=>startDrill(subj.code,"smart",20);
+  $("#dashDrill").onclick=()=>startDrill(subj.code,"wrong",20);
   $("#dashMe").onclick=()=>go("me");
   $("#dashMock").onclick=()=>go("mock");
   const d=$("#dashDiag");if(d)d.onclick=startDiag;
@@ -581,13 +591,13 @@ function showAnswered(el,q,j){
   const g=af.querySelector("[data-goto]");if(g)g.onclick=()=>openUnit(g.dataset.goto);
 }
 function bindQ(el,q,done){
-  el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const j=+b.dataset.j,ok=j===q.a;recordQ(q,ok);save();showAnswered(el,q,j);done&&done(ok,j);});
+  el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const j=+b.dataset.j,ok=j===q.a;recordQ(q,ok);save();ayiaState(ok?"encourage":"retry");showAnswered(el,q,j);done&&done(ok,j);});
 }
 
 // ---- drill ----
 function startDrill(sub,mode,k){
   const pool=subjQs(sub); let list;
-  if(mode==="wrong") list=shuffle(pool.filter(q=>{const r=S.q[q.id];return r&&r[3]===0;}));
+  if(mode==="wrong") list=shuffle(pool.filter(q=>{const r=S.q[q.id];return r&&r[3]===0;})).slice(0,k);
   else if(mode==="unseen") list=shuffle(pool.filter(q=>!S.q[q.id])).slice(0,k);
   else list=shuffle(pickFor(pool,k));
   drill={sub,mode,list,i:0,c:0,ans:null}; go("drill");
@@ -721,12 +731,14 @@ function vMe(){
   for(const s of lv.subjects)for(const ch of s.chapters){const qs=BANK.filter(q=>ch.sections.some(x=>x.code===q.sec));const dn=ch.sections.filter(secDone).length;const la=lastAcc(qs);
     h+=`<tr><td>${ch.code} ${esc(ch.name)}</td><td style="min-width:110px"><div class="bar"><i style="width:${dn/ch.sections.length*100}%"></i></div><span class="note">${dn}/${ch.sections.length}</span></td><td class="num">${seenN(qs)}/${qs.length}</td><td class="num">${la===null?"—":pct(la)}</td></tr>`;}
   h+=`</tbody></table></div></div>`;
+  h+=`<div class="card"><h3>✦ 我的學習筆記與今日計畫</h3><p class="small muted">免費、無需帳號。儲存於此瀏覽器；請定期匯出備份。</p><label class="study-field">學習顯示名稱 <input id="localName" maxlength="35" placeholder="例如：小明" value="${esc(S.localName||"")}"></label><label class="study-field">我的學習計畫 <textarea id="localPlan" maxlength="2500" placeholder="今天想完成哪些章節、練習與整理？">${esc(S.localPlan||"")}</textarea></label><div class="row"><button class="btn" id="savePersonal">儲存我的設定</button><span class="note" id="personalMessage"></span></div><div class="study-calendar"><h4>近 14 天學習日曆</h4><div class="study-days">${Array.from({length:14},(_,i)=>{const d=new Date(Date.now()-(13-i)*86400000),key=d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()),n=S.days[key]?.a||0;return `<div class="study-day ${n?"active":""}" title="${key}：${n} 題"><b>${d.getMonth()+1}/${d.getDate()}</b><span>${n? n+" 題":"—"}</span></div>`;}).join("")}</div></div></div>`;
   h+=`<div class="card"><h3>科目狀態</h3><p class="small muted">標記為已通過的科目，總覽會改為建議下一科。</p><div class="tbl" style="margin-top:8px"><table><tbody>${COURSE.levels.map(l=>l.subjects.map(s=>`<tr><td>${l.name}　${s.code} ${esc(s.name)}</td><td><select data-st="${s.code}" aria-label="${esc(s.name)}狀態"><option value="">準備中</option><option value="pass" ${S.status[s.code]==="pass"?"selected":""}>已通過</option></select></td></tr>`).join("")).join("")}</tbody></table></div></div>`;
   h+=`<div class="card"><h3>存檔與換裝置（免費／無帳號）</h3><p class="small">進度自動存在這個瀏覽器，關閉網頁再打開仍會保留。要換手機或電腦時，先在這裡匯出備份檔，到新裝置的同一個網址匯入即可。清除瀏覽器資料或使用無痕視窗會讓進度消失，請定期匯出。</p>
   <div class="row" style="margin-top:10px"><button class="btn" id="exp">匯出備份檔</button><label class="btn soft" for="impF" style="cursor:pointer">匯入備份檔</label><input type="file" id="impF" accept="application/json,.json" hidden></div><p class="small muted" id="bk" style="margin-top:6px"></p>
   <div class="row" style="margin-top:14px" id="rst"><button class="btn ghost sm" id="rstB">清除全部進度</button></div></div>`;
   $("#main").innerHTML=`<div class="view">${h}</div>`;
   document.querySelectorAll("[data-st]").forEach(s=>s.onchange=()=>{if(s.value)S.status[s.dataset.st]="pass";else delete S.status[s.dataset.st];save();renderToc();});
+  $("#savePersonal").onclick=()=>{S.localName=$("#localName").value.trim();S.localPlan=$("#localPlan").value.trim();save();$("#personalMessage").textContent="已儲存於此裝置";};
   $("#exp").onclick=()=>{const blob=new Blob([JSON.stringify(S)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`ipas-ai-progress-${today()}.json`;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);$("#bk").textContent="已下載備份檔。";};
   $("#impF").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o.q!=="object"||typeof o.days!=="object")throw 0;S=Object.assign(blank(),o,{v:4});save();$("#bk").textContent="已匯入備份。";render();}catch(x){$("#bk").textContent="檔案格式不符，請選擇本站匯出的備份檔。";}};r.readAsText(f);};
   $("#rstB").onclick=()=>{$("#rst").innerHTML=`<span class="small">確定清除全部作答與紀錄？無法復原。</span><button class="btn sm" id="ry">清除</button><button class="btn soft sm" id="rn">取消</button>`;$("#ry").onclick=()=>{S=blank();save();render();};$("#rn").onclick=()=>render();};
