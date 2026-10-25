@@ -807,6 +807,24 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
 @media(max-width:650px){.dash-map-aide{margin:3px 0 0}.dash-map-aide img{height:42px;width:42px}.dash-map-aide span{font-size:.7rem}.dash-mentor-note img{width:73px;height:75px}.dash-mentor-note{min-height:78px}.dash-mentor-note .dash-tip{font-size:.75rem}}
 @media(prefers-reduced-motion:reduce){.dash-character img{transition:none}.dash-character:hover img{transform:none}}
 
+
+/* Reference alignment pass: compact desktop heading, illustrated lab hero and open map route. */
+@media(min-width:1200px){
+ .shell:has(.dash) .dash-heading{min-height:42px!important;align-items:center!important;padding:0 5px!important}
+ .shell:has(.dash) .dash-heading .dash-eyebrow,.shell:has(.dash) .dash-heading p{display:none!important}
+ .shell:has(.dash) .dash-heading h2{font-size:1.12rem!important;margin:0!important}
+ .shell:has(.dash) .dash-hero{min-height:307px!important;grid-template-columns:minmax(0,1.05fr) minmax(245px,.88fr) minmax(225px,.8fr)!important;align-items:center!important;
+  background-image:linear-gradient(90deg,#f5f8ffdd 0%,#f2f6ff66 52%,#f3f3ffbb 100%),url("img/lab-room.svg")!important;
+  background-position:center,center!important;background-size:cover,cover!important}
+ .shell:has(.dash) .dash-hero .dash-character{height:298px!important;width:258px!important}
+ .shell:has(.dash) .dash-hero .dash-character img{height:298px!important;width:258px!important;max-height:none!important}
+ .shell:has(.dash) .dash-hero .dash-last{max-height:260px!important}
+ .shell:has(.dash) .dash-stat{min-height:104px!important}
+ .shell:has(.dash) .dash-map .dash-node:not(.current){background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+ .shell:has(.dash) .dash-map .dash-node-icon{width:58px!important;height:58px!important}
+ .shell:has(.dash) .dash-map:before{opacity:.98!important}
+}
+
 </style>
 </head>
 <body>
