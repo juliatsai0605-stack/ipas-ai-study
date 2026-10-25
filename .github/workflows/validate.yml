@@ -30,6 +30,7 @@ jobs:
           node tests/browser.mjs
           node tests/cloud.mjs
           node tests/exams.mjs
+          node tests/release-gate.mjs
       - name: Upload visual test screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -42,6 +43,7 @@ jobs:
             lesson-*.png
             cloud-*.png
             exam-*.png
+            navigation-*.png
             img/lab-scene.png
             img/lab-room.svg
             img/map-skyline.png
