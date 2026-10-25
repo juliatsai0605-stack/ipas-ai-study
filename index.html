@@ -750,6 +750,35 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
  }
  .top-in>.cloud-account-host .iconbtn{font-size:.76rem!important;padding:6px 9px!important;white-space:nowrap!important}
 }
+
+/* Desktop reference fidelity: use available canvas, tighter dashboard density. */
+@media(min-width:1200px){
+ .top-in{max-width:1520px!important}
+ .shell:has(.dash){max-width:1520px!important;grid-template-columns:205px minmax(0,1fr)!important;gap:14px!important;padding:10px 18px 45px!important}
+ .shell:has(.dash).noToc{grid-template-columns:minmax(0,1fr)!important}
+ .shell:has(.dash) .toc{top:68px!important;max-height:calc(100vh - 76px)!important}
+ .dash{gap:12px!important}
+ .dash-heading{padding:0 3px!important}
+ .dash-heading h2{font-size:1.5rem!important;margin:2px 0!important}
+ .dash-heading p{font-size:.82rem!important}
+ .dash-hero{min-height:246px!important;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)!important}
+ .dash-hero-copy{padding:19px 15px 16px 23px!important}
+ .dash-hero h2{font-size:clamp(1.55rem,2.3vw,2.1rem)!important;margin:8px 0!important}
+ .dash-hero p{font-size:.85rem!important;margin-bottom:9px!important}
+ .dash-hero .dash-character{height:235px!important;align-self:end!important}
+ .dash-hero .dash-character img{max-height:240px!important;object-fit:contain!important}
+ .dash-hero .dash-last{grid-column:auto!important;margin:15px!important;padding:12px!important}
+ .dash-stats{gap:9px!important}
+ .dash-stat{min-height:88px!important;padding:10px!important;gap:8px!important}
+ .dash-stat strong{font-size:1.4rem!important}
+ .dash-stat-icon{width:38px!important;height:38px!important}
+ .dash-grid{grid-template-columns:minmax(0,1.35fr) minmax(270px,1fr)!important;gap:11px!important}
+ .dash-box{padding:13px!important}
+ .dash-map{min-height:255px!important}
+ .dash-map .dash-path{margin-top:8px!important}
+ .dash-map .dash-node{min-height:115px!important}
+ .dash-map .dash-route{height:120px!important}
+}
 </style>
 </head>
 <body>
