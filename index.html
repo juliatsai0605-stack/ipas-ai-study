@@ -638,6 +638,10 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
 .top .brand .seal{display:grid!important;place-items:center!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;width:47px!important;height:47px!important;flex:0 0 47px}
 .top .brand .seal img{display:block;width:47px;height:47px;object-fit:contain}
 @media(max-width:900px){.top .brand .seal{width:35px!important;height:35px!important;flex-basis:35px}.top .brand .seal img{width:35px;height:35px}}
+
+.studio-nav button{display:flex!important;align-items:center!important;gap:12px!important;text-align:left!important}
+.studio-nav-icon{display:block;flex:0 0 21px;stroke-width:1.85}
+@media(min-width:901px){.shell:has(.dash) .studio-nav-icon{stroke:#d7d9ff}}
 </style>
 </head>
 <body>
@@ -767,17 +771,19 @@ function render(){
   updateMentor();
   ({home:vHome,units:vUnits,unit:vUnit,drill:vDrill,mock:vMock,me:vMe,diag:vDiag})[V.view]();
 }
+const NAV_ICON_PATHS={"home":"<path d=\"m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z\"/><path d=\"M9 21v-8h6v8\"/>","units":"<path d=\"m2 10 10-6 10 6-10 6-10-6Z\"/><path d=\"M6 12v6c4 3 8 3 12 0v-6\"/><path d=\"M22 10v6\"/>","drill":"<rect x=\"5\" y=\"4\" width=\"14\" height=\"17\" rx=\"2\"/><path d=\"M9 4.5h6M9 10h6M9 14h6M9 18h4\"/>","mock":"<rect x=\"4\" y=\"5\" width=\"16\" height=\"16\" rx=\"2\"/><path d=\"M8 2v6M16 2v6M4 10h16M8 15h3M8 18h7\"/>","review":"<path d=\"M3 11a9 9 0 1 1 3 7\"/><path d=\"M3 4v7h7\"/><path d=\"M12 7v5l4 2\"/>","me":"<path d=\"M3 6h7l2 3h9v11H3Z\"/><path d=\"M3 6V4h7l2 3\"/>","badges":"<path d=\"m8 3 4 2 4-2 2 5 4 3-4 4-2 6-4-3-4 3-2-6-4-4 4-3Z\"/><path d=\"m9 12 2 2 4-4\"/>","mentor":"<rect x=\"5\" y=\"6\" width=\"14\" height=\"14\" rx=\"5\"/><path d=\"M12 2v4M9 2h6M9 12h.01M15 12h.01M9 16q3 3 6 0M2 12h3M19 12h3\"/>"};
+function navSvg(k){return '<svg class="studio-nav-icon" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(NAV_ICON_PATHS[k]||'')+'</svg>';}
 function renderToc(){
   const lv=lvObj();
   let h=`<nav class="studio-nav" aria-label="主要功能">
-  <button data-go="home">⌂ <span>首頁</span></button>
-  <button data-go="units">◇ <span>我的課程</span></button>
-  <button data-go="drill">▣ <span>題庫練習</span></button>
-  <button data-go="mock">◴ <span>模擬考試</span></button>
-  <button data-go="review">↻ <span>錯題複習</span></button>
-  <button data-go="me">▤ <span>學習檔案庫</span></button>
-  <button data-go="badges">✦ <span>成就徽章</span></button>
-  <button data-go="mentor">✧ <span>AI 助教 愛芽</span></button>
+  <button data-go="home">${navSvg("home")} <span>首頁</span></button>
+  <button data-go="units">${navSvg("units")} <span>我的課程</span></button>
+  <button data-go="drill">${navSvg("drill")} <span>題庫練習</span></button>
+  <button data-go="mock">${navSvg("mock")} <span>模擬考試</span></button>
+  <button data-go="review">${navSvg("review")} <span>錯題複習</span></button>
+  <button data-go="me">${navSvg("me")} <span>學習檔案庫</span></button>
+  <button data-go="badges">${navSvg("badges")} <span>成就徽章</span></button>
+  <button data-go="mentor">${navSvg("mentor")} <span>AI 助教 愛芽</span></button>
   </nav><div class="studio-free"><b>✦ 免費學習網站</b><p>完整課程與練習皆免費。愛芽陪你一步一步前進！</p></div><div class="toc-head"><span>目次・${lv.name}</span><button class="iconbtn" id="tocHide" title="隱藏目次">隱藏</button></div>`;
   for(const s of lv.subjects){
     h+=`<div class="subj"><div><span>${s.code}　${esc(s.name)}</span>${S.status[s.code]==="pass"?'<span class="tag pass">已通過</span>':(s.note?`<span class="tag">${esc(s.note.replace(/（.*）/,""))}</span>`:"")}</div>`;
