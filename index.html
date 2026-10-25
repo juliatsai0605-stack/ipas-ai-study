@@ -282,6 +282,19 @@ body{background:#f5f7ff}
 @media(max-width:900px){.shell:has(.dash){display:block}.shell:has(.dash) .toc{position:fixed}.dash-hero{grid-template-columns:1.2fr .8fr}}
 @media(max-width:650px){.dash{gap:13px}.dash-heading h2{font-size:1.4rem}.dash-switch{width:100%}.dash-switch select{flex:1;min-width:0}.dash-hero{grid-template-columns:1fr;min-height:0}.dash-hero-copy{padding:20px 18px 12px}.dash-hero h2{font-size:1.65rem}.dash-character{height:170px;transform:scale(.64);justify-self:end;align-self:start;transform-origin:top right;margin-bottom:-40px}.dash-stats{gap:9px}.dash-stat{padding:11px 9px;gap:7px;min-height:97px}.dash-stat strong{font-size:1.28rem}.dash-stat-icon{width:31px;height:31px}.dash-box{padding:15px}.dash-medals{grid-template-columns:repeat(2,minmax(0,1fr))}.dash-files{gap:6px}}
 
+
+/* Closer to reference image: functional navigation and search */
+.study-search{display:flex;gap:8px;align-items:center;flex:1;min-width:160px;max-width:290px;border:1px solid #d5def6;border-radius:999px;background:#f7f9ff;padding:4px 12px;color:#5e6cac}
+.study-search input{width:100%;min-width:0;background:transparent;border:0;outline:none;font-size:.86rem}
+.study-search input:focus-visible{outline:2px solid #6264bc;border-radius:4px}
+.studio-nav{display:grid;gap:5px;margin-bottom:17px}
+.studio-nav button{display:flex;align-items:center;gap:10px;text-align:left;border:0;border-radius:11px;padding:10px 12px;background:transparent;color:#344579;cursor:pointer;font-size:.91rem;font-weight:700}
+.studio-nav button:hover,.studio-nav button[aria-current=true]{background:#ebeaff;color:#4145a8}
+.studio-nav button span{flex:1}
+.studio-free{padding:13px;border:1px solid #d7ddfb;border-radius:13px;background:linear-gradient(140deg,#faf6ff,#eef8ff);margin-bottom:20px;color:#354984}
+.studio-free b{font-size:.88rem}.studio-free p{font-size:.78rem;line-height:1.6;margin:5px 0}
+.shell:has(.dash) .toc{max-height:calc(100vh - 98px)}
+@media(max-width:800px){.study-search{order:3;max-width:none;min-width:100%;flex-basis:100%}}
 </style>
 </head>
 <body>
@@ -289,7 +302,7 @@ body{background:#f5f7ff}
   <div class="top-in">
     <button class="iconbtn" id="tocBtn" aria-pressed="true" aria-controls="toc" title="顯示或隱藏目次">☰ 目次</button>
     <div class="brand"><span class="seal">✦</span><h1>iPAS AI 備考室</h1><small>日系動畫研究所・115.06 範圍</small><span class="free-tag">完全免費</span></div>
-    <div class="seg" role="group" aria-label="級別">
+    <label class="study-search"><span>⌕</span><input id="studySearch" type="search" placeholder="搜尋章節、關鍵字或題目" aria-label="搜尋學習章節"></label><div class="seg" role="group" aria-label="級別">
       <button data-lv="P" aria-pressed="true">初級</button>
       <button data-lv="M" aria-pressed="false">中級</button>
     </div>
@@ -381,7 +394,16 @@ function render(){
 }
 function renderToc(){
   const lv=lvObj();
-  let h=`<div class="toc-head"><span>目次・${lv.name}</span><button class="iconbtn" id="tocHide" title="隱藏目次">隱藏</button></div>`;
+  let h=`<nav class="studio-nav" aria-label="主要功能">
+  <button data-go="home">⌂ <span>首頁</span></button>
+  <button data-go="units">◇ <span>我的課程</span></button>
+  <button data-go="drill">▣ <span>題庫練習</span></button>
+  <button data-go="mock">◴ <span>模擬考試</span></button>
+  <button data-go="review">↻ <span>錯題複習</span></button>
+  <button data-go="me">▤ <span>學習檔案庫</span></button>
+  <button data-go="badges">✦ <span>成就徽章</span></button>
+  <button data-go="mentor">✧ <span>AI 助教 愛芽</span></button>
+  </nav><div class="studio-free"><b>✦ 免費學習網站</b><p>完整課程與練習皆免費。愛芽陪你一步一步前進！</p></div><div class="toc-head"><span>目次・${lv.name}</span><button class="iconbtn" id="tocHide" title="隱藏目次">隱藏</button></div>`;
   for(const s of lv.subjects){
     h+=`<div class="subj"><div><span>${s.code}　${esc(s.name)}</span>${S.status[s.code]==="pass"?'<span class="tag pass">已通過</span>':(s.note?`<span class="tag">${esc(s.note.replace(/（.*）/,""))}</span>`:"")}</div>`;
     for(const ch of s.chapters){
@@ -395,6 +417,7 @@ function renderToc(){
   }
   $("#toc").innerHTML=h;
   $("#toc").querySelectorAll("button.sec").forEach(b=>b.onclick=()=>openUnit(b.dataset.sec));
+  $("#toc").querySelectorAll("[data-go]").forEach(b=>{b.setAttribute("aria-current",String((b.dataset.go===V.view)||(b.dataset.go==="badges"&&V.view==="home")));b.onclick=()=>{const d=b.dataset.go;if(d==="review")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"smart",20);if(d==="badges")return go("home");if(d==="mentor"){ayiaState("welcome");document.getElementById("ayiaPanel").scrollIntoView({behavior:"smooth",block:"start"});closeDrawer();return;}if(d==="drill")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"smart",20);go(d);};});
   $("#tocHide").onclick=()=>{if(window.matchMedia("(min-width:901px)").matches){S.toc=false;save();render();}else closeDrawer();};
 }
 function closeDrawer(){$("#toc").classList.remove("open");$("#drawerBg").classList.remove("open");}
@@ -711,6 +734,7 @@ function vMe(){
 
 // ---- boot ----
 document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{S.lv=b.dataset.lv;save();drill=null;quiz=null;V.subj=null;if(V.view==="unit"||V.view==="diag")V.view="units";render();});
+document.getElementById("studySearch").addEventListener("keydown",e=>{if(e.key!=="Enter")return;const term=e.target.value.trim().toLocaleLowerCase("zh-Hant");if(!term||!COURSE)return;const matches=ORDER.filter(code=>{const x=SECS[code];return x.lv===S.lv&&(code.toLowerCase().includes(term)||x.sec.name.toLocaleLowerCase("zh-Hant").includes(term)||x.ch.name.toLocaleLowerCase("zh-Hant").includes(term));});if(matches.length)openUnit(matches[0]);else{ayiaState("thinking");document.getElementById("ayiaText").textContent="目前找不到符合的單元。試試更短的詞，或從左側目次選擇。";}});
 document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{if(b.dataset.v==="drill")drill=null;go(b.dataset.v);});
 $("#tocBtn").onclick=()=>{if(window.matchMedia("(min-width:901px)").matches){S.toc=!S.toc;save();render();}else{$("#toc").classList.add("open");$("#drawerBg").classList.add("open");}};
 $("#drawerBg").onclick=closeDrawer;
