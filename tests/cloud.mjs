@@ -96,6 +96,7 @@ try{
  assert.match(await page.locator("#cloudMessage").innerText(),/註冊申請已送出/,"signup confirmation flow");
  await page.locator("#cloudSignIn").click();
  await page.locator("#cloudSignedIn").waitFor({state:"visible",timeout:15000});
+ await page.waitForFunction(()=>window.IPAS_BRIDGE?.snapshot().vault?.some(n=>n.title==="甲的私人筆記"),{timeout:15000});
  await page.evaluate(()=>window.IPAS_BRIDGE.updateCloudName("雲端跨裝置續學"));
  await page.waitForFunction(()=>window.__cloudMock.records["test-a"].state.localName==="雲端跨裝置續學",{timeout:15000});
  // Actual upload/list/download/delete UI flow against an RLS-enforcing Supabase mock.
