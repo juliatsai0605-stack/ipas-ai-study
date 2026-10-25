@@ -1,0 +1,28 @@
+name: Import approved Aiya art
+on:
+  push:
+    paths:
+      - '.github/workflows/import-approved-art.yml'
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Fetch the user's original-reference artwork
+        env:
+          ART_URL: 'https://media.canva.com/v2/image-resize/format:PNG/height:199/quality:100/uri:ifs%3A%2F%2FM%2Fb043c090-82c8-426a-b8ff-4c2cfe1f37a8/watermark:F/width:134?csig=AAAAAAAAAAAAAAAAAAAAABOMWbFfB7hKkY3QEoDFE3NZQbopHFQBYnJFySi7FsBA&exp=1792941825&osig=AAAAAAAAAAAAAAAAAAAAAPuPewcxvMAS3_TWWjYljkoca7Pri8wmcksGjoi1dGYq&signer=media-rpc&token=AAIAAU0AJGIwNDNjMDkwLTgyYzgtNDI2YS1iOGZmLTRjMmNmZTFmMzdhOAAAAAABoXOpG-gyEyo7dVRJxu8qXgaOMkuLiSZuFSFgP54VyRRAJng8nw&x-canva-quality=thumbnail'
+        run: |
+          mkdir -p img
+          curl --fail --location --retry 3 --silent --show-error "$ART_URL" -o img/aiya-reference.png
+          file img/aiya-reference.png
+          test "$(wc -c < img/aiya-reference.png)" -gt 10000
+      - name: Commit permanent website asset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add img/aiya-reference.png
+          git diff --cached --quiet || (git commit -m "assets: integrate user-approved Aiya reference artwork" && git push)
