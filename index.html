@@ -201,6 +201,87 @@ button,.btn,.iconbtn{border-radius:11px}
 @media(max-width:680px){.ayia-panel{grid-template-columns:56px minmax(0,1fr);padding:11px;gap:11px}.ayia-face{height:54px;width:54px;font-size:1.8rem}.brand h1{font-size:.95rem}.free-tag{font-size:.69rem}.reading{font-size:1.02rem}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
+
+/* Illustration-led dashboard, faithfully structured after approved anime laboratory preview. */
+body{background:#f5f7ff}
+.shell:has(.dash){max-width:1480px;grid-template-columns:225px minmax(0,1fr);gap:22px}
+.shell:has(.dash) main{width:100%}
+.shell:has(.dash) .toc{background:rgba(255,255,255,.9);border:1px solid #e1e6f5;border-radius:18px;padding:17px 12px}
+.shell:has(.dash) .ayia-panel{display:none}
+.dash{display:grid;gap:22px;font-size:15px;line-height:1.6}
+.dash-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:3px 4px}
+.dash-eyebrow{font-size:.75rem;letter-spacing:.1em;font-weight:800;color:#6867b5}
+.dash-heading h2{font-size:1.75rem;color:#27365f;letter-spacing:-.025em;margin:4px 0}
+.dash-heading p,.dash-sub{color:#576584;font-size:.9rem}
+.dash-spark{color:#b6a2e9}
+.dash-switch{display:flex;align-items:center;gap:8px;font-weight:700;color:#43527b;font-size:.85rem}
+.dash-switch select{background:#fff;border:1px solid #cbd6ed;border-radius:12px;padding:8px;max-width:280px}
+.dash-hero{min-height:285px;position:relative;overflow:hidden;border:1px solid #cfdcfb;border-radius:25px;display:grid;grid-template-columns:1.4fr 1fr;background:radial-gradient(circle at 73% 32%,#fbefff 0 14%,transparent 42%),linear-gradient(115deg,#e7f3ff,#ede7ff 80%);box-shadow:0 10px 34px #5f76ba12}
+.dash-hero:before,.dash-hero:after{position:absolute;content:"✦";font-size:60px;color:#ffffffb6;right:38%;top:12px}
+.dash-hero:after{content:"✧";font-size:40px;right:5%;top:28px}
+.dash-hero-copy{padding:28px 18px 28px 36px;position:relative;z-index:1;max-width:580px}
+.dash-label{display:inline-block;background:#ffffffc7;border:1px solid #dae2fc;border-radius:20px;padding:5px 13px;font-size:.78rem;font-weight:700;color:#4d59a4}
+.dash-hero h2{font-size:clamp(1.45rem,2.7vw,2.45rem);line-height:1.4;color:#2d3b75;margin:13px 0}
+.dash-hero h2 span{color:#6658b6}
+.dash-hero p{color:#49577f;font-size:.96rem;max-width:34em;margin-bottom:16px}
+.dash-primary{max-width:100%;white-space:normal;text-align:left;background:#5c57bb;border:0;border-radius:15px;box-shadow:0 5px 14px #5954ba30}
+.dash-character{width:270px;height:260px;position:relative;align-self:end;justify-self:center;filter:drop-shadow(0 12px 14px #6c7ec12b)}
+.dash-halo{position:absolute;width:210px;height:210px;background:radial-gradient(circle,#fffe 10%,#d8e6ff 72%,transparent 73%);border-radius:50%;top:10px;left:34px}
+.dash-hair{position:absolute;top:28px;left:60px;width:150px;height:150px;border-radius:48% 48% 40% 40%;background:linear-gradient(145deg,#8fd3ef,#998adc);box-shadow:inset -13px -5px 0 #7b8bd4}
+.dash-hair:before,.dash-hair:after{content:"";position:absolute;top:30px;width:33px;height:105px;border-radius:40%;background:#8fb9e8;transform:rotate(13deg);left:-10px}
+.dash-hair:after{left:auto;right:-12px;transform:rotate(-13deg);background:#978bd8}
+.dash-face{position:absolute;top:69px;left:84px;width:100px;height:98px;border-radius:42% 42% 48% 48%;background:#fff0e9;box-shadow:inset 0 -7px #f6dada;z-index:2}
+.dash-face .eye{position:absolute;width:13px;height:23px;border-radius:50%;top:35px;background:#474c9c;box-shadow:inset 2px 5px #303d80}
+.dash-face .eye.left{left:26px}.dash-face .eye.right{right:26px}
+.dash-face .mouth{position:absolute;width:24px;height:13px;border:3px solid #b66e89;border-top:0;border-radius:0 0 60% 60%;top:62px;left:37px}
+.dash-face .blush{position:absolute;width:18px;height:7px;border-radius:50%;background:#f0abba;top:63px;opacity:.7}
+.dash-face .blush.left{left:9px}.dash-face .blush.right{right:9px}
+.dash-coat{position:absolute;top:164px;left:83px;width:105px;height:90px;background:#fff;border:5px solid #c7dafa;border-radius:42px 42px 18px 18px;z-index:1;display:flex;align-items:center;justify-content:center;color:#6971be;font-weight:900;box-shadow:inset 0 -15px #d9e7fa}
+.dash-coat span{background:#e2dfff;border-radius:50%;padding:10px}
+.dash-orb{position:absolute;right:2px;top:98px;border:4px solid #a4bdf2;width:55px;height:55px;background:#e6fbff;border-radius:50%;z-index:3;text-align:center;line-height:48px;font-size:1.6rem;color:#6c73bd}
+.dash-star{position:absolute;left:49px;top:37px;color:#ffd574;font-size:50px;z-index:3}
+.dash-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}
+.dash-stat{border:1px solid #e1e6f3;background:#fff;display:flex;gap:12px;min-height:116px;border-radius:17px;padding:17px 14px;align-items:flex-start;box-shadow:0 6px 20px #42579d0b}
+.dash-stat>div{flex:1;min-width:0}
+.dash-stat small{display:block;font-size:.78rem;color:#516081}
+.dash-stat strong{display:block;font-size:1.65rem;color:#27355c;font-weight:800;line-height:1.35}
+.dash-stat em,.dash-review em{font-size:.85rem;color:#64728e;font-style:normal;font-weight:500}
+.dash-stat-icon{width:39px;height:39px;border-radius:12px;display:grid;place-items:center;flex-shrink:0;font-size:1.3rem;font-weight:bold}
+.dash-stat-icon.lavender{background:#eeebff;color:#6559bc}.dash-stat-icon.blue{background:#e8f1ff;color:#4779c7}.dash-stat-icon.pink{background:#ffedf2;color:#bc6489}.dash-stat-icon.mint{background:#e7f6f4;color:#387f82}
+.dash-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(265px,1fr);gap:16px}
+.dash-box{background:#fff;border:1px solid #e1e6f5;padding:21px;border-radius:19px;box-shadow:0 6px 20px #42579d0a;min-width:0}
+.dash-box-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.dash-box-title h3{font-size:1.05rem;color:#2c3966}
+.dash-link{border:0;color:#504fad;background:none;cursor:pointer;font-weight:700;padding:4px;font-size:.84rem;text-align:left}
+.dash-tag,.dash-count{border-radius:999px;background:#eef0ff;color:#514ca0;padding:4px 9px;font-size:.75rem;font-weight:700}
+.dash-map{min-height:308px}
+.dash-path{display:flex;gap:9px;margin-top:20px;overflow-x:auto;padding:10px 3px 18px}
+.dash-node{background:#f8faff;border:1px solid #dce3f3;border-radius:17px;min-width:104px;max-width:125px;min-height:135px;flex:1;padding:12px 7px;display:grid;gap:4px;justify-items:center;align-content:start;cursor:pointer;color:#53607f}
+.dash-node.finished{background:#e9f7f2;border-color:#a6d6c8}.dash-node.current{background:#f1ecff;border-color:#9587e1;box-shadow:0 0 0 2px #e6dfff}
+.dash-node-icon{height:40px;width:40px;border-radius:50%;background:#dfe6fa;color:#5263a5;display:grid;place-items:center;font-weight:800;font-size:1.1rem}
+.dash-node.finished .dash-node-icon{background:#4d9a7c;color:#fff}.dash-node.current .dash-node-icon{background:#7565cc;color:#fff}
+.dash-node small{font-size:.73rem}.dash-node b{font-size:.78rem;line-height:1.45;text-align:center}
+.dash-map-foot{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap;color:#526080;font-size:.82rem}
+.dash-tasks{display:grid;gap:6px}.dash-task{display:flex;gap:12px;align-items:flex-start;border-bottom:1px solid #edf0f9;padding:11px 3px}
+.dash-task>div{display:grid}.dash-task b{font-size:.89rem}.dash-task small{font-size:.76rem;color:#60708b}
+.dash-check{font-size:1.2rem;color:#8492b2}.dash-check.complete{color:#268061}
+.dash-tip{background:#f0eeff;border-radius:12px;padding:12px;margin-top:13px;font-size:.82rem;color:#58539e}
+.dash-review{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:16px}
+.dash-review strong{display:block;font-size:2.3rem;color:#424b9e}.dash-review p{font-size:.84rem;max-width:25em;color:#5c6984}
+.dash-files{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.dash-files>div{display:grid;justify-items:center;text-align:center;gap:3px;padding:15px 5px;border-radius:12px;background:#f6f7fe;color:#625dba;font-size:1.5rem}
+.dash-files b{font-size:.8rem;color:#344067}.dash-files small{font-size:.74rem;color:#65718b}
+.dash-disclaimer{font-size:.73rem;color:#626e87;margin-top:7px}
+.dash-medals{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:20px}
+.dash-medal{display:grid;justify-items:center;gap:5px;text-align:center;padding:7px 2px}
+.dash-medal span{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:linear-gradient(150deg,#f6d7a3,#e5b85c);border:4px double #c99645;color:#744a28;font-size:1.6rem}
+.dash-medal.locked{opacity:.45}.dash-medal.locked span{background:#e9ebf3;border-color:#c5ccdf}
+.dash-medal b{font-size:.77rem}.dash-medal small{font-size:.69rem;color:#65718b}
+.dash-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+@media(max-width:1150px){.dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.dash-grid{grid-template-columns:1fr}.dash-character{transform:scale(.88);transform-origin:bottom center}}
+@media(max-width:900px){.shell:has(.dash){display:block}.shell:has(.dash) .toc{position:fixed}.dash-hero{grid-template-columns:1.2fr .8fr}}
+@media(max-width:650px){.dash{gap:13px}.dash-heading h2{font-size:1.4rem}.dash-switch{width:100%}.dash-switch select{flex:1;min-width:0}.dash-hero{grid-template-columns:1fr;min-height:0}.dash-hero-copy{padding:20px 18px 12px}.dash-hero h2{font-size:1.65rem}.dash-character{height:170px;transform:scale(.64);justify-self:end;align-self:start;transform-origin:top right;margin-bottom:-40px}.dash-stats{gap:9px}.dash-stat{padding:11px 9px;gap:7px;min-height:97px}.dash-stat strong{font-size:1.28rem}.dash-stat-icon{width:31px;height:31px}.dash-box{padding:15px}.dash-medals{grid-template-columns:repeat(2,minmax(0,1fr))}.dash-files{gap:6px}}
+
 </style>
 </head>
 <body>
@@ -336,42 +417,48 @@ function phaseOf(r){return r.done<r.secs?1:(r.ready?3:2);}
 const EXAM={P:"初級每科 50 題單選、75 分鐘、70 分及格。分次報考時每科皆須達 70 分；單科及格成績保留三年度。115 年初級考試：3/21、5/16、8/15、11/7（第四次報名已於 9/22 截止）。",
 M:"中級科目一必考，科目二或科目三擇一，每科 50 題、90 分鐘，科目二、三含程式題。科目一＋二取得「數據分析」證書，科目一＋三取得「機器學習」證書。115 年中級考試：5/23、11/14（第二次報名已於 9/22 截止）。"};
 function vHome(){
-  const lv=lvObj(); const subs=openSubjects();
-  if(!V.subj||!lv.subjects.some(s=>s.code===V.subj)) V.subj=(subs[0]||lv.subjects[0]).code;
-  const s=lv.subjects.find(x=>x.code===V.subj); const r=readiness(s); const ph=phaseOf(r);
-  const next=subjSecs(s).find(x=>!secDone(x));
-  let adv;
-  if(ph===1) adv=`<h3>現在：重點講解＋單元測驗</h3><p>下一個單元是「${next.code} ${esc(next.name)}」。每單元先讀重點，再做本單元的官方試題，答完立刻看解析；測驗達 80% 視為完成。</p><div class="row"><button class="btn" id="goNext">開始這個單元</button></div>`;
-  else if(ph===2) adv=`<h3>單元都完成了，開始大量刷題</h3><p>每回 20 題，答錯的題與沒做過的題會優先出現。目標是連續 3 回達 85%、題庫做過八成以上，再用整卷模擬考確認。</p><div class="row"><button class="btn" id="goDrill">刷 20 題</button><button class="btn ghost" id="goMock">整卷模擬考</button></div>`;
-  else adv=`<h3>建議報名 ${esc(s.name)}</h3><p>檢核表全部達成，已明顯高於及格線 70 分。請到 iPAS 官網查最近一梯次的報名時間；報名後每週維持 1 回模擬考保持手感。</p>`;
-  const steps=["重點講解＋單元測驗","大量刷題","報名考試"].map((t,i)=>`<li class="${i+1<ph?"done":(i+1===ph?"now":"")}"><b>階段 ${i+1}</b>${t}</li>`).join("");
-  const t=S.days[today()]||{a:0,c:0};
-  const la=lastAcc(subjQs(s.code));
-  let h=`<div class="card"><div class="row" style="justify-content:space-between"><h2>${esc(lv.name)}　準備科目</h2>
-    <select id="subjSel" aria-label="準備科目">${lv.subjects.map(x=>`<option value="${x.code}" ${x.code===s.code?"selected":""}>${x.code} ${esc(x.name)}${S.status[x.code]==="pass"?"（已通過）":""}</option>`).join("")}</select></div></div>
-  <ol class="steps">${steps}</ol>
-  <div class="advice">${adv}</div>
-  <div class="stats">
-    <div class="stat"><span>單元完成</span><strong>${r.done}/${r.secs}</strong><div class="bar"><i style="width:${r.done/r.secs*100}%"></i></div></div>
-    <div class="stat"><span>題庫已做</span><strong>${r.seen}/${r.qs}</strong><div class="bar"><i style="width:${r.qs?r.seen/r.qs*100:0}%"></i></div></div>
-    <div class="stat"><span>最近正確率</span><strong>${la===null?"—":pct(la)}</strong></div>
-    <div class="stat"><span>今日作答</span><strong>${t.a}</strong><span>${t.a?"正確率 "+pct(t.c/t.a):"今天還沒作答"}</span></div>
-  </div>
-  <div class="card"><h3>報名檢核表・${esc(s.name)}</h3><ul class="check">
-    <li class="${r.done===r.secs?"ok":""}">所有單元測驗達 80%（${r.done}/${r.secs}）</li>
-    <li class="${r.coverOk?"ok":""}">題庫至少做過八成（${r.seen}/${r.qs}）</li>
-    <li class="${r.drillOk?"ok":""}">刷題連續 3 回達 85%（近 3 回：${r.d.map(pct).join("、")||"尚無"}）</li>
-    <li class="${r.mockOk?"ok":""}">最近一次整卷模擬考達 85 分</li></ul>
-    <p class="note" style="margin-top:8px">及格線 70 分；門檻設高是因為正式考題每次不同、情境題比例高。</p></div>`;
-  if(S.lv==="M") h+=midCard();
-  h+=`<div class="card"><h3>考試資訊</h3><p class="small">${EXAM[S.lv]}</p><p class="note" style="margin-top:6px">資料來源：115 年度 AI 應用規劃師能力鑑定簡章。116 年日程以官網公告為準。</p></div>`;
-  $("#main").innerHTML=`<div class="view">${h}</div>`;
+  const lv=lvObj(), subs=openSubjects();
+  if(!V.subj||!lv.subjects.some(s=>s.code===V.subj))V.subj=(subs[0]||lv.subjects[0]).code;
+  const subj=lv.subjects.find(x=>x.code===V.subj), r=readiness(subj),ph=phaseOf(r);
+  const all=subjSecs(subj),next=all.find(x=>!secDone(x)),last=latestSection();
+  const progress=r.secs?Math.round(r.done/r.secs*100):0;
+  const todayLog=S.days[today()]||{a:0,c:0};
+  const acc=lastAcc(subjQs(subj.code));
+  const totalAnswered=Object.values(S.q).reduce((n,q)=>n+(q[0]||0)+(q[1]||0),0);
+  const lastMock=S.mocks.length?S.mocks[S.mocks.length-1]:null;
+  const achievements=[
+    {icon:"✦",name:"初探研究員",ok:r.done>=1,desc:"完成首個單元"},
+    {icon:"✧",name:"知識探索者",ok:r.done>=5,desc:"完成五個單元"},
+    {icon:"★",name:"百題挑戰者",ok:totalAnswered>=100,desc:"累積回答 100 題"},
+    {icon:"♛",name:"練習達人",ok:r.drillOk,desc:"連續三回刷題達標"}];
+  const nodes=all.slice(0,Math.min(7,all.length));
+  const mission=[{done:r.done>0,title:"完成一個單元",sub:r.done+"/"+r.secs+" 單元"},{done:todayLog.a>=10,title:"今天練習 10 題",sub:todayLog.a+" / 10 題"},{done:!!S.feyn[(last&&last.sec.code)||""] ,title:"用自己的話整理重點",sub:"費曼筆記"}];
+  const lesson=last|| (next?SECS[next.code]:null);
+  const continueText=lesson?"接續 "+lesson.sec.code+" · "+lesson.sec.name:"挑選課程開始學習";
+  let h=`<div class="dash">
+    <div class="dash-heading"><div><span class="dash-eyebrow">✦ AI STUDY LAB · 免費學習空間</span><h2>我的學習研究室 <span class="dash-spark">✧</span></h2><p>在這裡累積知識、練習與每一次的小進步。</p></div><label class="dash-switch">學習科目 <select id="subjSel" aria-label="選擇準備科目">${lv.subjects.map(x=>`<option value="${x.code}" ${x.code===subj.code?"selected":""}>${x.code} ${esc(x.name)}</option>`).join("")}</select></label></div>
+    <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" aria-label="愛芽 Aiya，小小 AI 學習導師" role="img"><div class="dash-halo"></div><div class="dash-hair"></div><div class="dash-face"><i class="eye left"></i><i class="eye right"></i><i class="mouth"></i><i class="blush left"></i><i class="blush right"></i></div><div class="dash-coat"><span>AI</span></div><div class="dash-orb">✦</div><div class="dash-star">✧</div></div></section>
+    <section class="dash-stats" aria-label="學習紀錄摘要">
+    <div class="dash-stat"><span class="dash-stat-icon lavender">◈</span><div><small>單元完成度</small><strong>${r.done}<em> / ${r.secs}</em></strong><div class="bar"><i style="width:${progress}%"></i></div></div></div>
+    <div class="dash-stat"><span class="dash-stat-icon blue">◎</span><div><small>題庫已做</small><strong>${r.seen}<em> / ${r.qs}</em></strong><div class="bar"><i style="width:${r.qs?r.seen/r.qs*100:0}%"></i></div></div></div>
+    <div class="dash-stat"><span class="dash-stat-icon pink">✦</span><div><small>最近正確率</small><strong>${acc===null?"—":pct(acc)}</strong><small>依已作答題目計算</small></div></div>
+    <div class="dash-stat"><span class="dash-stat-icon mint">◷</span><div><small>今日作答題數</small><strong>${todayLog.a} <em>題</em></strong><small>${todayLog.a?"今日正確 "+todayLog.c+" 題":"從第一題開始！"}</small></div></div></section>
+    <div class="dash-grid"><section class="dash-box dash-map"><div class="dash-box-title"><h3>✦ 學習章節地圖</h3><button class="dash-link" id="dashUnits">查看全部單元 →</button></div><p class="dash-sub">完成單元測驗、收集星星，逐步解鎖自己的學習成果。</p><div class="dash-path">${nodes.map((sec,i)=>`<button class="dash-node ${secDone(sec)?"finished":(lesson&&lesson.sec.code===sec.code?"current":"")}" data-dash-sec="${sec.code}"><span class="dash-node-icon">${secDone(sec)?"✓":i+1}</span><small>${esc(sec.code)}</small><b>${esc(sec.name)}</b></button>`).join("")}</div><div class="dash-map-foot"><span>已完成 ${r.done} 個單元　·　完成率 ${progress}%</span><span class="dash-tag">✦ 持續累積中</span></div></section>
+    <section class="dash-box"><div class="dash-box-title"><h3>☑ 今日學習計畫</h3><span class="dash-count">${mission.filter(m=>m.done).length} / ${mission.length}</span></div><div class="dash-tasks">${mission.map(m=>`<div class="dash-task"><span class="dash-check ${m.done?"complete":""}">${m.done?"✓":"○"}</span><div><b>${m.title}</b><small>${m.sub}</small></div></div>`).join("")}</div><p class="dash-tip">愛芽小提醒：今天只要比昨天多懂一點就好 ♡</p></section>
+    <section class="dash-box"><div class="dash-box-title"><h3>↻ 錯題複習</h3><span class="dash-tag">精準練習</span></div><div class="dash-review"><div><small>待重新練習的題目</small><strong>${Object.values(S.q).filter(q=>q[3]===0).length}<em> 題</em></strong><p>優先練習先前答錯的題目，複習弱點。</p></div><button class="btn" id="dashDrill">開始練習 →</button></div></section>
+    <section class="dash-box"><div class="dash-box-title"><h3>▣ 我的學習檔案</h3><span class="dash-tag">本機儲存</span></div><div class="dash-files"><div>▤<b>費曼筆記</b><small>${Object.values(S.feyn).filter(Boolean).length} 份</small></div><div>▧<b>完成單元</b><small>${r.done} 個</small></div><div>▣<b>歷次模擬考</b><small>${S.mocks.length} 次</small></div></div><button class="dash-link" id="dashMe">查看進度與匯出備份 →</button><p class="dash-disclaimer">目前僅儲存於這台裝置；雲端登入與私人上傳尚未開放。</p></section>
+    <section class="dash-box dash-achievements"><div class="dash-box-title"><h3>✧ 成就徽章</h3><span class="dash-count">${achievements.filter(a=>a.ok).length} / ${achievements.length}</span></div><div class="dash-medals">${achievements.map(a=>`<div class="dash-medal ${a.ok?"earned":"locked"}" title="${a.desc}"><span>${a.icon}</span><b>${a.name}</b><small>${a.ok?"已獲得":"尚未達成"}</small></div>`).join("")}</div></section>
+    <section class="dash-box"><div class="dash-box-title"><h3>▤ 備考建議</h3><span class="dash-tag">依實際進度</span></div><p class="dash-sub">${ph===1?"先讀單元重點、再完成測驗；單元達 80% 才算完成。":ph===2?"已完成單元階段，建議大量刷題並練習整卷模擬考。":"準備狀態良好，記得持續做模擬考並查詢官方報名公告。"}</p><div class="dash-actions"><button id="dashMock" class="btn ghost">整卷模擬考</button><button id="dashDiag" class="btn soft" ${S.lv==="M"?"":"hidden"}>中級診斷</button></div></section></div></div>`;
+  if(S.lv==="M")h+=midCard();
+  $("#main").innerHTML='<div class="view">'+h+'</div>';
   $("#subjSel").onchange=e=>{V.subj=e.target.value;render();};
-  const on=(id,f)=>{const e=$("#"+id);if(e)e.onclick=f;};
-  on("goNext",()=>openUnit(next.code));
-  on("goDrill",()=>startDrill(s.code,"smart",20));
-  on("goMock",()=>go("mock"));
-  on("goDiag",startDiag);
+  $("#dashContinue").onclick=()=>{if(lesson)openUnit(lesson.sec.code);else go("units");};
+  $("#dashUnits").onclick=()=>go("units");
+  $("#dashDrill").onclick=()=>startDrill(subj.code,"smart",20);
+  $("#dashMe").onclick=()=>go("me");
+  $("#dashMock").onclick=()=>go("mock");
+  const d=$("#dashDiag");if(d)d.onclick=startDiag;
+  document.querySelectorAll("[data-dash-sec]").forEach(b=>b.onclick=()=>openUnit(b.dataset.dashSec));
 }
 function midCard(){
   const a=lastAcc(subjQs("L22")),b=lastAcc(subjQs("L23")),na=seenN(subjQs("L22")),nb=seenN(subjQs("L23"));
