@@ -385,7 +385,13 @@ document.getElementById("ayiaReturn").addEventListener("click",restoreLast);
 
 // ---- progress helpers ----
 function logDay(ok){const k=today();const d=S.days[k]||{a:0,c:0};d.a++;if(ok)d.c++;S.days[k]=d;}
-function recordQ(q,ok){const r=S.q[q.id]||[0,0,0,0];ok?r[0]++:r[1]++;r[2]=dayNum(today());r[3]=ok?1:0;S.q[q.id]=r;logDay(ok);}
+function recordQ(q,ok){const r=S.q[q.id]||[0,0,0,0];ok?r[0]++:r[1]++;r[2]=dayNum(today());r[3]=ok?1:0;S.q[q.id]=r;logDay(ok);
+  if(!S.srs||typeof S.srs!=="object")S.srs={};
+  const prev=S.srs[q.id]||{step:0},step=ok?Math.min((prev.step||0)+1,6):0;
+  const interval=ok?[1,3,7,14,30,60][step-1]:1;
+  S.srs[q.id]={step,due:dayNum(today())+interval,interval,last:dayNum(today())};
+}
+function dueReviewCount(qs){const now=dayNum(today());return qs.filter(q=>{const r=S.srs&&S.srs[q.id];return r&&r.due<=now;}).length;}
 const secQs=c=>BANK.filter(q=>q.sec===c);
 const subjQs=c=>BANK.filter(q=>q.sub===c);
 function lastAcc(qs){let n=0,c=0;for(const q of qs){const r=S.q[q.id];if(r){n++;c+=r[3];}}return n?c/n:null;}
@@ -435,7 +441,7 @@ function renderToc(){
   }
   $("#toc").innerHTML=h;
   $("#toc").querySelectorAll("button.sec").forEach(b=>b.onclick=()=>openUnit(b.dataset.sec));
-  $("#toc").querySelectorAll("[data-go]").forEach(b=>{b.setAttribute("aria-current",String((b.dataset.go===V.view)||(b.dataset.go==="badges"&&V.view==="home")));b.onclick=()=>{const d=b.dataset.go;if(d==="review")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"wrong",20);if(d==="badges")return go("home");if(d==="mentor"){ayiaState("welcome");document.getElementById("ayiaPanel").scrollIntoView({behavior:"smooth",block:"start"});closeDrawer();return;}if(d==="drill")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"smart",20);go(d);};});
+  $("#toc").querySelectorAll("[data-go]").forEach(b=>{b.setAttribute("aria-current",String((b.dataset.go===V.view)||(b.dataset.go==="badges"&&V.view==="home")));b.onclick=()=>{const d=b.dataset.go;if(d==="review")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"review",20);if(d==="badges")return go("home");if(d==="mentor"){ayiaState("welcome");document.getElementById("ayiaPanel").scrollIntoView({behavior:"smooth",block:"start"});closeDrawer();return;}if(d==="drill")return startDrill(V.subj||openSubjects()[0]?.code||lv.subjects[0].code,"smart",20);go(d);};});
   $("#tocHide").onclick=()=>{if(window.matchMedia("(min-width:901px)").matches){S.toc=false;save();render();}else closeDrawer();};
 }
 function closeDrawer(){$("#toc").classList.remove("open");$("#drawerBg").classList.remove("open");}
@@ -486,7 +492,7 @@ function vHome(){
     <div class="dash-stat"><span class="dash-stat-icon mint">◷</span><div><small>今日作答題數</small><strong>${todayLog.a} <em>題</em></strong><small>${todayLog.a?"今日正確 "+todayLog.c+" 題":"從第一題開始！"}</small></div></div></section>
     <div class="dash-grid"><section class="dash-box dash-map"><div class="dash-box-title"><h3>✦ 學習章節地圖</h3><button class="dash-link" id="dashUnits">查看全部單元 →</button></div><p class="dash-sub">完成單元測驗、收集星星，逐步解鎖自己的學習成果。</p><div class="dash-path">${nodes.map((sec,i)=>`<button class="dash-node ${secDone(sec)?"finished":(lesson&&lesson.sec.code===sec.code?"current":"")}" data-dash-sec="${sec.code}"><span class="dash-node-icon">${secDone(sec)?"✓":i+1}</span><small>${esc(sec.code)}</small><b>${esc(sec.name)}</b></button>`).join("")}</div><div class="dash-map-foot"><span>已完成 ${r.done} 個單元　·　完成率 ${progress}%</span><span class="dash-tag">✦ 持續累積中</span></div></section>
     <section class="dash-box"><div class="dash-box-title"><h3>☑ 今日學習計畫</h3><span class="dash-count">${mission.filter(m=>m.done).length} / ${mission.length}</span></div><div class="dash-tasks">${mission.map(m=>`<div class="dash-task"><span class="dash-check ${m.done?"complete":""}">${m.done?"✓":"○"}</span><div><b>${m.title}</b><small>${m.sub}</small></div></div>`).join("")}</div><p class="dash-tip">愛芽小提醒：今天只要比昨天多懂一點就好 ♡</p></section>
-    <section class="dash-box"><div class="dash-box-title"><h3>↻ 錯題複習</h3><span class="dash-tag">精準練習</span></div><div class="dash-review"><div><small>待重新練習的題目</small><strong>${Object.values(S.q).filter(q=>q[3]===0).length}<em> 題</em></strong><p>優先練習先前答錯的題目，複習弱點。</p></div><button class="btn" id="dashDrill">開始練習 →</button></div></section>
+    <section class="dash-box"><div class="dash-box-title"><h3>↻ 錯題複習</h3><span class="dash-tag">精準練習</span></div><div class="dash-review"><div><small>今日到期的複習題目</small><strong>${dueReviewCount(subjQs(subj.code))}<em> 題</em></strong><p>依 1、3、7、14、30、60 天間隔安排已做過的題目。</p></div><button class="btn" id="dashDrill">開始練習 →</button></div></section>
     <section class="dash-box"><div class="dash-box-title"><h3>▣ 我的學習檔案</h3><span class="dash-tag">本機儲存</span></div><div class="dash-files"><div>▤<b>費曼筆記</b><small>${Object.values(S.feyn).filter(Boolean).length} 份</small></div><div>▧<b>完成單元</b><small>${r.done} 個</small></div><div>▣<b>歷次模擬考</b><small>${S.mocks.length} 次</small></div></div><button class="dash-link" id="dashMe">查看進度與匯出備份 →</button><p class="dash-disclaimer">目前僅儲存於這台裝置；雲端登入與私人上傳尚未開放。</p></section>
     <section class="dash-box dash-achievements"><div class="dash-box-title"><h3>✧ 成就徽章</h3><span class="dash-count">${achievements.filter(a=>a.ok).length} / ${achievements.length}</span></div><div class="dash-medals">${achievements.map(a=>`<div class="dash-medal ${a.ok?"earned":"locked"}" title="${a.desc}"><span>${a.icon}</span><b>${a.name}</b><small>${a.ok?"已獲得":"尚未達成"}</small></div>`).join("")}</div></section>
     <section class="dash-box"><div class="dash-box-title"><h3>▤ 備考建議</h3><span class="dash-tag">依實際進度</span></div><p class="dash-sub">${ph===1?"先讀單元重點、再完成測驗；單元達 80% 才算完成。":ph===2?"已完成單元階段，建議大量刷題並練習整卷模擬考。":"準備狀態良好，記得持續做模擬考並查詢官方報名公告。"}</p><div class="dash-actions"><button id="dashMock" class="btn ghost">整卷模擬考</button><button id="dashDiag" class="btn soft" ${S.lv==="M"?"":"hidden"}>中級診斷</button></div></section></div></div>`;
@@ -495,7 +501,7 @@ function vHome(){
   $("#subjSel").onchange=e=>{V.subj=e.target.value;render();};
   $("#dashContinue").onclick=()=>{if(lesson)openUnit(lesson.sec.code);else go("units");};
   $("#dashUnits").onclick=()=>go("units");
-  $("#dashDrill").onclick=()=>startDrill(subj.code,"wrong",20);
+  $("#dashDrill").onclick=()=>startDrill(subj.code,"review",20);
   $("#dashMe").onclick=()=>go("me");
   $("#dashMock").onclick=()=>go("mock");
   const d=$("#dashDiag");if(d)d.onclick=startDiag;
@@ -605,7 +611,8 @@ function bindQ(el,q,done){
 // ---- drill ----
 function startDrill(sub,mode,k){
   const pool=subjQs(sub); let list;
-  if(mode==="wrong") list=shuffle(pool.filter(q=>{const r=S.q[q.id];return r&&r[3]===0;})).slice(0,k);
+  if(mode==="review")list=shuffle(pool.filter(q=>S.srs?.[q.id]&&S.srs[q.id].due<=dayNum(today()))).slice(0,k);
+  else if(mode==="wrong") list=shuffle(pool.filter(q=>{const r=S.q[q.id];return r&&r[3]===0;})).slice(0,k);
   else if(mode==="unseen") list=shuffle(pool.filter(q=>!S.q[q.id])).slice(0,k);
   else list=shuffle(pickFor(pool,k));
   drill={sub,mode,list,i:0,c:0,ans:null}; go("drill");
@@ -617,23 +624,24 @@ function vDrill(){
     let h=`<div class="card"><h3>刷題・${esc(lv.name)}</h3><p class="small muted">題目全部是官方公告試題，答完立刻看解析。「智慧出題」優先出：最近一次答錯的題 → 沒做過的題 → 最久沒複習的題，並混合各單元。</p>
     <div class="form" style="margin-top:12px"><label>科目 <select id="dSub">${lv.subjects.map(s=>`<option value="${s.code}" ${s.code===def?"selected":""}>${s.code} ${esc(s.name)}（${subjQs(s.code).length} 題）</option>`).join("")}</select></label>
     <label>題數 <select id="dK"><option>10</option><option selected>20</option><option>30</option><option>50</option></select></label></div>
-    <div class="row" style="margin-top:14px"><button class="btn" id="dSmart">智慧出題</button><button class="btn ghost" id="dWrong">錯題本</button><button class="btn ghost" id="dUnseen">只做沒做過的</button></div></div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="dSmart">智慧出題</button><button class="btn ghost" id="dReview">今日到期複習</button><button class="btn ghost" id="dWrong">錯題本</button><button class="btn ghost" id="dUnseen">只做沒做過的</button></div></div>
     <div class="card"><h3>各科概況</h3><div class="tbl"><table><thead><tr><th>科目</th><th class="num">已做</th><th class="num">目前答錯</th><th class="num">最近正確率</th><th>近期刷題</th></tr></thead><tbody>${lv.subjects.map(s=>{const qs=subjQs(s.code);const w=qs.filter(q=>S.q[q.id]&&S.q[q.id][3]===0).length;const la=lastAcc(qs);const d=(S.drills[s.code]||[]).slice(-5);return `<tr><td>${s.code} ${esc(s.name)}</td><td class="num">${seenN(qs)}/${qs.length}</td><td class="num">${w}</td><td class="num">${la===null?"—":pct(la)}</td><td><div class="hist">${d.map(x=>`<span class="${x>=0.85?"pass":""}">${pct(x)}</span>`).join("")||"—"}</div></td></tr>`;}).join("")}</tbody></table></div></div>`;
     $("#main").innerHTML=`<div class="view">${h}</div>`;
     const sub=()=>$("#dSub").value,k=()=>+$("#dK").value;
     $("#dSmart").onclick=()=>startDrill(sub(),"smart",k());
+    $("#dReview").onclick=()=>startDrill(sub(),"review",20);
     $("#dWrong").onclick=()=>startDrill(sub(),"wrong",999);
     $("#dUnseen").onclick=()=>startDrill(sub(),"unseen",k());
     return;
   }
   const d=drill;
-  if(!d.list.length){$("#main").innerHTML=`<div class="view"><div class="card"><p>${d.mode==="wrong"?"目前沒有錯題。":"這一科的題目都做過了，改用智慧出題複習。"}</p><div class="row" style="margin-top:10px"><button class="btn" id="dBack">回刷題首頁</button></div></div></div>`;$("#dBack").onclick=()=>{drill=null;render();};return;}
+  if(!d.list.length){$("#main").innerHTML=`<div class="view"><div class="card"><p>${d.mode==="wrong"?"目前沒有錯題。":d.mode==="review"?"今天沒有到期的間隔複習題，先學習新單元或智慧刷題。":"這一科的題目都做過了，改用智慧出題複習。"}</p><div class="row" style="margin-top:10px"><button class="btn" id="dBack">回刷題首頁</button></div></div></div>`;$("#dBack").onclick=()=>{drill=null;render();};return;}
   if(d.i>=d.list.length){
     const sc=d.c/d.list.length;
     if(d.mode==="smart"&&d.list.length>=10&&!d.logged){(S.drills[d.sub]=S.drills[d.sub]||[]).push(sc);d.logged=true;save();}
     $("#main").innerHTML=`<div class="view"><div class="card"><h3>本回 ${d.c}/${d.list.length}（${pct(sc)}）</h3><p>${sc>=0.85?"表現穩定，連續 3 回達 85% 就完成刷題條件。":sc>=0.7?"已過及格線 70%，答錯的題下回會優先出現。":"未達 70%，建議先回看錯題所屬單元的重點，再刷一回。"}</p>
     <div class="row" style="margin-top:12px"><button class="btn" id="dAgain">再刷一回</button><button class="btn ghost" id="dBack">回刷題首頁</button></div></div></div>`;
-    $("#dAgain").onclick=()=>startDrill(d.sub,d.mode==="wrong"?"wrong":"smart",Math.max(d.list.length,10));
+    $("#dAgain").onclick=()=>startDrill(d.sub,d.mode==="wrong"?"wrong":d.mode==="review"?"review":"smart",Math.max(d.list.length,10));
     $("#dBack").onclick=()=>{drill=null;render();};return;
   }
   const q=d.list[d.i];
