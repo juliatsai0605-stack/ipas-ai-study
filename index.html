@@ -570,6 +570,30 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
  .dash-map .dash-node:nth-of-type(5){background:linear-gradient(140deg,#f9f4ff,#eef5ff)!important}
  .dash-hero .dash-last{box-shadow:0 5px 17px #7589b52d!important}
 }
+
+/* Original-user-art integration, not substitute illustrations */
+.dash-hero{
+ background-image:linear-gradient(90deg,#f7f6ffef 0%,#eef3ffb0 43%,#e7eeff5c 75%,#f9eeffc2 100%),url("img/lab-scene.png")!important;
+ background-position:center,center!important;
+ background-size:cover,cover!important;
+}
+.dash-hero:after{opacity:.14!important}
+.dash-map:before{
+ background-image:linear-gradient(0deg,#f4f8ff55,transparent),url("img/map-skyline.png")!important;
+ background-size:cover,auto 135px!important;
+ background-repeat:no-repeat,repeat-x!important;
+ background-position:center,bottom center!important;
+ opacity:.78!important;
+ mask-image:linear-gradient(to top,#000,transparent 98%)!important;
+ height:170px!important;
+}
+.ayia-face img{object-fit:contain;image-rendering:auto;filter:drop-shadow(0 4px 8px #8e8bcc5c)}
+.dash-hero .dash-character img{filter:drop-shadow(0 13px 18px #656caa70)!important}
+@media(max-width:900px){
+ .dash-hero{background-position:center,right center!important}
+ .dash-hero .dash-character img{filter:drop-shadow(0 5px 8px #656caa70)!important}
+ .dash-map:before{height:110px!important;background-size:cover,auto 85px!important;opacity:.55!important}
+}
 </style>
 </head>
 <body>
