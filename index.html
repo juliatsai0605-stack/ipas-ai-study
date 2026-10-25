@@ -360,10 +360,11 @@ const SESS=x=>{const [y,n]=x.split("-");return `${y} 年第 ${n} 次`;};
 
 let COURSE=null,BANK=[],SECS={},ORDER=[];
 const KEY="ipas-ai-study-v4";
+let activeSaveKey=KEY;
 const blank=()=>({v:4,lv:"P",toc:true,status:{},best:{},read:{},feyn:{},q:{},days:{},drills:{},mocks:[],diag:null});
 let S=blank();
 function load(){try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(blank(),JSON.parse(r));}catch(e){}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function save(){try{localStorage.setItem(activeSaveKey,JSON.stringify(S));}catch(e){}document.dispatchEvent(new Event("ipas:save"));}
 load();
 
 
@@ -410,7 +411,7 @@ function openSubjects(){return lvObj().subjects.filter(s=>S.status[s.code]!=="pa
 // ---- view state ----
 let V={view:"home",sec:null,subj:null};
 let quiz=null, drill=null, mock=null, mockTimer=null, diag=null;
-function go(view,extra){Object.assign(V,{view},extra||{});if(view==="unit"&&V.sec){S.lastSec=V.sec;save();ayiaState("thinking");}else if(view==="home"){ayiaState("welcome");}closeDrawer();render();window.scrollTo(0,0);}
+function go(view,extra){Object.assign(V,{view},extra||{});if(view==="unit"&&V.sec){S.lastSec=V.sec;S.lastSecUpdated=Date.now();save();ayiaState("thinking");}else if(view==="home"){ayiaState("welcome");}closeDrawer();render();window.scrollTo(0,0);}
 function render(){
   if(!COURSE)return;
   document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lv===S.lv));
@@ -773,6 +774,34 @@ function vMe(){
   $("#rstB").onclick=()=>{$("#rst").innerHTML=`<span class="small">確定清除全部作答與紀錄？無法復原。</span><button class="btn sm" id="ry">清除</button><button class="btn soft sm" id="rn">取消</button>`;$("#ry").onclick=async()=>{try{await attachmentAction("clear");}catch(e){alert("本機附件可能未完全清除："+e.message);}S=blank();save();render();};$("#rn").onclick=()=>render();};
 }
 
+
+// Safe cloud bridge for the optional Supabase module. Preserve previous local data.
+// Multi-device merge uses maxima for counters/scores (not sums) to avoid duplicating attempts.
+function mergeStudyState(a,b){
+  if(!b||typeof b!=="object")return Object.assign(blank(),a||{});
+  const out=Object.assign(blank(),b,a);
+  for(const key of ["best","read","status","feyn"]){out[key]={...(b[key]||{}),...(a[key]||{})};}
+  for(const [id,val] of Object.entries(b.best||{}))out.best[id]=Math.max(Number(a.best?.[id]||0),Number(val||0));
+  out.q={...(b.q||{})};
+  for(const [id,val] of Object.entries(a.q||{})){const old=out.q[id];out.q[id]=old?[Math.max(old[0]||0,val[0]||0),Math.max(old[1]||0,val[1]||0),Math.max(old[2]||0,val[2]||0),(val[2]||0)>=(old[2]||0)?val[3]:old[3]]:val;}
+  out.days={...(b.days||{})};for(const [d,v] of Object.entries(a.days||{})){const old=out.days[d]||{a:0,c:0};out.days[d]={a:Math.max(old.a||0,v.a||0),c:Math.max(old.c||0,v.c||0)};}
+  out.drills={...(b.drills||{})};for(const [k,v] of Object.entries(a.drills||{}))if(!out.drills[k]||v.length>out.drills[k].length)out.drills[k]=v;
+  out.mocks=[...(b.mocks||[])];for(const m of a.mocks||[])if(!out.mocks.some(x=>JSON.stringify(x)===JSON.stringify(m)))out.mocks.push(m);
+  out.vault=[...(b.vault||[])];for(const n of a.vault||[])if(!out.vault.some(x=>x.title===n.title&&x.body===n.body&&x.date===n.date))out.vault.push(n);
+  out.srs={...(b.srs||{})};for(const [id,v] of Object.entries(a.srs||{}))if(!out.srs[id]||(v.last||0)>=(out.srs[id].last||0))out.srs[id]=v;
+  const localStamp=a.lastSecUpdated||0,remoteStamp=b.lastSecUpdated||0;
+  if(remoteStamp>localStamp){out.lastSec=b.lastSec;out.lastSecUpdated=remoteStamp;}
+  out.attachments=a.attachments||[]; // IndexedDB attachments are on-device only
+  return out;
+}
+window.IPAS_BRIDGE={
+  snapshot:()=>{const data=JSON.parse(JSON.stringify(S));delete data.attachments;return data;},
+  attachUser:(uid,remote)=>{const old=S;const userKey=KEY+"-account-"+uid;let cached=null;try{const raw=localStorage.getItem(userKey);if(raw)cached=JSON.parse(raw);}catch(e){}
+    S=mergeStudyState(mergeStudyState(old,cached||{}),remote||{});activeSaveKey=userKey;save();render();},
+  signOut:()=>{activeSaveKey=KEY;S=blank();save();render();},
+  updateCloudName:(name)=>{S.localName=String(name||"").slice(0,35);save();render();}
+};
+
 // ---- boot ----
 document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{S.lv=b.dataset.lv;save();drill=null;quiz=null;V.subj=null;if(V.view==="unit"||V.view==="diag")V.view="units";render();});
 document.getElementById("studySearch").addEventListener("keydown",e=>{if(e.key!=="Enter")return;const term=e.target.value.trim().toLocaleLowerCase("zh-Hant");if(!term||!COURSE)return;const matches=ORDER.filter(code=>{const x=SECS[code];return x.lv===S.lv&&(code.toLowerCase().includes(term)||x.sec.name.toLocaleLowerCase("zh-Hant").includes(term)||x.ch.name.toLocaleLowerCase("zh-Hant").includes(term));});if(matches.length)openUnit(matches[0]);else{ayiaState("thinking");document.getElementById("ayiaText").textContent="目前找不到符合的單元。試試更短的詞，或從左側目次選擇。";}});
@@ -788,5 +817,6 @@ Promise.all([fetch("course.json").then(r=>r.json()),fetch("bank.json").then(r=>r
 }).catch(()=>{$("#main").innerHTML=`<div class="card">題庫載入失敗，請重新整理頁面。</div>`;});
 })();
 </script>
+<script type="module" src="cloud.js"></script>
 </body>
 </html>
