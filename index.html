@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>AI應用規劃師備考室</title>
+<title>iPAS AI 備考室｜免費 AI 應用規劃師學習</title>
 <meta name="description" content="經濟部 iPAS AI應用規劃師初級、中級備考：單元重點、官方公告試題即時解析、刷題、整卷模擬考與學習進度。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect x=%222%22 y=%222%22 width=%2228%22 height=%2228%22 rx=%225%22 fill=%22%23fffdf8%22 stroke=%22%23bf6534%22 stroke-width=%222.5%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2216%22 text-anchor=%22middle%22 fill=%22%23bf6534%22%3E%E5%82%99%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -168,13 +168,46 @@ footer{max-width:1200px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-rig
 }
 @media (max-width:560px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.brand small{display:none}.steps{font-size:.8rem}}
 @media (prefers-reduced-motion:reduce){.toc{transition:none}}
+
+/* Aiya free edition: readable anime-academy design, additive to the existing app */
+:root{--paper:#f4f7ff;--card:#fff;--ink:#20294a;--muted:#525f7b;--line:#d8e1f5;--matcha:#585bc5;--matcha-soft:#eae9ff;--kaki:#7151bd;--kaki-soft:#f3eaff;--ai:#2856a6;--ai-soft:#eaf2ff;--ok:#246c54;--ok-soft:#e4f4ed;--ng:#a43453;--ng-soft:#fff0f3;--f-display:"Noto Sans TC",-apple-system,"Microsoft JhengHei",sans-serif;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--paper:#f4f7ff;--card:#fff;--ink:#20294a;--muted:#525f7b;--line:#d8e1f5;--matcha:#585bc5;--matcha-soft:#eae9ff;--kaki:#7151bd;--kaki-soft:#f3eaff;--ai:#2856a6;--ai-soft:#eaf2ff;--ok:#246c54;--ok-soft:#e4f4ed;--ng:#a43453;--ng-soft:#fff0f3;color-scheme:light}}
+body{background:radial-gradient(circle at 95% 0%,#e8e7ff 0,transparent 33%),radial-gradient(circle at 4% 25%,#e7f3ff 0,transparent 32%),var(--paper);color:var(--ink)}
+.top{background:rgba(255,255,255,.97);box-shadow:0 4px 22px rgba(45,66,141,.06)}
+.seal{border-color:var(--matcha);color:var(--matcha);background:var(--matcha-soft);border-radius:11px;font-family:var(--f-body);font-weight:700}
+.brand h1{font-family:var(--f-body);font-size:1.06rem}
+.card,.unit{box-shadow:0 7px 26px rgba(63,81,156,.045);border-radius:16px}
+h1,h2,h3,h4{font-family:var(--f-body);letter-spacing:0}
+button,.btn,.iconbtn{border-radius:11px}
+.btn{background:#4847aa;color:#fff;border-color:#4847aa}
+.btn.ghost{color:#34336f;border-color:#34336f}
+.btn:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #404bb5;outline-offset:3px}
+.reading{font-size:1.06rem;line-height:2;color:#20294a}
+.reading li{margin-bottom:.45em}
+.small,.note,.muted,th{color:#52617d}
+.toc button.sec{padding:7px 8px}
+.toc button.sec[aria-current=true]{background:#e7ebff;color:#273681}
+.ayia-panel{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:14px;background:linear-gradient(125deg,#f5f2ff,#eaf5ff);border:1px solid #cfdafa;border-radius:18px;padding:13px 16px;margin-bottom:16px;box-shadow:0 6px 22px #3449a00e}
+.ayia-face{width:70px;height:70px;border:2px solid #b1bef7;border-radius:24px;display:grid;place-items:center;font-size:2.6rem;background:#fff;flex-shrink:0;position:relative}
+.ayia-face::after{content:"✦";position:absolute;right:-6px;top:-12px;color:#dd9d3d;font-size:1.2rem}
+.ayia-panel strong{color:#32358f;font-size:1rem}
+.ayia-panel p{line-height:1.55;font-size:.95rem;margin:3px 0 7px}
+.ayia-actions{display:flex;gap:8px;flex-wrap:wrap}
+.ayia-actions button{background:#fff;border:1px solid #b6c8e7;color:#263f82;padding:4px 10px;font-size:.82rem;cursor:pointer}
+.free-tag{font-size:.73rem;background:#e5f7ef;color:#21644c;padding:2px 8px;border-radius:999px;font-weight:700;white-space:nowrap}
+.ayia-quick{border:1px solid #cbd7f7;background:#f2f5ff;border-radius:14px;padding:13px 15px;margin-bottom:14px}
+.ayia-quick h3{font-size:1rem;margin-bottom:5px}
+.ayia-quick p{font-size:.9rem;margin-bottom:9px}
+@media(max-width:680px){.ayia-panel{grid-template-columns:56px minmax(0,1fr);padding:11px;gap:11px}.ayia-face{height:54px;width:54px;font-size:1.8rem}.brand h1{font-size:.95rem}.free-tag{font-size:.69rem}.reading{font-size:1.02rem}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
 <header class="top">
   <div class="top-in">
     <button class="iconbtn" id="tocBtn" aria-pressed="true" aria-controls="toc" title="顯示或隱藏目次">☰ 目次</button>
-    <div class="brand"><span class="seal">備</span><h1>AI應用規劃師備考室</h1><small>經濟部 iPAS・評鑑範圍 115.06 版</small></div>
+    <div class="brand"><span class="seal">✦</span><h1>iPAS AI 備考室</h1><small>日系動畫研究所・115.06 範圍</small><span class="free-tag">完全免費</span></div>
     <div class="seg" role="group" aria-label="級別">
       <button data-lv="P" aria-pressed="true">初級</button>
       <button data-lv="M" aria-pressed="false">中級</button>
@@ -192,7 +225,7 @@ footer{max-width:1200px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-rig
 <div class="shell" id="shell">
   <aside class="toc" id="toc" aria-label="目次"></aside>
   <div class="drawer-bg" id="drawerBg"></div>
-  <main id="main"><div class="card">正在載入題庫與單元內容…</div></main>
+  <div style="min-width:0"><section class="ayia-panel" id="ayiaPanel" aria-live="polite"><div class="ayia-face" id="ayiaFace" role="img" aria-label="愛芽 AI 學習小導師">👩🏻‍🔬</div><div><strong>✦ 愛芽 Aiya｜你的免費學習小導師</strong><p id="ayiaText">歡迎來到研究所！我們一起穩穩地準備 iPAS。</p><div class="ayia-actions"><button id="ayiaEncourage" type="button">給我鼓勵</button><button id="ayiaReturn" type="button" hidden>繼續上次單元</button></div></div></section><main id="main"><div class="card">正在載入題庫與單元內容…</div></main></div>
 </div>
 
 <footer>
@@ -221,6 +254,23 @@ function load(){try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(blank
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 load();
 
+
+// Aiya mentor is local rule-based guidance; it never sends study data to an API.
+const AYIA_LINES={
+  standby:"隨時都在！今天先讀懂一個概念，再做幾題練習吧。",
+  welcome:"歡迎回來！有進度就很棒，我們從上次的地方接著學。",
+  thinking:"先找出題幹關鍵字，再用自己的話解釋選項。",
+  encourage:"你已經跨出重要的一步！保持節奏，比一次讀很多更有用。",
+  retry:"答錯也是有效的學習。先看解析，再想想為什麼其他選項不對。",
+  celebrate:"完成一個單元了！恭喜你，今天又離目標更近一步。"
+};
+function ayiaState(state){const faces={standby:"👩🏻‍🔬",welcome:"😊",thinking:"🤔",encourage:"💪",retry:"🫶",celebrate:"🎉"};const t=document.getElementById("ayiaText"),a=document.getElementById("ayiaFace");if(t)t.textContent=AYIA_LINES[state]||AYIA_LINES.standby;if(a)a.textContent=faces[state]||faces.standby;}
+function latestSection(){const code=S.lastSec;return code&&SECS[code]&&SECS[code].lv===S.lv?SECS[code]:null;}
+function restoreLast(){const x=latestSection();if(x)go("unit",{sec:x.sec.code,subj:x.subj.code});}
+function updateMentor(){const x=latestSection(),b=document.getElementById("ayiaReturn");if(b){b.hidden=!x;b.textContent=x?"繼續上次單元："+x.sec.code:"繼續上次單元";}}
+document.getElementById("ayiaEncourage").addEventListener("click",()=>ayiaState("encourage"));
+document.getElementById("ayiaReturn").addEventListener("click",restoreLast);
+
 // ---- progress helpers ----
 function logDay(ok){const k=today();const d=S.days[k]||{a:0,c:0};d.a++;if(ok)d.c++;S.days[k]=d;}
 function recordQ(q,ok){const r=S.q[q.id]||[0,0,0,0];ok?r[0]++:r[1]++;r[2]=dayNum(today());r[3]=ok?1:0;S.q[q.id]=r;logDay(ok);}
@@ -236,7 +286,7 @@ function openSubjects(){return lvObj().subjects.filter(s=>S.status[s.code]!=="pa
 // ---- view state ----
 let V={view:"home",sec:null,subj:null};
 let quiz=null, drill=null, mock=null, mockTimer=null, diag=null;
-function go(view,extra){Object.assign(V,{view},extra||{});closeDrawer();render();window.scrollTo(0,0);}
+function go(view,extra){Object.assign(V,{view},extra||{});if(view==="unit"&&V.sec){S.lastSec=V.sec;save();ayiaState("thinking");}else if(view==="home"){ayiaState("welcome");}closeDrawer();render();window.scrollTo(0,0);}
 function render(){
   if(!COURSE)return;
   document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lv===S.lv));
@@ -245,6 +295,7 @@ function render(){
   $("#toc").hidden=wide&&!S.toc; $("#shell").classList.toggle("noToc",wide&&!S.toc);
   $("#tocBtn").setAttribute("aria-pressed",wide?String(S.toc):"false");
   renderToc();
+  updateMentor();
   ({home:vHome,units:vUnits,unit:vUnit,drill:vDrill,mock:vMock,me:vMe,diag:vDiag})[V.view]();
 }
 function renderToc(){
@@ -367,6 +418,7 @@ function pickFor(pool,k){
 }
 function vUnit(){
   const {sec,ch,subj}=SECS[V.sec];
+  if(S.lastSec!==sec.code){S.lastSec=sec.code;save();}
   const ord=ORDER.filter(c=>SECS[c].lv===S.lv); const i=ord.indexOf(sec.code); const prev=ord[i-1],nxt=ord[i+1];
   const qs=secQs(sec.code);
   if(!quiz||quiz.sec!==sec.code) quiz={sec:sec.code,list:pickFor(qs,8),ans:{},c:0};
@@ -560,7 +612,7 @@ function vMe(){
     h+=`<tr><td>${ch.code} ${esc(ch.name)}</td><td style="min-width:110px"><div class="bar"><i style="width:${dn/ch.sections.length*100}%"></i></div><span class="note">${dn}/${ch.sections.length}</span></td><td class="num">${seenN(qs)}/${qs.length}</td><td class="num">${la===null?"—":pct(la)}</td></tr>`;}
   h+=`</tbody></table></div></div>`;
   h+=`<div class="card"><h3>科目狀態</h3><p class="small muted">標記為已通過的科目，總覽會改為建議下一科。</p><div class="tbl" style="margin-top:8px"><table><tbody>${COURSE.levels.map(l=>l.subjects.map(s=>`<tr><td>${l.name}　${s.code} ${esc(s.name)}</td><td><select data-st="${s.code}" aria-label="${esc(s.name)}狀態"><option value="">準備中</option><option value="pass" ${S.status[s.code]==="pass"?"selected":""}>已通過</option></select></td></tr>`).join("")).join("")}</tbody></table></div></div>`;
-  h+=`<div class="card"><h3>存檔與換裝置</h3><p class="small">進度自動存在這個瀏覽器，關閉網頁再打開仍會保留。要換手機或電腦時，先在這裡匯出備份檔，到新裝置的同一個網址匯入即可。清除瀏覽器資料或使用無痕視窗會讓進度消失，請定期匯出。</p>
+  h+=`<div class="card"><h3>存檔與換裝置（免費／無帳號）</h3><p class="small">進度自動存在這個瀏覽器，關閉網頁再打開仍會保留。要換手機或電腦時，先在這裡匯出備份檔，到新裝置的同一個網址匯入即可。清除瀏覽器資料或使用無痕視窗會讓進度消失，請定期匯出。</p>
   <div class="row" style="margin-top:10px"><button class="btn" id="exp">匯出備份檔</button><label class="btn soft" for="impF" style="cursor:pointer">匯入備份檔</label><input type="file" id="impF" accept="application/json,.json" hidden></div><p class="small muted" id="bk" style="margin-top:6px"></p>
   <div class="row" style="margin-top:14px" id="rst"><button class="btn ghost sm" id="rstB">清除全部進度</button></div></div>`;
   $("#main").innerHTML=`<div class="view">${h}</div>`;
@@ -579,6 +631,7 @@ window.matchMedia("(min-width:901px)").addEventListener("change",()=>{closeDrawe
 Promise.all([fetch("course.json").then(r=>r.json()),fetch("bank.json").then(r=>r.json())]).then(([c,b])=>{
   COURSE=c;BANK=b;
   for(const lv of COURSE.levels)for(const s of lv.subjects)for(const ch of s.chapters)for(const sec of ch.sections){SECS[sec.code]={sec,ch,subj:s,lv:lv.id};ORDER.push(sec.code);}
+  ayiaState("welcome");
   render();
 }).catch(()=>{$("#main").innerHTML=`<div class="card">題庫載入失敗，請重新整理頁面。</div>`;});
 })();
