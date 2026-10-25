@@ -56,6 +56,9 @@ try{
  await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
  await page.locator(".cloud-account-host button").waitFor({timeout:15000});
  assert.match(await page.locator(".cloud-account-host button").innerText(),/登入/);
+ const mobileGeometry=await page.evaluate(()=>({viewport:innerWidth,scroll:document.documentElement.scrollWidth,header:document.querySelector(".top").getBoundingClientRect().height}));
+ assert.ok(mobileGeometry.scroll<=mobileGeometry.viewport+2,"cloud account controls overflow mobile viewport: "+JSON.stringify(mobileGeometry));
+ assert.ok(mobileGeometry.header<230,"cloud account controls make mobile header too tall: "+JSON.stringify(mobileGeometry));
  await page.locator(".cloud-account-host button").click();
  await page.locator("#cloudEmail").fill("a@example.test");
  await page.locator("#cloudPassword").fill("password123");
