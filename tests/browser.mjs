@@ -37,6 +37,16 @@ async function run(label,size){
       const b=await n.boundingBox();assert.ok(b&&b.x>=-1&&b.x+b.width<=viewport.width+1,"chapter card clipped offscreen");
     }
   }
+  if(label==="desktop"){
+    const geometry=await page.evaluate(()=>({
+      mapTop:document.querySelector(".dash-map").getBoundingClientRect().top,
+      mapWidth:document.querySelector(".dash-map").getBoundingClientRect().width,
+      heroHeight:document.querySelector(".dash-hero").getBoundingClientRect().height
+    }));
+    assert.ok(geometry.mapTop<700,"desktop map begins too far below fold: "+JSON.stringify(geometry));
+    assert.ok(geometry.mapWidth>450,"desktop map too narrow: "+JSON.stringify(geometry));
+    assert.ok(geometry.heroHeight<340,"desktop hero excessively tall: "+JSON.stringify(geometry));
+  }
   await page.screenshot({path:"home-"+label+".png",fullPage:true});
   await page.screenshot({path:"home-fold-"+label+".png",fullPage:false});
   const broken=await page.locator("img").evaluateAll(images=>images.filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.getAttribute("src")));
