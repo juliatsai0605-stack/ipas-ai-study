@@ -41,6 +41,17 @@ async function run(label,size){
   await page.screenshot({path:"home-fold-"+label+".png",fullPage:false});
   const broken=await page.locator("img").evaluateAll(images=>images.filter(i=>!i.complete||i.naturalWidth===0).map(i=>i.getAttribute("src")));
   assert.deepEqual(broken,[],"broken site illustrations");
+  if(label==="mobile"){
+    const header=await page.locator(".top").boundingBox();
+    assert.ok(header&&header.height<235,"mobile navigation exceeds 235px");
+    const nodes=await page.locator(".dash-map .dash-node").all();
+    assert.equal(nodes.length,5,"five complete chapter cards required");
+    const vw=page.viewportSize().width;
+    for(let i=0;i<nodes.length;i++){
+      const r=await nodes[i].boundingBox();
+      assert.ok(r&&r.left>=-2&&r.right<=vw+2,"CH"+(i+1)+" clipped on mobile");
+    }
+  }
   const heroRect=await page.locator(".dash-hero").boundingBox();
   assert.ok(heroRect&&heroRect.width>0&&heroRect.height>0,"hero must be visible");
   const characterRect=await page.locator(".dash-character img").boundingBox();
