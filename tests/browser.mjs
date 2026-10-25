@@ -10,6 +10,13 @@ async function run(label,size){
   await page.locator("#dashContinue").waitFor({timeout:20000});
   assert.match(await page.locator("body").innerText(),/iPAS AI 備考室/);
   assert.ok(await page.locator('img[src^="img/aiya"]').count()>0);
+  assert.equal(await page.locator(".dash-hero").count(),1,"research-lab hero missing");
+  assert.equal(await page.locator(".dash-stats .dash-stat").count(),4,"four progress cards required");
+  assert.equal(await page.locator(".dash-map .dash-node").count(),5,"five-step learning path required");
+  assert.equal(await page.locator(".dash-map .dash-route").count(),1,"visual learning route missing");
+  assert.equal(await page.locator(".dash-achievements .dash-medal").count(),4,"achievements must be visible");
+  assert.equal(await page.getByText("升級 Gold 會員").count(),0,"no paid membership prompts");
+  for(const n of await page.locator(".dash-map .dash-node").all())assert.ok(await n.isVisible());
   await page.screenshot({path:"home-"+label+".png",fullPage:true});
   await page.locator("#dashContinue").click();
   await page.locator(".sec-head h2").waitFor();
