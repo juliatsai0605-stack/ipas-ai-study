@@ -128,7 +128,9 @@ async function runAccountIsolation(){
   const storedBlob=await page.evaluate(async()=>{
     const record=JSON.parse(localStorage.getItem("ipas-ai-study-v4-account-test-account-a")||"{}").attachments?.[0];
     if(!record)return {record:false};
-    const data=await attachmentAction("get",record.id);
+    const db=await new Promise((resolve,reject)=>{const req=indexedDB.open("ipas-ai-study-attachments",1);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});
+    const data=await new Promise((resolve,reject)=>{const req=db.transaction("files","readonly").objectStore("files").get(record.id);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});
+    db.close();
     return {record:true,stored:!!data,blob:!!data?.blob,size:data?.blob?.size||0};
   });
   assert.ok(storedBlob.stored&&storedBlob.blob,"account A binary file lost during B reset: "+JSON.stringify(storedBlob));
