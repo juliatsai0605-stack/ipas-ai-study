@@ -17,7 +17,10 @@ grant select,insert,update on public.study_profiles to authenticated;
 -- Private storage namespace; only the logged-in owner can see their own folder.
 insert into storage.buckets (id,name,public,file_size_limit,allowed_mime_types)
 values ('study-files','study-files',false,10485760,array['application/pdf','text/plain','text/markdown','application/vnd.openxmlformats-officedocument.wordprocessingml.document','image/png','image/jpeg'])
-on conflict (id) do nothing;
+on conflict (id) do update set
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 drop policy if exists "study files own select" on storage.objects;
 drop policy if exists "study files own insert" on storage.objects;
 drop policy if exists "study files own delete" on storage.objects;
