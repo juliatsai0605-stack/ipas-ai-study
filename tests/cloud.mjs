@@ -92,8 +92,12 @@ try{
  await page.locator(".cloud-account-host button").click();
  await page.locator("#cloudEmail").fill("a@example.test");
  await page.locator("#cloudPassword").fill("password123");
+ await page.locator("#cloudSignUp").click();
+ assert.match(await page.locator("#cloudMessage").innerText(),/註冊申請已送出/,"signup confirmation flow");
  await page.locator("#cloudSignIn").click();
  await page.locator("#cloudSignedIn").waitFor({state:"visible",timeout:15000});
+ await page.evaluate(()=>window.IPAS_BRIDGE.updateCloudName("雲端跨裝置續學"));
+ await page.waitForFunction(()=>window.__cloudMock.records["test-a"].state.localName==="雲端跨裝置續學",{timeout:15000});
  // Actual upload/list/download/delete UI flow against an RLS-enforcing Supabase mock.
  await page.locator("#cloudUpload").setInputFiles({name:"study-note.txt",mimeType:"text/plain",buffer:Buffer.from("private A study content")});
  await page.locator("#cloudUploadBtn").click();
@@ -108,11 +112,14 @@ try{
  await page.locator("#cloudSignOut").click();
  await page.locator("#cloudAnonymous").waitFor({state:"visible",timeout:15000});
  assert.equal(await page.locator(".vault-entry").count(),0,"signed-out users must not see A cloud attachments");
+ // Emulate a fresh second device by clearing account-local cache before reading remote profile.
+ await page.evaluate(()=>localStorage.removeItem("ipas-ai-study-v4-account-test-a"));
  // Re-login A to check that the private attachment is persisted and deletable.
  await page.locator("#cloudEmail").fill("a@example.test");
  await page.locator("#cloudPassword").fill("password123");
  await page.locator("#cloudSignIn").click();
  await page.locator("#cloudSignedIn").waitFor({state:"visible",timeout:15000});
+ await page.waitForFunction(()=>window.IPAS_BRIDGE.snapshot().localName==="雲端跨裝置續學",{timeout:15000});
  await page.locator("#cloudRefreshFiles").click();
  await page.locator(".vault-entry").first().waitFor({timeout:15000});
  page.once("dialog",async dialog=>dialog.accept());
@@ -158,5 +165,5 @@ try{
  const record=await page.evaluate(()=>window.__cloudMock.records["test-b"].state.localName);
  assert.notEqual(record,"不應覆寫遠端","failed cloud read must not overwrite remote profile");
  assert.deepEqual(errors,[],"unexpected browser JavaScript errors");
- console.log("PASS cloud-auth-mock: sign-in, sign-out, profile isolation, private upload/download/delete, storage RLS mock, upload limits, failed-read write gate");
+ console.log("PASS cloud-auth-mock: sign-in, sign-out, profile isolation, private upload/download/delete, storage RLS mock, cloud roundtrip after clearing local cache, upload limits, failed-read write gate");
 }finally{await browser.close();}
