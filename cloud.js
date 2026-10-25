@@ -12,7 +12,7 @@ let cfg;
 try{const response=await fetch("/api/cloud-config",{cache:"no-store"});cfg=response.ok?await response.json():null;}catch(e){cfg=null;}
 if(cfg?.configured&&cfg.url&&cfg.publishableKey){
   try{
-    const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
+    const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2.57.0");
     const supabase=createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     let user=null,syncTimer=null,busy=false,queued=false,filesBusy=false;
     const button=document.createElement("button");
@@ -109,7 +109,9 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
       if(file.size>10485760){msg("單檔上限 10 MB");return;}
       if(!/\.(pdf|docx|txt|md|png|jpe?g)$/i.test(file.name)){msg("不支援此檔案格式");return;}
       const safe=file.name.replace(/[^\p{L}\p{N}._-]/gu,"_").slice(0,90),path=user.id+"/"+crypto.randomUUID()+"-"+safe;
-      const {error}=await supabase.storage.from("study-files").upload(path,file,{cacheControl:"0",upsert:false,contentType:file.type||"application/octet-stream"});
+      const ext=(file.name.split(".").pop()||"").toLowerCase();
+      const mimeMap={pdf:"application/pdf",docx:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",txt:"text/plain",md:"text/markdown",png:"image/png",jpg:"image/jpeg",jpeg:"image/jpeg"};
+      const {error}=await supabase.storage.from("study-files").upload(path,file,{cacheControl:"0",upsert:false,contentType:mimeMap[ext]||file.type||"application/octet-stream"});
       if(error)msg("上傳失敗："+error.message);else{msg("附件已存入私人雲端檔案庫");q("cloudUpload").value="";refreshFiles();}
     };
     supabase.auth.onAuthStateChange((_event,session)=>queueMicrotask(()=>handleAuth(session)));
