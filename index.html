@@ -305,7 +305,15 @@ body{background:#f5f7ff}
 .study-day.active{background:#e5e8ff;border-color:#b1b9f1;color:#363991}
 .study-day b{font-size:.76rem}.study-day span{font-size:.7rem}
 @media(max-width:500px){.study-days{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.vault-list{display:grid;gap:10px;margin-top:15px}.vault-entry{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;background:#f5f7ff;border:1px solid #dbe2f5;border-radius:12px;padding:13px;min-width:0}.vault-entry>div{min-width:0}.vault-entry small{display:block;color:#596888}.vault-entry p{white-space:pre-wrap;overflow-wrap:anywhere;max-height:220px;overflow:auto;margin:8px 0;font-size:.88rem}</style>
+.vault-list{display:grid;gap:10px;margin-top:15px}.vault-entry{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;background:#f5f7ff;border:1px solid #dbe2f5;border-radius:12px;padding:13px;min-width:0}.vault-entry>div{min-width:0}.vault-entry small{display:block;color:#596888}.vault-entry p{white-space:pre-wrap;overflow-wrap:anywhere;max-height:220px;overflow:auto;margin:8px 0;font-size:.88rem}
+/* Original Aiya visual asset replaces temporary CSS stick-figure. */
+.dash-character{height:285px;width:290px;position:relative;display:flex;align-items:end;justify-content:center;overflow:visible}
+.dash-character img{display:block;width:240px;height:300px;object-fit:contain;filter:drop-shadow(0 10px 12px #757bc031)}
+.aiya-speech{position:absolute;top:10px;right:-34px;max-width:148px;background:#ffffffec;border:1px solid #dddafa;color:#4c5187;border-radius:16px 16px 16px 2px;padding:8px 11px;line-height:1.45;font-size:.76rem;font-weight:700;box-shadow:0 6px 13px #545b921c}
+.ayia-face{height:84px;width:72px;border-radius:17px;overflow:hidden;align-self:start;background:#f3f4ff}
+.ayia-face img{height:83px;width:65px;object-fit:cover;object-position:top}
+@media(max-width:650px){.dash-character{width:230px;height:180px;transform:none;margin:0;justify-self:end}.dash-character img{width:170px;height:195px}.aiya-speech{right:125px;top:8px;width:145px;max-width:145px}}
+</style>
 </head>
 <body>
 <header class="top">
@@ -329,7 +337,7 @@ body{background:#f5f7ff}
 <div class="shell" id="shell">
   <aside class="toc" id="toc" aria-label="目次"></aside>
   <div class="drawer-bg" id="drawerBg"></div>
-  <div style="min-width:0"><section class="ayia-panel" id="ayiaPanel" aria-live="polite"><div class="ayia-face" id="ayiaFace" role="img" aria-label="愛芽 AI 學習小導師">👩🏻‍🔬</div><div><strong>✦ 愛芽 Aiya｜你的免費學習小導師</strong><p id="ayiaText">歡迎來到研究所！我們一起穩穩地準備 iPAS。</p><div class="ayia-actions"><button id="ayiaEncourage" type="button">給我鼓勵</button><button id="ayiaReturn" type="button" hidden>繼續上次單元</button></div></div></section><main id="main"><div class="card">正在載入題庫與單元內容…</div></main></div>
+  <div style="min-width:0"><section class="ayia-panel" id="ayiaPanel" aria-live="polite"><div class="ayia-face" id="ayiaFace" role="img" aria-label="愛芽 AI 學習小導師"><img src="img/aiya.svg" alt="" width="64" height="84"></div><div><strong>✦ 愛芽 Aiya｜你的免費學習小導師</strong><p id="ayiaText">歡迎來到研究所！我們一起穩穩地準備 iPAS。</p><div class="ayia-actions"><button id="ayiaEncourage" type="button">給我鼓勵</button><button id="ayiaReturn" type="button" hidden>繼續上次單元</button></div></div></section><main id="main"><div class="card">正在載入題庫與單元內容…</div></main></div>
 </div>
 
 <footer>
@@ -368,7 +376,7 @@ const AYIA_LINES={
   retry:"答錯也是有效的學習。先看解析，再想想為什麼其他選項不對。",
   celebrate:"完成一個單元了！恭喜你，今天又離目標更近一步。"
 };
-function ayiaState(state){const faces={standby:"👩🏻‍🔬",welcome:"😊",thinking:"🤔",encourage:"💪",retry:"🫶",celebrate:"🎉"};const t=document.getElementById("ayiaText"),a=document.getElementById("ayiaFace");if(t)t.textContent=AYIA_LINES[state]||AYIA_LINES.standby;if(a){a.textContent=faces[state]||faces.standby;a.dataset.state=state;}}
+function ayiaState(state){const faces={standby:"👩🏻‍🔬",welcome:"😊",thinking:"🤔",encourage:"💪",retry:"🫶",celebrate:"🎉"};const t=document.getElementById("ayiaText"),a=document.getElementById("ayiaFace");if(t)t.textContent=AYIA_LINES[state]||AYIA_LINES.standby;if(a){a.dataset.state=state;const im=a.querySelector("img");if(im){im.style.transform=state==="celebrate"?"translateY(-5px) rotate(-5deg)":state==="thinking"?"rotate(4deg)":"";}else a.textContent=faces[state]||faces.standby;}}
 function latestSection(){const code=S.lastSec;return code&&SECS[code]&&SECS[code].lv===S.lv?SECS[code]:null;}
 function restoreLast(){const x=latestSection();if(x)go("unit",{sec:x.sec.code,subj:x.subj.code});}
 function updateMentor(){const x=latestSection(),b=document.getElementById("ayiaReturn");if(b){b.hidden=!x;b.textContent=x?"繼續上次單元："+x.sec.code:"繼續上次單元";}}
@@ -470,7 +478,7 @@ function vHome(){
   const continueText=lesson?"接續 "+lesson.sec.code+" · "+lesson.sec.name:"挑選課程開始學習";
   let h=`<div class="dash">
     <div class="dash-heading"><div><span class="dash-eyebrow">✦ AI STUDY LAB · 免費學習空間</span><h2>我的學習研究室 <span class="dash-spark">✧</span></h2><p>${S.localName?"歡迎回來，"+esc(S.localName)+"！":"在這裡累積知識、練習與每一次的小進步。"}</p></div><label class="dash-switch">學習科目 <select id="subjSel" aria-label="選擇準備科目">${lv.subjects.map(x=>`<option value="${x.code}" ${x.code===subj.code?"selected":""}>${x.code} ${esc(x.name)}</option>`).join("")}</select></label></div>
-    <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" aria-label="愛芽 Aiya，小小 AI 學習導師" role="img"><div class="dash-halo"></div><div class="dash-hair"></div><div class="dash-face"><i class="eye left"></i><i class="eye right"></i><i class="mouth"></i><i class="blush left"></i><i class="blush right"></i></div><div class="dash-coat"><span>AI</span></div><div class="dash-orb">✦</div><div class="dash-star">✧</div></div></section>
+    <section class="dash-hero"><div class="dash-hero-copy"><div class="dash-label">愛芽 Aiya 的學習研究所 · 完全免費</div><h2>今天也一起，<br><span>朝 iPAS 目標前進！</span></h2><p>「學習不用趕，一次掌握一個概念。需要幫忙時，我就在這裡。」</p><button class="btn dash-primary" id="dashContinue" type="button">▶　${esc(continueText)}</button></div><div class="dash-character" role="img" aria-label="愛芽 Aiya，藍紫髮白袍的動漫風學習導師"><img src="img/aiya.svg" width="270" height="360" alt="" loading="eager"><span class="aiya-speech">每次練習，都是靠近目標的一步。一起加油！ ✦</span></div></section>
     <section class="dash-stats" aria-label="學習紀錄摘要">
     <div class="dash-stat"><span class="dash-stat-icon lavender">◈</span><div><small>單元完成度</small><strong>${r.done}<em> / ${r.secs}</em></strong><div class="bar"><i style="width:${progress}%"></i></div></div></div>
     <div class="dash-stat"><span class="dash-stat-icon blue">◎</span><div><small>題庫已做</small><strong>${r.seen}<em> / ${r.qs}</em></strong><div class="bar"><i style="width:${r.qs?r.seen/r.qs*100:0}%"></i></div></div></div>
