@@ -60,16 +60,29 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     document.addEventListener("ipas:save",queueSync);
     window.addEventListener("online",queueSync);
     async function handleAuth(session){
-      const prevId=user?.id;user=session?.user||null;
-      if(!user){clearTimeout(syncTimer);if(prevId)window.IPAS_BRIDGE?.signOut();present();return;}
-      if(prevId===user.id){present();return;}
+      const nextUser=session?.user||null,prevId=user?.id;
+      if(!nextUser){
+        user=null;clearTimeout(syncTimer);queued=false;
+        if(prevId)window.IPAS_BRIDGE?.signOut();
+        q("cloudFiles").replaceChildren();present();return;
+      }
+      if(prevId===nextUser.id){present();return;}
+      // Never display or upload the previous account's state while the new identity loads.
+      clearTimeout(syncTimer);queued=false;
+      if(prevId)window.IPAS_BRIDGE?.signOut();
+      user=nextUser;q("cloudFiles").replaceChildren();
       present();notice.textContent="正在載入雲端進度…";
       try{
-        const {data,error}=await supabase.from("study_profiles").select("state,display_name").eq("user_id",user.id).maybeSingle();
+        const {data,error}=await supabase.from("study_profiles").select("state,display_name").eq("user_id",nextUser.id).maybeSingle();
+        if(user?.id!==nextUser.id)return; // stale response from an earlier session
         if(error)throw error;
-        window.IPAS_BRIDGE?.attachUser(user.id,data?.state||{});
+        window.IPAS_BRIDGE?.attachUser(nextUser.id,data?.state||{});
         present();queueSync();msg(data?"已載入並合併雲端學習進度":"已建立帳號，正在備份現有學習進度");
-      }catch(e){notice.textContent="登入成功，但資料同步失敗";msg("請檢查資料庫政策與連線："+e.message);}
+      }catch(e){
+        if(user?.id!==nextUser.id)return;
+        notice.textContent="登入成功，但資料同步失敗";
+        msg("雲端進度未載入；為避免覆蓋其他裝置的資料，暫停自動同步。"+e.message);
+      }
     }
     q("cloudAuthForm").onsubmit=async e=>{
       e.preventDefault();const email=q("cloudEmail").value.trim(),password=q("cloudPassword").value;
@@ -88,18 +101,19 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     q("cloudSyncNow").onclick=push;
     q("cloudSaveName").onclick=()=>{window.IPAS_BRIDGE?.updateCloudName(q("cloudDisplayName").value.trim());msg("名稱已更新，正在同步。");};
     async function refreshFiles(){
-      if(!user||filesBusy)return;filesBusy=true;q("cloudFiles").replaceChildren();
+      if(!user||filesBusy)return;const fileOwner=user.id;filesBusy=true;q("cloudFiles").replaceChildren();
       const spinner=document.createElement("p");spinner.textContent="正在讀取附件…";q("cloudFiles").appendChild(spinner);
       try{
-        const {data,error}=await supabase.storage.from("study-files").list(user.id,{limit:100,sortBy:{column:"created_at",order:"desc"}});
+        const {data,error}=await supabase.storage.from("study-files").list(fileOwner,{limit:100,sortBy:{column:"created_at",order:"desc"}});
+        if(user?.id!==fileOwner)return;
         if(error)throw error;q("cloudFiles").replaceChildren();
         const files=(data||[]).filter(x=>x.name!==".emptyFolderPlaceholder"&&x.id);
         if(!files.length){const p=document.createElement("p");p.className="small muted";p.textContent="尚無雲端附件";q("cloudFiles").appendChild(p);}
         for(const f of files){const row=document.createElement("div");row.className="vault-entry";const title=document.createElement("span");title.textContent=f.name.slice(37)||f.name;row.appendChild(title);
           const download=document.createElement("button");download.className="btn soft sm";download.textContent="下載";
-          download.onclick=async()=>{const {data,error}=await supabase.storage.from("study-files").download(user.id+"/"+f.name);if(error){msg(error.message);return;}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=f.name.slice(37)||f.name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
+          download.onclick=async()=>{if(user?.id!==fileOwner)return;const {data,error}=await supabase.storage.from("study-files").download(fileOwner+"/"+f.name);if(error){msg(error.message);return;}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=f.name.slice(37)||f.name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
           const del=document.createElement("button");del.className="btn ghost sm";del.textContent="刪除";
-          del.onclick=async()=>{if(!confirm("確定刪除這份雲端附件？"))return;const {error}=await supabase.storage.from("study-files").remove([user.id+"/"+f.name]);if(error)msg(error.message);else refreshFiles();};
+          del.onclick=async()=>{if(user?.id!==fileOwner||!confirm("確定刪除這份雲端附件？"))return;const {error}=await supabase.storage.from("study-files").remove([fileOwner+"/"+f.name]);if(error)msg(error.message);else refreshFiles();};
           row.append(download,del);q("cloudFiles").appendChild(row);}
       }catch(e){q("cloudFiles").textContent="讀取失敗："+e.message;}finally{filesBusy=false;}
     }
