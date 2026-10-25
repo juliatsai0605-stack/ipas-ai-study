@@ -106,7 +106,7 @@ async function runAccountIsolation(){
     b.signOut();
     b.attachUser("test-account-b",{localName:"B-private-name",vault:[{title:"B-private-note",body:"private B",date:"2026-10-25"}]});
     const bState=b.snapshot();
-    return {aHasNote:a.vault?.some(n=>n.title==="A-private-note"),aHasFile:a.attachments?.some(f=>f.name==="anonymous-note.txt"),bHasA:bState.vault?.some(n=>n.title==="A-private-note"),bHasFile:(bState.attachments||[]).length,bName:bState.localName};
+    return {aHasNote:a.vault?.some(n=>n.title==="A-private-note"),aHasFile:JSON.parse(localStorage.getItem("ipas-ai-study-v4-account-test-account-a")||"{}").attachments?.some(f=>f.name==="anonymous-note.txt"),bHasA:bState.vault?.some(n=>n.title==="A-private-note"),bHasFile:(JSON.parse(localStorage.getItem("ipas-ai-study-v4-account-test-account-b")||"{}").attachments||[]).length,bName:bState.localName};
   });
   assert.ok(initial.aHasNote&&initial.aHasFile,"first login must migrate anonymous attachment and preserve notes: "+JSON.stringify(initial));
   assert.equal(initial.bHasA,false,"second account must not see first account notes");
@@ -120,10 +120,10 @@ async function runAccountIsolation(){
   const restored=await page.evaluate(()=>{
     const b=window.IPAS_BRIDGE;
     b.signOut();b.attachUser("test-account-a",{});
-    return b.snapshot();
+    return {state:b.snapshot(),attachments:JSON.parse(localStorage.getItem("ipas-ai-study-v4-account-test-account-a")||"{}").attachments||[]};
   });
-  assert.ok(restored.vault?.some(n=>n.title==="A-private-note"),"account A notes must survive account B reset");
-  assert.ok(restored.attachments?.some(f=>f.name==="anonymous-note.txt"),"account A attachment must survive account B reset");
+  assert.ok(restored.state.vault?.some(n=>n.title==="A-private-note"),"account A notes must survive account B reset");
+  assert.ok(restored.attachments.some(f=>f.name==="anonymous-note.txt"),"account A attachment must survive account B reset");
   await page.locator('.tabs [data-v="me"]').click();
   const download=page.waitForEvent("download",{timeout:10000});
   await page.locator('[data-attachment-get]').first().click();
