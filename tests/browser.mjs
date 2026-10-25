@@ -17,6 +17,14 @@ async function run(label,size){
   assert.equal(await page.locator(".dash-achievements .dash-medal").count(),4,"achievements must be visible");
   assert.equal(await page.getByText("升級 Gold 會員").count(),0,"no paid membership prompts");
   for(const n of await page.locator(".dash-map .dash-node").all())assert.ok(await n.isVisible());
+  if(label==="mobile"){
+    const viewport=await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,headerHeight:document.querySelector(".top").getBoundingClientRect().height}));
+    assert.ok(viewport.scrollWidth<=viewport.width+2,"mobile horizontal overflow: "+JSON.stringify(viewport));
+    assert.ok(viewport.headerHeight<230,"mobile header obscures homepage: "+JSON.stringify(viewport));
+    for(const n of await page.locator(".dash-map .dash-node").all()){
+      const b=await n.boundingBox();assert.ok(b&&b.x>=-1&&b.x+b.width<=viewport.width+1,"chapter card clipped offscreen");
+    }
+  }
   await page.screenshot({path:"home-"+label+".png",fullPage:true});
   await page.locator("#dashContinue").click();
   await page.locator(".sec-head h2").waitFor();
