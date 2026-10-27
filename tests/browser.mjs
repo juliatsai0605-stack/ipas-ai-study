@@ -115,6 +115,7 @@ async function run(label,size){
   await checkLayout(page,label,"continue-lesson");
   await page.screenshot({path:"lesson-"+label+".png",fullPage:true,animations:"disabled"});
   await page.reload({waitUntil:"networkidle"});
+ await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("test-account-a",{}));
   await page.locator("#dashContinue").waitFor();
   assert.ok((await page.locator("#ayiaReturn").innerText()).includes("繼續上次單元"));
   await page.locator('.tabs [data-v="me"]').click();
@@ -129,6 +130,7 @@ async function run(label,size){
   await page.locator("[data-attachment-get]").waitFor({timeout:10000});
   assert.match(await page.locator("body").innerText(),/practice.txt/);
   await page.reload({waitUntil:"networkidle"});
+ await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("test-account-a",{}));
   await page.locator('.tabs [data-v="me"]').click();
   assert.equal(await page.locator("#localName").inputValue(),"測試學習者");
   assert.equal(await page.locator("[data-attachment-get]").count(),1);
