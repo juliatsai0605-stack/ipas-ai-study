@@ -15,7 +15,9 @@ jobs:
         with:
           node-version: '22'
       - name: Check site, courses, bank and cloud schemas
-        run: node tests/smoke.mjs
+        run: |
+          node tests/smoke.mjs
+          node tests/content.mjs
       - name: Set up browser tests
         run: |
           npm install --no-save playwright@1.57.0
@@ -28,12 +30,14 @@ jobs:
           node tests/cloud.mjs
           node tests/exams.mjs
           node tests/release-gate.mjs
+          node tests/study-browser.mjs
       - name: Upload visual test screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: ipas-browser-screenshots
           path: |
+            study-*.png
             test-*.png
             home-*.png
             home-fold-*.png

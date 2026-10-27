@@ -1,8 +1,10 @@
 import {chromium} from "playwright";
 import assert from "node:assert/strict";
+import {decodePageImages} from './images.mjs';
 const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
 const failures=[];
 async function checkLayout(page,label,view){
+ await decodePageImages(page);
  const result=await page.evaluate(()=>{
   const viewport=innerWidth,doc=document.documentElement.scrollWidth;
   const selectors=".dash-stat,.dash-medal,.dash-node,.dash-last,.dash-mentor-note,.dash-map-aide,.sec-head,.vault-list,.card";
