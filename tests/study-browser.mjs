@@ -35,7 +35,8 @@ try{
   await page.locator('#next').click();assert.equal(await page.locator('#player').evaluate(a=>a.paused),true);
   await page.locator('#auto').check();await page.locator('#player').evaluate(a=>{a.currentTime=a.duration-0.1;return a.play();});
   await page.waitForFunction(()=>document.querySelector('#title').textContent.includes('L11201')&&!document.querySelector('#player').paused);
-  await page.locator('#player').evaluate(a=>a.pause());assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2));
+  await page.locator('#commuteStop').click();assert.equal(await page.locator('#player').evaluate(a=>a.currentTime),0);assert.equal(await page.locator('#player').evaluate(a=>a.paused),true);
+  await page.locator('#player').evaluate(a=>a.play());await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pagehide')));assert.equal(await page.locator('#player').evaluate(a=>a.paused),true);assert.equal(await page.locator('#player').evaluate(a=>a.currentTime),0);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2));
   const packEvent=page.waitForEvent('download');await page.locator('a[href="commute-audio.zip"]').click();assert.equal((await packEvent).suggestedFilename(),'commute-audio.zip');
   await page.close();
  }
