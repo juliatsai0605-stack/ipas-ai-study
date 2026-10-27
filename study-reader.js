@@ -7,7 +7,7 @@
     try{const u=new URL(s);return /^https?:$/.test(u.protocol)?u.href:'#';}catch{return '#';}
   };
   function stop(){if(currentAudio){currentAudio.pause();try{currentAudio.currentTime=0;}catch{}currentAudio=null;}}
-  const audioURL=lesson=>/^audio\/podcast-mf\/L[12]\d{4}\.mp3$/.test(lesson?.audio?.file||'')?lesson.audio.file:'';
+  const audioURL=lesson=>/^audio\/podcast-mf\/L[12]\d{4}(?:-plain)?\.mp3$/.test(lesson?.audio?.file||'')?lesson.audio.file:'';
   function html(code){
     const lesson=data?.lessons?.[code];if(!lesson)return '';
     const resources=lesson.sources.map(id=>{
