@@ -1,4 +1,4 @@
-// Optional cloud service. Without configured Supabase envs, the site remains fully usable locally.
+// Personal learning requires authentication; unavailable auth fails closed.
 // Public publishable/anon key only. Authorization is enforced by Supabase RLS and private storage.
 const host=document.createElement("div");
 host.className="cloud-account-host";
@@ -88,9 +88,15 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     }
     q("cloudGoogle").onclick=async()=>{
       q("cloudGoogle").disabled=true;msg("正在前往 Google 帳號授權…");
-      try{const {error}=await supabase.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+"/",queryParams:{prompt:"select_account"}}});if(error)throw error;}
+      try{
+        const settingsResponse=await fetch(cfg.url+"/auth/v1/settings",{headers:{apikey:cfg.publishableKey},cache:"no-store"});
+        if(!settingsResponse.ok)throw Error("無法確認登入服務狀態，請稍後重試");
+        const settings=await settingsResponse.json();
+        if(!settings.external?.google)throw Error("Google 登入尚未啟用，請待網站管理者完成設定");
+        const {error}=await supabase.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+"/",queryParams:{prompt:"select_account"}}});if(error)throw error;}
       catch(e){msg("Google 登入失敗："+e.message);q("cloudGoogle").disabled=false;}
     };
+    window.addEventListener("pageshow",()=>{q("cloudGoogle").disabled=false;});
     const oauthError=new URLSearchParams(location.search).get("error_description")||new URLSearchParams(location.hash.slice(1)).get("error_description");
     if(oauthError){button.click();msg("Google 授權未完成："+oauthError);history.replaceState(null,"",location.pathname);}
     q("cloudAuthForm").onsubmit=async e=>{
