@@ -23,8 +23,8 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     const dialog=document.createElement("dialog");dialog.className="cloud-dialog";
     dialog.style.cssText="border:1px solid #cad5f3;border-radius:18px;padding:24px;max-width:min(92vw,550px);width:100%;box-shadow:0 20px 70px #29345b40;color:#263154;background:#fff";
     dialog.innerHTML=`<form id="cloudAuthForm"><div class="row" style="justify-content:space-between"><h2>✦ 個人學習帳號</h2><button type="button" class="iconbtn" id="cloudClose" aria-label="關閉">✕</button></div>
-    <p class="small muted">完全免費。使用 Google 帳號登入，讓不同裝置接續學習；亦可使用電子郵件帳號。請勿使用公務帳號或上傳機敏資料。</p>
-    <div id="cloudAnonymous"><button class="btn" type="button" id="cloudGoogle">使用 Google 帳號登入</button><p class="small muted">授權與帳號選擇由你本人完成。</p><label class="study-field">電子郵件<input type="email" id="cloudEmail" autocomplete="email" required></label>
+    <p class="small muted">完全免費。使用電子郵件與密碼登入，讓不同裝置接續學習。請勿使用公務帳號或上傳機敏資料。</p>
+    <div id="cloudAnonymous"><button class="btn" type="button" id="cloudGoogle" hidden>使用 Google 帳號登入</button><label class="study-field">電子郵件<input type="email" id="cloudEmail" autocomplete="email" required></label>
     <label class="study-field">密碼（至少 8 字）<input id="cloudPassword" type="password" minlength="8" autocomplete="current-password" required></label>
     <div class="row"><button class="btn" id="cloudSignIn" type="submit">登入</button><button class="btn soft" type="button" id="cloudSignUp">免費註冊</button><button class="btn ghost" type="button" id="cloudResend">重寄驗證信</button></div></div>
     <div id="cloudSignedIn" hidden><p>已登入：<strong id="cloudUserName"></strong></p><p class="small muted">學習進度將保存於你的帳號。附件只允許本人讀取，單檔不得超過 10 MB。</p>
@@ -37,6 +37,7 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     document.body.appendChild(dialog);
     const q=id=>dialog.querySelector("#"+id);
     const msg=(s)=>{q("cloudMessage").textContent=String(s||"");};
+    fetch(cfg.url+"/auth/v1/settings",{headers:{apikey:cfg.publishableKey},cache:"no-store"}).then(r=>r.ok?r.json():null).then(settings=>{q("cloudGoogle").hidden=!settings?.external?.google;}).catch(()=>{});
     button.onclick=()=>{if(typeof dialog.showModal==="function")dialog.showModal();else dialog.setAttribute("open","");if(user)refreshFiles();};
     document.addEventListener("ipas:login-required",()=>{button.click();msg("請先登入，再使用個人學習功能。");});
     q("cloudClose").onclick=()=>dialog.close();
