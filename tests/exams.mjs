@@ -51,6 +51,7 @@ try{
  assert.ok(snapshot.mocks.length>=1,"mock exam score must persist in local state");
  assert.ok(Object.keys(snapshot.q).length>=1,"question history must persist");
  await page.reload({waitUntil:"networkidle"});
+ await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("ui-test-account",{}));
  const reloaded=await page.evaluate(()=>window.IPAS_BRIDGE.snapshot());
  assert.ok(reloaded.mocks.length>=1,"mock result must survive reload");
  assert.deepEqual(errors,[],"unexpected JavaScript errors");
