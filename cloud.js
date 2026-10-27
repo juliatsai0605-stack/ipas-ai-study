@@ -6,14 +6,14 @@ document.querySelector(".top-in")?.appendChild(host);
 host.style.cssText="display:flex;align-items:center;gap:8px";
 const notice=document.createElement("span");
 notice.style.cssText="font-size:.75rem;color:#60708c;white-space:nowrap";
-notice.textContent="本機進度";
+notice.textContent="正在確認登入狀態…";
 host.appendChild(notice);
 let cfg;
 try{const response=await fetch("/api/cloud-config",{cache:"no-store"});cfg=response.ok?await response.json():null;}catch(e){cfg=null;}
 if(cfg?.configured&&cfg.url&&cfg.publishableKey){
   try{
     const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2.57.0");
-    const supabase=createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+    const supabase=createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:"pkce"}});
     let user=null,syncTimer=null,busy=false,queued=false,filesBusy=false,syncReady=false;
     const button=document.createElement("button");
     button.className="iconbtn";
@@ -23,8 +23,8 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     const dialog=document.createElement("dialog");dialog.className="cloud-dialog";
     dialog.style.cssText="border:1px solid #cad5f3;border-radius:18px;padding:24px;max-width:min(92vw,550px);width:100%;box-shadow:0 20px 70px #29345b40;color:#263154;background:#fff";
     dialog.innerHTML=`<form id="cloudAuthForm"><div class="row" style="justify-content:space-between"><h2>✦ 個人學習帳號</h2><button type="button" class="iconbtn" id="cloudClose" aria-label="關閉">✕</button></div>
-    <p class="small muted">完全免費。使用電子郵件與密碼登入，讓不同裝置接續學習。請勿使用公務帳號或上傳機敏資料。</p>
-    <div id="cloudAnonymous"><label class="study-field">電子郵件<input type="email" id="cloudEmail" autocomplete="email" required></label>
+    <p class="small muted">完全免費。使用 Google 帳號登入，讓不同裝置接續學習；亦可使用電子郵件帳號。請勿使用公務帳號或上傳機敏資料。</p>
+    <div id="cloudAnonymous"><button class="btn" type="button" id="cloudGoogle">使用 Google 帳號登入</button><p class="small muted">授權與帳號選擇由你本人完成。</p><label class="study-field">電子郵件<input type="email" id="cloudEmail" autocomplete="email" required></label>
     <label class="study-field">密碼（至少 8 字）<input id="cloudPassword" type="password" minlength="8" autocomplete="current-password" required></label>
     <div class="row"><button class="btn" id="cloudSignIn" type="submit">登入</button><button class="btn soft" type="button" id="cloudSignUp">免費註冊</button></div></div>
     <div id="cloudSignedIn" hidden><p>已登入：<strong id="cloudUserName"></strong></p><p class="small muted">學習進度將保存於你的帳號。附件只允許本人讀取，單檔不得超過 10 MB。</p>
@@ -38,13 +38,14 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     const q=id=>dialog.querySelector("#"+id);
     const msg=(s)=>{q("cloudMessage").textContent=String(s||"");};
     button.onclick=()=>{if(typeof dialog.showModal==="function")dialog.showModal();else dialog.setAttribute("open","");if(user)refreshFiles();};
+    document.addEventListener("ipas:login-required",()=>{button.click();msg("請先登入，再使用個人學習功能。");});
     q("cloudClose").onclick=()=>dialog.close();
     dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close();});
     function present(){
       q("cloudAnonymous").hidden=!!user;
       q("cloudSignedIn").hidden=!user;
       if(user){button.textContent="☁ 我的帳號";notice.textContent=syncReady?"雲端同步已啟用":"雲端進度尚未同步";q("cloudUserName").textContent=user.email||"已登入帳號";q("cloudDisplayName").value=window.IPAS_BRIDGE?.snapshot().localName||"";}
-      else{button.textContent="登入／雲端續學";notice.textContent="本機進度（未登入）";}
+      else{button.textContent="登入／雲端續學";notice.textContent="請登入以使用個人學習功能";}
     }
     async function push(){
       if(!user||!syncReady||!window.IPAS_BRIDGE)return;
@@ -63,7 +64,7 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     async function handleAuth(session){
       const nextUser=session?.user||null,prevId=user?.id;
       if(!nextUser){
-        user=null;syncReady=false;clearTimeout(syncTimer);queued=false;
+        user=null;syncReady=false;clearTimeout(syncTimer);queued=false;window.IPAS_BRIDGE?.setAuthState(false);
         if(prevId)window.IPAS_BRIDGE?.signOut();
         q("cloudFiles").replaceChildren();present();return;
       }
@@ -78,13 +79,20 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
         if(user?.id!==nextUser.id)return; // stale response from an earlier session
         if(error)throw error;
         window.IPAS_BRIDGE?.attachUser(nextUser.id,data?.state||{});
-        syncReady=true;present();queueSync();msg(data?"已載入並合併雲端學習進度":"已建立帳號，正在備份現有學習進度");
+        syncReady=true;window.IPAS_BRIDGE?.setAuthState(true);present();queueSync();msg(data?"已載入並合併雲端學習進度":"已建立帳號，正在備份現有學習進度");
       }catch(e){
         if(user?.id!==nextUser.id)return;
         notice.textContent="登入成功，但資料同步失敗";
         msg("雲端進度未載入；為避免覆蓋其他裝置的資料，暫停自動同步。"+e.message);
       }
     }
+    q("cloudGoogle").onclick=async()=>{
+      q("cloudGoogle").disabled=true;msg("正在前往 Google 帳號授權…");
+      try{const {error}=await supabase.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+"/",queryParams:{prompt:"select_account"}}});if(error)throw error;}
+      catch(e){msg("Google 登入失敗："+e.message);q("cloudGoogle").disabled=false;}
+    };
+    const oauthError=new URLSearchParams(location.search).get("error_description")||new URLSearchParams(location.hash.slice(1)).get("error_description");
+    if(oauthError){button.click();msg("Google 授權未完成："+oauthError);history.replaceState(null,"",location.pathname);}
     q("cloudAuthForm").onsubmit=async e=>{
       e.preventDefault();const email=q("cloudEmail").value.trim(),password=q("cloudPassword").value;
       if(password.length<8){msg("密碼至少 8 字");return;}
@@ -137,7 +145,7 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     };
     supabase.auth.onAuthStateChange((_event,session)=>queueMicrotask(()=>handleAuth(session)));
     const {data:{session}}=await supabase.auth.getSession();
-    if(session)await handleAuth(session);
+    await handleAuth(session);
     present();
-  }catch(e){notice.textContent="雲端元件載入失敗；本機功能仍可用";}
-}else{notice.textContent="本機模式｜雲端登入尚未設定";}
+  }catch(e){notice.textContent="登入服務載入失敗，請重新整理";window.IPAS_BRIDGE?.setAuthState(false);}
+}else{notice.textContent="登入服務尚未設定，個人功能暫停使用";window.IPAS_BRIDGE?.setAuthState(false);}
