@@ -26,7 +26,7 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     <p class="small muted">完全免費。使用 Google 帳號登入，讓不同裝置接續學習；亦可使用電子郵件帳號。請勿使用公務帳號或上傳機敏資料。</p>
     <div id="cloudAnonymous"><button class="btn" type="button" id="cloudGoogle">使用 Google 帳號登入</button><p class="small muted">授權與帳號選擇由你本人完成。</p><label class="study-field">電子郵件<input type="email" id="cloudEmail" autocomplete="email" required></label>
     <label class="study-field">密碼（至少 8 字）<input id="cloudPassword" type="password" minlength="8" autocomplete="current-password" required></label>
-    <div class="row"><button class="btn" id="cloudSignIn" type="submit">登入</button><button class="btn soft" type="button" id="cloudSignUp">免費註冊</button></div></div>
+    <div class="row"><button class="btn" id="cloudSignIn" type="submit">登入</button><button class="btn soft" type="button" id="cloudSignUp">免費註冊</button><button class="btn ghost" type="button" id="cloudResend">重寄驗證信</button></div></div>
     <div id="cloudSignedIn" hidden><p>已登入：<strong id="cloudUserName"></strong></p><p class="small muted">學習進度將保存於你的帳號。附件只允許本人讀取，單檔不得超過 10 MB。</p>
     <label class="study-field">顯示名稱<input id="cloudDisplayName" maxlength="35" placeholder="你的名稱"></label>
     <div class="row"><button type="button" class="btn soft" id="cloudSaveName">儲存名稱</button><button type="button" class="btn ghost" id="cloudSyncNow">立即同步</button><button type="button" class="btn ghost" id="cloudSignOut">登出</button></div>
@@ -99,17 +99,34 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
     window.addEventListener("pageshow",()=>{q("cloudGoogle").disabled=false;});
     const oauthError=new URLSearchParams(location.search).get("error_description")||new URLSearchParams(location.hash.slice(1)).get("error_description");
     if(oauthError){button.click();msg("Google 授權未完成："+oauthError);history.replaceState(null,"",location.pathname);}
+    let authBusy=false,resendUntil=0;
+    function authMessage(error){
+      const code=error?.code||"",text=error?.message||"";
+      if(code==="email_not_confirmed"||/Email not confirmed/i.test(text))return "帳號已建立，但信箱尚未驗證。請開啟註冊確認信並點選驗證連結；找不到信件可按「重寄驗證信」，不必再註冊。";
+      if(code==="invalid_credentials"||/Invalid login credentials/i.test(text))return "電子郵件或密碼不正確，請確認後再登入。";
+      if(error?.status===429||/after \\d+ seconds|rate limit/i.test(text)){const n=Number(text.match(/after (\\d+) seconds/i)?.[1]||60);resendUntil=Date.now()+n*1000;return "寄信次數受到限制，請等 "+n+" 秒後再試；不要重複按註冊。";}
+      return "操作未完成："+text;
+    }
+    q("cloudResend").onclick=async()=>{
+      if(authBusy)return;
+      const email=q("cloudEmail").value.trim();
+      if(!email||!q("cloudEmail").checkValidity()){msg("請先輸入有效電子郵件，不必填密碼。");return;}
+      const wait=Math.ceil((resendUntil-Date.now())/1000);if(wait>0){msg("請再等 "+wait+" 秒後重寄。");return;}
+      authBusy=true;q("cloudResend").disabled=true;msg("正在寄送驗證信…");
+      try{const {error}=await supabase.auth.resend({type:"signup",email,options:{emailRedirectTo:location.origin+"/"}});if(error)throw error;resendUntil=Date.now()+60000;msg("驗證信已送出。請檢查收件匣及垃圾郵件，點選最新確認信的連結，再回來按「登入」。");}
+      catch(error){msg(authMessage(error));}finally{authBusy=false;q("cloudResend").disabled=false;}
+    };
     q("cloudAuthForm").onsubmit=async e=>{
       e.preventDefault();const email=q("cloudEmail").value.trim(),password=q("cloudPassword").value;
       if(password.length<8){msg("密碼至少 8 字");return;}
       msg("登入中…");const {error}=await supabase.auth.signInWithPassword({email,password});
-      if(error)msg(error.message);
+      if(error)msg(authMessage(error));
     };
     q("cloudSignUp").onclick=async()=>{
       const email=q("cloudEmail").value.trim(),password=q("cloudPassword").value;
       if(!q("cloudEmail").checkValidity()||password.length<8){msg("請輸入有效電子郵件與至少 8 字密碼");return;}
-      msg("註冊中…");const {data,error}=await supabase.auth.signUp({email,password});
-      if(error)msg(error.message);
+      msg("註冊中…");const {data,error}=await supabase.auth.signUp({email,password,options:{emailRedirectTo:location.origin+"/"}});
+      if(error)msg(authMessage(error));
       else msg(data.session?"註冊完成，正在同步進度":"註冊申請已送出。請到電子郵件收信並完成確認，再回來登入。");
     };
     q("cloudSignOut").onclick=async()=>{const {error}=await supabase.auth.signOut();if(error)msg(error.message);else msg("已登出；本機登入資料已清除。");};
@@ -125,9 +142,9 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
         const files=(data||[]).filter(x=>x.name!==".emptyFolderPlaceholder"&&x.id);
         if(!files.length){const p=document.createElement("p");p.className="small muted";p.textContent="尚無雲端附件";q("cloudFiles").appendChild(p);}
         for(const f of files){const row=document.createElement("div");row.className="vault-entry";const title=document.createElement("span");title.textContent=f.name.slice(37)||f.name;row.appendChild(title);
-          const download=document.createElement("button");download.className="btn soft sm";download.textContent="下載";
+          const download=document.createElement("button");download.type="button";download.className="btn soft sm";download.textContent="下載";
           download.onclick=async()=>{if(user?.id!==fileOwner)return;const {data,error}=await supabase.storage.from("study-files").download(fileOwner+"/"+f.name);if(user?.id!==fileOwner)return;if(error){msg(error.message);return;}const u=URL.createObjectURL(data),a=document.createElement("a");a.href=u;a.download=f.name.slice(37)||f.name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);};
-          const del=document.createElement("button");del.className="btn ghost sm";del.textContent="刪除";
+          const del=document.createElement("button");del.type="button";del.className="btn ghost sm";del.textContent="刪除";
           del.onclick=async()=>{if(user?.id!==fileOwner||!confirm("確定刪除這份雲端附件？"))return;const {error}=await supabase.storage.from("study-files").remove([fileOwner+"/"+f.name]);if(user?.id!==fileOwner)return;if(error)msg(error.message);else refreshFiles();};
           row.append(download,del);q("cloudFiles").appendChild(row);}
       }catch(e){q("cloudFiles").textContent="讀取失敗："+e.message;}finally{filesBusy=false;}
