@@ -8,9 +8,9 @@ try{
   await page.addInitScript(()=>{
    window.__speechTest={spoken:[],cancelled:0};
    Object.defineProperty(window,'speechSynthesis',{value:{
-    getVoices:()=>[{name:'Local test voice',lang:'zh-TW',localService:true}],
+    paused:false,getVoices:()=>[{name:'Local test voice',lang:'zh-TW',localService:true}],
     addEventListener(){},cancel(){window.__speechTest.cancelled++;},
-    speak(u){window.__speechTest.spoken.push(u.text);},pause(){},resume(){}
+    speak(u){window.__speechTest.spoken.push(u.text);},pause(){this.paused=true;},resume(){this.paused=false;}
    }});
    window.SpeechSynthesisUtterance=class{constructor(text){this.text=text;}};
   });
@@ -23,7 +23,9 @@ try{
   await page.locator('#studySpeak').click();
   assert.match(await page.locator('#studyAudioStatus').innerText(),/播放中/);
   await page.locator('#studyPause').click();assert.match(await page.locator('#studyAudioStatus').innerText(),/已暫停/);
-  await page.locator('#studyPause').click();await page.locator('#studyStop').click();
+  await page.locator('#studyStop').click();
+  await page.locator('#studySpeak').click();assert.equal(await page.evaluate(()=>speechSynthesis.paused),false);
+  await page.locator('#studyStop').click();
   assert.match(await page.locator('#studyAudioStatus').innerText(),/已停止/);
   assert.equal(await page.evaluate(()=>JSON.stringify(window.IPAS_BRIDGE.snapshot())),before,'narration must not rewrite study records');
   const download=page.waitForEvent('download');await page.locator('#studyDownload').click();
@@ -34,7 +36,8 @@ try{
   assert.ok(await page.locator('.study-source a[href^="https://"]').count()>=3);
   assert.ok(await page.locator('.q .meta a[href*="#page="]').count()>0,'questions must link to official original page');
   await page.locator('#studySpeak').click();const cancelled=await page.evaluate(()=>window.__speechTest.cancelled);
-  await page.locator('.tabs [data-v="units"]').click();assert.ok(await page.evaluate(()=>window.__speechTest.cancelled)>cancelled,'navigation stops old lesson narration');
+  await page.locator('#studyText').scrollIntoViewIfNeeded();await page.screenshot({path:'study-lesson-'+width+'.png',fullPage:false});
+  await page.locator('#studyPause').click();await page.locator('.tabs [data-v="units"]').click();assert.equal(await page.evaluate(()=>speechSynthesis.paused),false);assert.ok(await page.evaluate(()=>window.__speechTest.cancelled)>cancelled,'navigation stops old lesson narration');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2));
   await page.screenshot({path:'study-'+width+'.png',fullPage:false});
   assert.deepEqual(errors,[]);await page.close();
