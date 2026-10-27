@@ -902,7 +902,7 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
 
 <footer>
   <span>題目來源：經濟部產業發展署 iPAS AI應用規劃師能力鑑定公告試題（114 年第二、四梯次；115 年第一至三次），答案依官方公告。單元重點、自我檢查與每題解析為本站整理，題目的單元歸類以關鍵字自動判定，僅供參考。</span>
-  <span>考試日期、報名與授證規定以 <a href="https://www.ipas.org.tw/" target="_blank" rel="noopener">iPAS 官網</a>最新公告為準。未登入時進度保存在目前瀏覽器；免費帳號登入後可同步個人學習進度，亦可使用「我的進度」備份。</span>
+  <span>考試日期、報名與授證規定以 <a href="https://www.ipas.org.tw/" target="_blank" rel="noopener">iPAS 官網</a>最新公告為準。個人學習功能須登入 Google 或免費帳號後使用；進度依帳號分別保存，亦可使用「我的進度」備份。</span>
 </footer>
 
 <script>
@@ -925,7 +925,7 @@ const blank=()=>({v:4,lv:"P",toc:true,status:{},best:{},read:{},feyn:{},q:{},day
 let S=blank();
 function load(){try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(blank(),JSON.parse(r));}catch(e){}}
 function save(){try{localStorage.setItem(activeSaveKey,JSON.stringify(S));}catch(e){}document.dispatchEvent(new Event("ipas:save"));}
-load();
+// Existing anonymous history is retained for one-time migration after authentication.
 
 
 // Aiya mentor is local rule-based guidance; it never sends study data to an API.
@@ -975,6 +975,7 @@ let lastStudyTick=Date.now(),lastActivity=Date.now();
 ["pointerdown","keydown","scroll","pointermove"].forEach(name=>document.addEventListener(name,()=>{lastActivity=Date.now();},{passive:true}));
 setInterval(()=>{const now=Date.now(),diff=Math.max(0,Math.min(now-lastStudyTick,60000));lastStudyTick=now;
   if(!COURSE||document.visibilityState!=="visible"||!document.hasFocus()||now-lastActivity>300000)return;
+  if(!authenticated)return;
   if(!S.studySeconds)S.studySeconds={};
   S.studySeconds[today()]=(S.studySeconds[today()]||0)+Math.floor(diff/1000);save();
 },60000);
@@ -989,10 +990,26 @@ function todayStudyLabel(){const seconds=S.studySeconds?.[today()]||0;const minu
 
 // ---- view state ----
 let V={view:"home",sec:null,subj:null};
+let authenticated=false,authReady=false,pendingRoute=null;
+const privateViews=new Set(["units","unit","drill","mock","me","diag","review","badges"]);
+function requireLogin(view,extra){
+ if(authenticated)return false;
+ pendingRoute={view,extra};
+ document.dispatchEvent(new Event("ipas:login-required"));
+ return true;
+}
+// Guard all personal actions before their event handlers can mutate study state.
+document.addEventListener("click",e=>{
+ const b=e.target.closest("button");if(!b||b.closest(".cloud-dialog")||b.closest(".cloud-account-host"))return;
+ const dest=b.dataset.v||b.dataset.go;
+ const personal=(dest&&privateViews.has(dest))||b.dataset.sec||b.closest("#main")&&V.view!=="home"||b.closest("#main")&&/dash(Continue|Units|Diag)|dash-node/.test(b.id+" "+b.className)||b.id==="ayiaReturn";
+ if(personal&&!authenticated){e.preventDefault();e.stopImmediatePropagation();requireLogin(dest||"units");}
+},true);
 let quiz=null, drill=null, mock=null, mockTimer=null, diag=null;
-function go(view,extra){Object.assign(V,{view},extra||{});if(view==="unit"&&V.sec){S.lastSec=V.sec;S.lastSecUpdated=Date.now();save();ayiaState("thinking");}else if(view==="home"){ayiaState("welcome");}closeDrawer();render();window.scrollTo(0,0);}
+function go(view,extra){if(privateViews.has(view)&&requireLogin(view,extra))return;Object.assign(V,{view},extra||{});if(view==="unit"&&V.sec){S.lastSec=V.sec;S.lastSecUpdated=Date.now();save();ayiaState("thinking");}else if(view==="home"){ayiaState("welcome");}closeDrawer();render();window.scrollTo(0,0);}
 function render(){
   if(!COURSE)return;
+  if(privateViews.has(V.view)&&!authenticated)V={view:"home",sec:null,subj:null};
   document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lv===S.lv));
   document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.v===V.view||(V.view==="unit"&&b.dataset.v==="units")||(V.view==="diag"&&b.dataset.v==="home")));
   const wide=window.matchMedia("(min-width:901px)").matches;
@@ -1380,6 +1397,7 @@ function mergeStudyState(a,b){
   return out;
 }
 window.IPAS_BRIDGE={
+  setAuthState:(ready)=>{authenticated=!!ready;authReady=true;if(!ready){clearInterval(mockTimer);quiz=drill=mock=diag=null;S=blank();V={view:"home",sec:null,subj:null};render();}else if(pendingRoute){const r=pendingRoute;pendingRoute=null;go(r.view,r.extra);}},
   snapshot:()=>{const data=JSON.parse(JSON.stringify(S));delete data.attachments;return data;},
   attachUser:(uid,remote)=>{
     // Account isolation: never import another signed-in account's live state.
@@ -1395,13 +1413,12 @@ window.IPAS_BRIDGE={
     const starting=mergeStudyState(cached||{},remote||{});
     S=permittedAnonymous?mergeStudyState(anonymous||{},starting):mergeStudyState({},starting);
     if(!claim&&anonymous){try{localStorage.setItem(claimKey,uid);}catch(e){}}
-    activeSaveKey=userKey;save();render();
+    activeSaveKey=userKey;authenticated=true;save();render();
   },
   signOut:()=>{
     // Keep the anonymous progress intact for this device; never erase prior work.
     activeSaveKey=KEY;
-    try{const raw=localStorage.getItem(KEY);S=raw?Object.assign(blank(),JSON.parse(raw)):blank();}catch(e){S=blank();}
-    render();
+    authenticated=false;S=blank();V={view:"home",sec:null,subj:null};clearInterval(mockTimer);quiz=drill=mock=diag=null;render();
   },
   updateCloudName:(name)=>{S.localName=String(name||"").slice(0,35);save();render();}
 };
