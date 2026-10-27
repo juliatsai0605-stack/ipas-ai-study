@@ -7,6 +7,8 @@ const errors=[];
 page.on("pageerror",e=>errors.push(e.message));
 try{
  await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
+  // Isolated frontend fixture only; real Auth/RLS E2E is a separate release gate.
+  await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("ui-test-account",{}));
  await page.locator("#dashContinue").waitFor({timeout:15000});
  await page.locator('.tabs [data-v="drill"]').click();
  await page.locator("#dK").selectOption("10");
