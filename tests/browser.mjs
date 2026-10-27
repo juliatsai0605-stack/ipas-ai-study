@@ -23,6 +23,8 @@ async function run(label,size){
  page.on("pageerror",e=>failures.push(label+": JS "+e.message));
  try{
   await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
+  // Isolated frontend fixture only; real Auth/RLS E2E is a separate release gate.
+  await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("test-account-a",{}));
   await page.locator("#dashContinue").waitFor({timeout:20000});
   assert.match(await page.locator("body").innerText(),/iPAS AI 備考室/);
   assert.ok(await page.locator('img[src^="img/aiya"]').count()>0);
@@ -141,6 +143,8 @@ async function runAccountIsolation(){
  const page=await context.newPage();
  try{
   await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
+  // Isolated frontend fixture only; real Auth/RLS E2E is a separate release gate.
+  await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("test-account-a",{}));
   await page.locator("#dashContinue").waitFor();
   await page.locator('.tabs [data-v="me"]').click();
   await page.locator("#attachmentInput").setInputFiles({name:"anonymous-note.txt",mimeType:"text/plain",buffer:Buffer.from("anonymous attachment")});
@@ -154,7 +158,7 @@ async function runAccountIsolation(){
     const bState=b.snapshot();
     return {aHasNote:a.vault?.some(n=>n.title==="A-private-note"),aHasFile:JSON.parse(localStorage.getItem("ipas-ai-study-v4-account-test-account-a")||"{}").attachments?.some(f=>f.name==="anonymous-note.txt"),bHasA:bState.vault?.some(n=>n.title==="A-private-note"),bHasFile:(JSON.parse(localStorage.getItem("ipas-ai-study-v4-account-test-account-b")||"{}").attachments||[]).length,bName:bState.localName};
   });
-  assert.ok(initial.aHasNote&&initial.aHasFile,"first login must migrate anonymous attachment and preserve notes: "+JSON.stringify(initial));
+  assert.ok(initial.aHasNote&&initial.aHasFile,"account A must retain its attachment and notes: "+JSON.stringify(initial));
   assert.equal(initial.bHasA,false,"second account must not see first account notes");
   assert.equal(initial.bHasFile,0,"second account must not see first account attachments");
   assert.equal(initial.bName,"B-private-name","second account should retain own cloud profile");
