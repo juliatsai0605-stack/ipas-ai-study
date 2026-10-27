@@ -1393,7 +1393,7 @@ function mergeStudyState(a,b){
   out.srs={...(b.srs||{})};for(const [id,v] of Object.entries(a.srs||{}))if(!out.srs[id]||(v.last||0)>=(out.srs[id].last||0))out.srs[id]=v;
   const localStamp=a.lastSecUpdated||0,remoteStamp=b.lastSecUpdated||0;
   if(remoteStamp>localStamp){out.lastSec=b.lastSec;out.lastSecUpdated=remoteStamp;}
-  out.attachments=a.attachments||[]; // IndexedDB attachments are on-device only
+  out.attachments=a.attachments||b.attachments||[]; // Remote snapshots exclude binary attachments; retain account-local metadata.
   return out;
 }
 window.IPAS_BRIDGE={
