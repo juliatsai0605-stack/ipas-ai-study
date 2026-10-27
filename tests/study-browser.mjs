@@ -12,7 +12,7 @@ try{
   await page.locator('#studySearch').fill('L11102');await page.locator('#studySearch').press('Enter');
   await page.locator('#studyText').waitFor();assert.match(await page.locator('#studyText').innerText(),/治理先問/);
   const before=await page.evaluate(()=>JSON.stringify(window.IPAS_BRIDGE.snapshot()));
-  const audio=page.locator('#studyAudio');assert.match(await audio.getAttribute('src'),/audio\/hsiaochen\/L11102\.mp3$/);
+  const audio=page.locator('#studyAudio');assert.match(await audio.getAttribute('src'),/audio\/podcast\/L11102\.mp3$/);
   await page.locator('#studySpeak').click();await page.waitForFunction(()=>document.querySelector('#studyAudio').currentTime>0.15);
   assert.match(await page.locator('#studyAudioStatus').innerText(),/播放中/);
   await page.locator('#studyPause').click();assert.equal(await audio.evaluate(a=>a.paused),true);
@@ -41,7 +41,7 @@ try{
   const packEvent=page.waitForEvent('download');await page.locator('a[href="commute-audio.zip"]').click();assert.equal((await packEvent).suggestedFilename(),'commute-audio.zip');
   await page.close();
  }
- const page=await browser.newPage();await page.route('**/audio/hsiaochen/*.mp3',r=>r.fulfill({status:404,body:'Missing'}));
+ const page=await browser.newPage();await page.route('**/audio/podcast/*.mp3',r=>r.fulfill({status:404,body:'Missing'}));
  await page.goto(base,{waitUntil:'networkidle'});await page.evaluate(()=>window.IPAS_BRIDGE.attachUser('missing-audio-test',{}));await page.locator('#studySearch').fill('L11101');await page.locator('#studySearch').press('Enter');
  await page.locator('#studySpeak').click();await page.waitForFunction(()=>/無法播放|未能開始/.test(document.querySelector('#studyAudioStatus').textContent));assert.ok(await page.locator('#studyDownload').isEnabled());assert.ok(await page.locator('#studyText').isVisible());
  await page.close();console.log('PASS selected MP3: actual playback without device voices, pause/stop/replay/speed, downloads, navigation stop, optional autoplay, missing-file fallback, desktop/mobile, unchanged study state');
