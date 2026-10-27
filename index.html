@@ -874,6 +874,8 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
 
 </style>
 <link rel="stylesheet" href="visual-polish.css">
+<link rel="stylesheet" href="study-reader.css">
+<script src="study-reader.js"></script>
 </head>
 <body>
 <header class="top">
@@ -1006,7 +1008,7 @@ document.addEventListener("click",e=>{
  if(personal&&!authenticated){e.preventDefault();e.stopImmediatePropagation();requireLogin(dest||"units");}
 },true);
 let quiz=null, drill=null, mock=null, mockTimer=null, diag=null;
-function go(view,extra){if(privateViews.has(view)&&requireLogin(view,extra))return;Object.assign(V,{view},extra||{});if(view==="unit"&&V.sec){S.lastSec=V.sec;S.lastSecUpdated=Date.now();save();ayiaState("thinking");}else if(view==="home"){ayiaState("welcome");}closeDrawer();render();window.scrollTo(0,0);}
+function go(view,extra){window.IPAS_STUDY?.stop();if(privateViews.has(view)&&requireLogin(view,extra))return;Object.assign(V,{view},extra||{});if(view==="unit"&&V.sec){S.lastSec=V.sec;S.lastSecUpdated=Date.now();save();ayiaState("thinking");}else if(view==="home"){ayiaState("welcome");}closeDrawer();render();window.scrollTo(0,0);}
 function render(){
   if(!COURSE)return;
   if(privateViews.has(V.view)&&!authenticated)V={view:"home",sec:null,subj:null};
@@ -1168,6 +1170,7 @@ function vUnit(){
   const f=S.feyn[sec.code]||"";
   let h=`<div class="sec-head"><span class="note">${subj.code} ${esc(subj.name)} ／ ${ch.code} ${esc(ch.name)}</span><span class="code">${sec.code}</span><h2>${esc(sec.name)}</h2></div>
   <div class="card reading"><h3>重點</h3><ol>${sec.pts.map(p=>`<li>${esc(p)}</li>`).join("")}</ol></div>
+  ${window.IPAS_STUDY?.html(sec.code)||""}
   <details class="card"><summary>自我檢查（${sec.cards.length} 題，點一下看答案）</summary><div class="qa">${sec.cards.map(c=>`<button><span>${esc(c[0])}</span><span class="a" hidden>${esc(c[1])}</span></button>`).join("")}</div></details>
   <details class="card" ${f?"open":""}><summary>用自己的話說說看</summary><p class="small" style="margin-top:8px">${esc(sec.feyn)}</p><textarea id="feyn" aria-label="我的說明" placeholder="寫給完全不懂的人聽；卡住講不清楚的地方，就是要回頭重讀的地方。">${esc(f)}</textarea><div class="keys" id="keys"></div></details>`;
   if(qs.length){
@@ -1177,6 +1180,7 @@ function vUnit(){
   }
   h+=`<div class="qnav">${prev?`<button class="btn soft sm" id="prevSec">← ${prev} ${esc(SECS[prev].sec.name)}</button>`:"<span></span>"}${nxt?`<button class="btn soft sm" id="nextSec">${nxt} ${esc(SECS[nxt].sec.name)} →</button>`:""}</div>`;
   $("#main").innerHTML=`<div class="view">${h}</div>`;
+  window.IPAS_STUDY?.bind(sec.code);
   document.querySelectorAll(".qa button").forEach(b=>b.onclick=()=>{const a=b.querySelector(".a");a.hidden=!a.hidden;});
   const ta=$("#feyn"),keys=()=>{const t=ta.value;$("#keys").innerHTML=t?sec.keys.map(k=>`<span class="${t.includes(k)?"hit":""}">${esc(k)}</span>`).join("")+`<span style="border:0">涵蓋 ${sec.keys.filter(k=>t.includes(k)).length}/${sec.keys.length} 個關鍵詞</span>`:"";};
   keys(); let tm; ta.oninput=()=>{keys();clearTimeout(tm);tm=setTimeout(()=>{S.feyn[sec.code]=ta.value;save();},600);};
@@ -1202,7 +1206,7 @@ function qHTML(q,idx){
   const ctx=q.ctx?`<div class="ctx">${esc(q.ctx)}</div>`:"";
   const fig=q.img?`<figure><img src="${q.img}" alt="${SESS(q.x)}第 ${q.n} 題原卷圖片（含圖表或程式碼）" loading="lazy"></figure>`:"";
   const opts=q.o.map((o,j)=>`<button class="opt" data-j="${j}"><b>${L[j]}</b><span>${o?esc(o):'<span class="muted">見上方原卷圖片</span>'}</span></button>`).join("");
-  return `<div class="q" data-id="${q.id}"><div class="meta">${idx!=null?`<b>第 ${idx+1} 題</b>`:""}<span class="tag ai">${q.sub}</span><span>${SESS(q.x)}公告試題・第 ${q.n} 題</span></div>${ctx}<div class="stem">${esc(q.q)}</div>${fig}<div class="opts">${opts}</div><div class="after" hidden></div></div>`;
+  return `<div class="q" data-id="${q.id}"><div class="meta">${idx!=null?`<b>第 ${idx+1} 題</b>`:""}<span class="tag ai">${q.sub}</span><span>${SESS(q.x)}公告試題・第 ${q.n} 題</span>${window.IPAS_STUDY?.sourceHTML(q.id)||""}</div>${ctx}<div class="stem">${esc(q.q)}</div>${fig}<div class="opts">${opts}</div><div class="after" hidden></div></div>`;
 }
 function expHTML(q,j){
   const ok=j===q.a; const sec=q.sec&&SECS[q.sec]?SECS[q.sec].sec:null;
@@ -1430,7 +1434,8 @@ document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{if(b.dataset
 $("#tocBtn").onclick=()=>{if(window.matchMedia("(min-width:901px)").matches){S.toc=!S.toc;save();render();}else{$("#toc").classList.add("open");$("#drawerBg").classList.add("open");}};
 $("#drawerBg").onclick=closeDrawer;
 window.matchMedia("(min-width:901px)").addEventListener("change",()=>{closeDrawer();render();});
-Promise.all([fetch("course.json").then(r=>r.json()),fetch("bank.json").then(r=>r.json())]).then(([c,b])=>{
+Promise.all([fetch("course.json").then(r=>r.json()),fetch("bank.json").then(r=>r.json()),fetch("study-content.json").then(r=>{if(!r.ok)throw new Error("study content");return r.json();}).catch(()=>null)]).then(([c,b,study])=>{
+  window.IPAS_STUDY?.setData(study);
   COURSE=c;BANK=b;
   for(const lv of COURSE.levels)for(const s of lv.subjects)for(const ch of s.chapters)for(const sec of ch.sections){SECS[sec.code]={sec,ch,subj:s,lv:lv.id};ORDER.push(sec.code);}
   ayiaState("welcome");

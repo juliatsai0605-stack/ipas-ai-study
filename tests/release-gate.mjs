@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import {readdirSync} from "node:fs";
 import {chromium} from "playwright";
+import {decodePageImages} from './images.mjs';
 
 const BASE="http://127.0.0.1:4173/";
 const assets=readdirSync("img",{withFileTypes:true})
@@ -12,6 +13,7 @@ assert.ok(assets.length>=25,"image inventory unexpectedly small");
 const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
 const failures=[];
 async function inspect(page,label){
+ await decodePageImages(page);
  const report=await page.evaluate(()=>{
    const vw=innerWidth;
    const doc=Math.max(document.documentElement.scrollWidth,document.body.scrollWidth);
