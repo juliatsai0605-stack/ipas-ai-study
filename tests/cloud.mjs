@@ -109,17 +109,17 @@ try{
  // Actual upload/list/download/delete UI flow against an RLS-enforcing Supabase mock.
  await page.locator("#cloudUpload").setInputFiles({name:"study-note.txt",mimeType:"text/plain",buffer:Buffer.from("private A study content")});
  await page.locator("#cloudUploadBtn").click();
- await page.locator(".vault-entry").first().waitFor({timeout:15000});
+ await page.locator("#cloudFiles .vault-entry").first().waitFor({timeout:15000});
  assert.match(await page.locator("#cloudFiles").innerText(),/study-note\.txt/);
  const aFile=await page.evaluate(()=>Object.keys(window.__cloudMock.storageFiles)[0]);
  assert.ok(aFile.startsWith("test-a/"),"A upload must use A namespace");
  const download=page.waitForEvent("download",{timeout:10000});
- await page.locator(".vault-entry button").first().click();
+ await page.locator("#cloudFiles .vault-entry button").first().click();
  const downloaded=await download;
  assert.equal(downloaded.suggestedFilename(),"study-note.txt","cloud attachment filename must survive download");
  await page.locator("#cloudSignOut").click();
  await page.locator("#cloudAnonymous").waitFor({state:"visible",timeout:15000});
- assert.equal(await page.locator(".vault-entry").count(),0,"signed-out users must not see A cloud attachments");
+ assert.equal(await page.locator("#cloudFiles .vault-entry").count(),0,"signed-out users must not see A cloud attachments");
  // Emulate a fresh second device by clearing account-local cache before reading remote profile.
  await page.evaluate(()=>localStorage.removeItem("ipas-ai-study-v4-account-test-a"));
  // Re-login A to check that the private attachment is persisted and deletable.
@@ -129,15 +129,15 @@ try{
  await page.locator("#cloudSignedIn").waitFor({state:"visible",timeout:15000});
  await page.waitForFunction(()=>window.IPAS_BRIDGE.snapshot().localName==="雲端跨裝置續學",{timeout:15000});
  await page.locator("#cloudRefreshFiles").click();
- await page.locator(".vault-entry").first().waitFor({timeout:15000});
+ await page.locator("#cloudFiles .vault-entry").first().waitFor({timeout:15000});
  page.once("dialog",async dialog=>dialog.accept());
- await page.locator(".vault-entry button").nth(1).click();
+ await page.locator("#cloudFiles .vault-entry button").nth(1).click();
  await page.waitForFunction(()=>Object.keys(window.__cloudMock.storageFiles).length===0,{timeout:15000});
- assert.equal(await page.locator(".vault-entry").count(),0,"deleted attachment must disappear from list");
+ assert.equal(await page.locator("#cloudFiles .vault-entry").count(),0,"deleted attachment must disappear from list");
  // Keep one private A attachment to verify account B cannot list or fetch it.
  await page.locator("#cloudUpload").setInputFiles({name:"only-a.txt",mimeType:"text/plain",buffer:Buffer.from("A only")});
  await page.locator("#cloudUploadBtn").click();
- await page.locator(".vault-entry").first().waitFor({timeout:15000});
+ await page.locator("#cloudFiles .vault-entry").first().waitFor({timeout:15000});
  await page.waitForFunction(()=>window.IPAS_BRIDGE?.snapshot().vault?.some(n=>n.title==="甲的私人筆記"),{timeout:15000});
  await page.locator("#cloudSignOut").click();
  await page.locator("#cloudAnonymous").waitFor({state:"visible",timeout:15000});
@@ -151,7 +151,7 @@ try{
  assert.ok(state.vault?.some(n=>n.title==="乙的私人筆記"),"B notes missing");
  await page.locator("#cloudRefreshFiles").click();
  await page.waitForFunction(()=>document.querySelector("#cloudFiles")?.textContent.includes("尚無雲端附件"),{timeout:15000});
- assert.equal(await page.locator(".vault-entry").count(),0,"B must not list A attachments");
+ assert.equal(await page.locator("#cloudFiles .vault-entry").count(),0,"B must not list A attachments");
  assert.equal(await page.evaluate(()=>window.__cloudMock.canRead(Object.keys(window.__cloudMock.storageFiles)[0])),false,"B must not read A storage path");
  // Browser-side quota and extension checks must prevent unauthorized formats and oversize files.
  await page.locator("#cloudUpload").setInputFiles({name:"malware.exe",mimeType:"application/octet-stream",buffer:Buffer.from("x")});
