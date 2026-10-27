@@ -33,6 +33,7 @@ try{
   await page.goto(new URL('commute.html',base).href,{waitUntil:'networkidle'});assert.equal(await page.locator('#list button').count(),50);
   await page.locator('#player').evaluate(a=>a.play());await page.waitForFunction(()=>document.querySelector('#player').currentTime>0.15);
   await page.locator('#next').click();assert.equal(await page.locator('#player').evaluate(a=>a.paused),true);
+  await page.waitForFunction(()=>Number.isFinite(document.querySelector('#player').duration));
   await page.locator('#auto').check();await page.locator('#player').evaluate(a=>{a.currentTime=a.duration-0.1;return a.play();});
   await page.waitForFunction(()=>document.querySelector('#title').textContent.includes('L11201')&&!document.querySelector('#player').paused);
   await page.locator('#commuteStop').click();assert.equal(await page.locator('#player').evaluate(a=>a.currentTime),0);assert.equal(await page.locator('#player').evaluate(a=>a.paused),true);
