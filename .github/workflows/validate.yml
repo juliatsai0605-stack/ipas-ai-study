@@ -37,6 +37,7 @@ jobs:
         with:
           name: ipas-browser-screenshots
           path: |
+            study-*.png
             test-*.png
             home-*.png
             home-fold-*.png

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 const bank=JSON.parse(readFileSync('bank.json','utf8'));
 assert.equal(bank.length,700,'all 14 published papers must be available');
 assert.equal(new Set(bank.map(x=>x.id)).size,700,'question IDs must remain unique');
@@ -19,6 +20,9 @@ for(const sec of sections){
  const x=study.lessons[sec.code];assert.ok(x,'missing lesson '+sec.code);
  assert.ok(x.explain.length>=2&&x.example.length>20&&x.memory.length>5);
  assert.ok(x.sources.length&&x.dialogue.length>=3);
+ assert.match(x.audio.file,/^audio\/hsiaochen\/L[12]\d{4}\.mp3$/);
+ assert.ok(x.audio.duration>30);
+ assert.equal(createHash('sha256').update(readFileSync(x.audio.file)).digest('hex'),x.audio.sha256);
  for(const id of x.practiceIds)assert.ok(bank.some(q=>q.id===id&&q.sec===sec.code),id);
  for(const id of x.sources)assert.ok(study.sources[id],id);
 }

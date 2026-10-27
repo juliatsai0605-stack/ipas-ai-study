@@ -293,7 +293,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的AI 的定義與分類，我先抓住什麼？"
+          "text": "這節來談AI 的定義與分類。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -325,7 +325,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L11101.mp3",
+        "voice": "曉臻",
+        "duration": 79.0,
+        "sha256": "08aa8f654cdf2471545fb9d6c825646012f75b7b231940cc6cc7077889d487e5"
+      }
     },
     "L11102": {
       "title": "AI 治理概念",
@@ -357,7 +363,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的AI 治理概念，我先抓住什麼？"
+          "text": "這節來談AI 治理概念。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -389,7 +395,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L11102.mp3",
+        "voice": "曉臻",
+        "duration": 78.5,
+        "sha256": "714f02adf620295c32840aee6840c065497f1369bf6c5f5da5b2ae217ea5a62b"
+      }
     },
     "L11201": {
       "title": "資料基本概念與來源",
@@ -417,7 +429,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的資料基本概念與來源，我先抓住什麼？"
+          "text": "這節來談資料基本概念與來源。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -449,7 +461,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L11201.mp3",
+        "voice": "曉臻",
+        "duration": 80.6,
+        "sha256": "1119e22cc34b8df9272ff676657862c5a7442245e31e35d61066d954bcdc91d7"
+      }
     },
     "L11202": {
       "title": "資料整理與分析流程",
@@ -477,7 +495,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的資料整理與分析流程，我先抓住什麼？"
+          "text": "這節來談資料整理與分析流程。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -509,7 +527,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L11202.mp3",
+        "voice": "曉臻",
+        "duration": 77.2,
+        "sha256": "e597957818fb7cea733b4077a96e1013c48aa6e91ea876a0075f238993033789"
+      }
     },
     "L11203": {
       "title": "資料隱私與安全",
@@ -538,7 +562,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的資料隱私與安全，我先抓住什麼？"
+          "text": "這節來談資料隱私與安全。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -570,7 +594,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L11203.mp3",
+        "voice": "曉臻",
+        "duration": 74.3,
+        "sha256": "597c0db5cf35f6a250c2de0b5bc99feb6f10b5412adea3b34493474edb7124a4"
+      }
     },
     "L11301": {
       "title": "機器學習基本原理",
@@ -598,7 +628,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的機器學習基本原理，我先抓住什麼？"
+          "text": "這節來談機器學習基本原理。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -630,7 +660,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L11301.mp3",
+        "voice": "曉臻",
+        "duration": 75.1,
+        "sha256": "a701d6c9107c3ad70967585fc9772daab6df1a4e371334a2c43acc68ca34d62a"
+      }
     },
     "L11302": {
       "title": "常見的機器學習模型",
@@ -658,7 +694,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的常見的機器學習模型，我先抓住什麼？"
+          "text": "這節來談常見的機器學習模型。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -690,7 +726,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L11302.mp3",
+        "voice": "曉臻",
+        "duration": 75.5,
+        "sha256": "92e8f10edfd3c362b607e26d3a6be0eb7528483028c4067abf4867a55988d92b"
+      }
     },
     "L11401": {
       "title": "鑑別式 AI 與生成式 AI 的基本原理",
@@ -718,7 +760,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的鑑別式 AI 與生成式 AI 的基本原理，我先抓住什麼？"
+          "text": "這節來談鑑別式 AI 與生成式 AI 的基本原理。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -750,7 +792,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L11401.mp3",
+        "voice": "曉臻",
+        "duration": 79.8,
+        "sha256": "46c129de1e0c29ff078b783a7d661a0fa37bd98cd1e0b03f4a9e7deef74f5368"
+      }
     },
     "L11402": {
       "title": "鑑別式 AI 與生成式 AI 的整合應用",
@@ -778,7 +826,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的鑑別式 AI 與生成式 AI 的整合應用，我先抓住什麼？"
+          "text": "這節來談鑑別式 AI 與生成式 AI 的整合應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -810,7 +858,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L11402.mp3",
+        "voice": "曉臻",
+        "duration": 83.0,
+        "sha256": "80564dbe7c89b252c84299befd9a46aa74dd1d44784fc20ff6559408dd2e13f6"
+      }
     },
     "L12101": {
       "title": "No Code / Low Code 的基本概念",
@@ -838,7 +892,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的No Code / Low Code 的基本概念，我先抓住什麼？"
+          "text": "這節來談No Code / Low Code 的基本概念。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -870,7 +924,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L12101.mp3",
+        "voice": "曉臻",
+        "duration": 78.9,
+        "sha256": "fdcb05fe83e175834d3929dd0bd39ae563a40d1e6423165ea6d88520a196e9e0"
+      }
     },
     "L12102": {
       "title": "No Code / Low Code 的優勢與限制",
@@ -895,7 +955,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的No Code / Low Code 的優勢與限制，我先抓住什麼？"
+          "text": "這節來談No Code / Low Code 的優勢與限制。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -927,7 +987,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L12102.mp3",
+        "voice": "曉臻",
+        "duration": 82.8,
+        "sha256": "61a5ea4312559881ea4832b58227b6c6a162c3e043c284df9e40bd1006ef757c"
+      }
     },
     "L12201": {
       "title": "生成式 AI 應用領域與常見工具",
@@ -955,7 +1021,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的生成式 AI 應用領域與常見工具，我先抓住什麼？"
+          "text": "這節來談生成式 AI 應用領域與常見工具。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -987,7 +1053,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L12201.mp3",
+        "voice": "曉臻",
+        "duration": 77.3,
+        "sha256": "0319d842f62dcf492944c42854c858983ef7e0e34072fc276e39118fc040ae58"
+      }
     },
     "L12202": {
       "title": "如何善用生成式 AI 工具",
@@ -1017,7 +1089,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的如何善用生成式 AI 工具，我先抓住什麼？"
+          "text": "這節來談如何善用生成式 AI 工具。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1049,7 +1121,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L12202.mp3",
+        "voice": "曉臻",
+        "duration": 84.6,
+        "sha256": "32354e0de484236b8efce66e9047a7bf1d2a3fbb671ffcf39de6a55379554c1b"
+      }
     },
     "L12301": {
       "title": "生成式 AI 導入評估",
@@ -1077,7 +1155,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的生成式 AI 導入評估，我先抓住什麼？"
+          "text": "這節來談生成式 AI 導入評估。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1109,7 +1187,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L12301.mp3",
+        "voice": "曉臻",
+        "duration": 76.9,
+        "sha256": "eafb11b7cb48a2134f805b84894825a1a620eb568d8b0187d572fae660ebaa60"
+      }
     },
     "L12302": {
       "title": "生成式 AI 導入規劃",
@@ -1137,7 +1221,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的生成式 AI 導入規劃，我先抓住什麼？"
+          "text": "這節來談生成式 AI 導入規劃。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1169,7 +1253,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L12302.mp3",
+        "voice": "曉臻",
+        "duration": 76.6,
+        "sha256": "7a34d8864830a3c8a940c0fce50f86a35cf06437466d652f7990cfd87478909b"
+      }
     },
     "L12303": {
       "title": "生成式 AI 風險管理",
@@ -1199,7 +1289,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的生成式 AI 風險管理，我先抓住什麼？"
+          "text": "這節來談生成式 AI 風險管理。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1231,7 +1321,13 @@
         }
       ],
       "mediaPriority": "先讀文字；卡住再看延伸影片",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L12303.mp3",
+        "voice": "曉臻",
+        "duration": 80.9,
+        "sha256": "db2e62cdd7ef6c711f4f763d221a419e403fa80ad01a828e94dd630ec5806ae7"
+      }
     },
     "L21101": {
       "title": "自然語言處理技術與應用",
@@ -1259,7 +1355,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的自然語言處理技術與應用，我先抓住什麼？"
+          "text": "這節來談自然語言處理技術與應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1291,7 +1387,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L21101.mp3",
+        "voice": "曉臻",
+        "duration": 73.8,
+        "sha256": "eb9f6e00dda88d21d7431bdac0adac77ff06f878505048f21eee07c86fc87c0f"
+      }
     },
     "L21102": {
       "title": "電腦視覺技術與應用",
@@ -1319,7 +1421,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的電腦視覺技術與應用，我先抓住什麼？"
+          "text": "這節來談電腦視覺技術與應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1351,7 +1453,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L21102.mp3",
+        "voice": "曉臻",
+        "duration": 76.0,
+        "sha256": "9ba5e9be7c082513963028404b9edd9bb9193283a08ee3a988bdb7b2c886aa42"
+      }
     },
     "L21103": {
       "title": "生成式 AI 技術與應用",
@@ -1380,7 +1488,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的生成式 AI 技術與應用，我先抓住什麼？"
+          "text": "這節來談生成式 AI 技術與應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1412,7 +1520,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L21103.mp3",
+        "voice": "曉臻",
+        "duration": 75.0,
+        "sha256": "c0941141cadec890c7b0dd9c036bfee9f1e9ca970513d0c004105f2e65a54115"
+      }
     },
     "L21104": {
       "title": "多模態人工智慧應用",
@@ -1437,7 +1551,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的多模態人工智慧應用，我先抓住什麼？"
+          "text": "這節來談多模態人工智慧應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1469,7 +1583,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L21104.mp3",
+        "voice": "曉臻",
+        "duration": 73.8,
+        "sha256": "d3473c86c26ede7ebcb773975fa33e20804f7dac662a8bb5bda0c47bae87c7bd"
+      }
     },
     "L21201": {
       "title": "AI 導入評估",
@@ -1493,7 +1613,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的AI 導入評估，我先抓住什麼？"
+          "text": "這節來談AI 導入評估。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1525,7 +1645,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L21201.mp3",
+        "voice": "曉臻",
+        "duration": 75.6,
+        "sha256": "bdda7a07721913bc1dc5f39e5e284e4ea58f668c40c9f83a56e67dfc057428c4"
+      }
     },
     "L21202": {
       "title": "AI 導入規劃",
@@ -1549,7 +1675,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的AI 導入規劃，我先抓住什麼？"
+          "text": "這節來談AI 導入規劃。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1581,7 +1707,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L21202.mp3",
+        "voice": "曉臻",
+        "duration": 72.0,
+        "sha256": "754790e4452785782c7852b6f04d5a064035ca542d518f165ff4443f7c65e577"
+      }
     },
     "L21203": {
       "title": "AI 風險管理",
@@ -1608,7 +1740,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的AI 風險管理，我先抓住什麼？"
+          "text": "這節來談AI 風險管理。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1640,7 +1772,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L21203.mp3",
+        "voice": "曉臻",
+        "duration": 75.0,
+        "sha256": "6d6db3356ffb1250532b90776eb4f719249d3af764222141f4fcaa6309614e8f"
+      }
     },
     "L21301": {
       "title": "數據準備與模型選擇",
@@ -1668,7 +1806,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的數據準備與模型選擇，我先抓住什麼？"
+          "text": "這節來談數據準備與模型選擇。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1700,7 +1838,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L21301.mp3",
+        "voice": "曉臻",
+        "duration": 74.3,
+        "sha256": "8dcec60489d25d8a8f8e3ccc12a64cc6262a0f6b2c31ee9a4d7e0afcb5c25a4d"
+      }
     },
     "L21302": {
       "title": "AI 技術系統集成與部署",
@@ -1728,7 +1872,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的AI 技術系統集成與部署，我先抓住什麼？"
+          "text": "這節來談AI 技術系統集成與部署。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1760,7 +1904,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L21302.mp3",
+        "voice": "曉臻",
+        "duration": 75.3,
+        "sha256": "dfde973e73aa86bf6d7dd1c39feee5d52283009d7ae92b81ec01c06b273e8272"
+      }
     },
     "L22101": {
       "title": "敘述性統計與資料摘要技術",
@@ -1788,7 +1938,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的敘述性統計與資料摘要技術，我先抓住什麼？"
+          "text": "這節來談敘述性統計與資料摘要技術。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1820,7 +1970,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22101.mp3",
+        "voice": "曉臻",
+        "duration": 75.5,
+        "sha256": "3d4244800f1198af3353537e5b208a829668649ef7b368b79260ab83f7295dbe"
+      }
     },
     "L22102": {
       "title": "機率分佈與資料分佈模型",
@@ -1848,7 +2004,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的機率分佈與資料分佈模型，我先抓住什麼？"
+          "text": "這節來談機率分佈與資料分佈模型。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1880,7 +2036,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22102.mp3",
+        "voice": "曉臻",
+        "duration": 78.8,
+        "sha256": "0bf7e7191c6cf3a0b76c6750695fefc51b12799b60c1ce16ee4070374ee8108c"
+      }
     },
     "L22103": {
       "title": "假設檢定與統計推論",
@@ -1908,7 +2070,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的假設檢定與統計推論，我先抓住什麼？"
+          "text": "這節來談假設檢定與統計推論。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -1940,7 +2102,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22103.mp3",
+        "voice": "曉臻",
+        "duration": 74.0,
+        "sha256": "d6266b631e74bd98d0803668ea764774281cd1711ccb796e08a5faf1053908f7"
+      }
     },
     "L22201": {
       "title": "數據收集與清理",
@@ -1968,7 +2136,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的數據收集與清理，我先抓住什麼？"
+          "text": "這節來談數據收集與清理。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2000,7 +2168,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22201.mp3",
+        "voice": "曉臻",
+        "duration": 71.0,
+        "sha256": "628237c7de00c53d38dbaf3d1b42bb1052ed3841918addae0810569dfb66b496"
+      }
     },
     "L22202": {
       "title": "數據儲存與管理",
@@ -2028,7 +2202,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的數據儲存與管理，我先抓住什麼？"
+          "text": "這節來談數據儲存與管理。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2060,7 +2234,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22202.mp3",
+        "voice": "曉臻",
+        "duration": 69.8,
+        "sha256": "94b62c57ae30efb5cf8f1000fd328b89bfb8280ff256f15155a340e2f55118a1"
+      }
     },
     "L22203": {
       "title": "數據處理技術與工具",
@@ -2086,7 +2266,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的數據處理技術與工具，我先抓住什麼？"
+          "text": "這節來談數據處理技術與工具。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2118,7 +2298,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22203.mp3",
+        "voice": "曉臻",
+        "duration": 73.7,
+        "sha256": "262a0dcbadd0c92f84a5c2754cebf77fa60cc84c8769a7d0a53da2ce18bbe77b"
+      }
     },
     "L22301": {
       "title": "統計學在大數據中的應用",
@@ -2146,7 +2332,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的統計學在大數據中的應用，我先抓住什麼？"
+          "text": "這節來談統計學在大數據中的應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2178,7 +2364,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22301.mp3",
+        "voice": "曉臻",
+        "duration": 71.2,
+        "sha256": "9f6607ff059f68a41fda2b6ebe81d8bed42008bfb7781b9fe281db98706bef26"
+      }
     },
     "L22302": {
       "title": "常見的大數據分析方法",
@@ -2206,7 +2398,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的常見的大數據分析方法，我先抓住什麼？"
+          "text": "這節來談常見的大數據分析方法。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2238,7 +2430,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22302.mp3",
+        "voice": "曉臻",
+        "duration": 73.5,
+        "sha256": "d011816f5f83f97a0c06c45c0452a9d0c76201ed9e3ab8a73a8be58d89f45f3a"
+      }
     },
     "L22303": {
       "title": "數據可視化工具",
@@ -2266,7 +2464,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的數據可視化工具，我先抓住什麼？"
+          "text": "這節來談數據可視化工具。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2298,7 +2496,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22303.mp3",
+        "voice": "曉臻",
+        "duration": 75.3,
+        "sha256": "283161a564ae0597c3400e9c04b43eef9b444ea80f93f7e3f2b1d1e33505e116"
+      }
     },
     "L22401": {
       "title": "大數據與機器學習",
@@ -2321,7 +2525,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的大數據與機器學習，我先抓住什麼？"
+          "text": "這節來談大數據與機器學習。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2353,7 +2557,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22401.mp3",
+        "voice": "曉臻",
+        "duration": 72.6,
+        "sha256": "42d1b4d331d7b24564c2dd62ac875d4d5d0b93edc80175d1be46e230ef924660"
+      }
     },
     "L22402": {
       "title": "大數據在鑑別式 AI 中的應用",
@@ -2381,7 +2591,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的大數據在鑑別式 AI 中的應用，我先抓住什麼？"
+          "text": "這節來談大數據在鑑別式 AI 中的應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2413,7 +2623,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22402.mp3",
+        "voice": "曉臻",
+        "duration": 74.3,
+        "sha256": "7fb048bc0e5cc8322c5577515a048be790e5424e27326f768d0d87ac7ad664ff"
+      }
     },
     "L22403": {
       "title": "大數據在生成式 AI 中的應用",
@@ -2436,7 +2652,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的大數據在生成式 AI 中的應用，我先抓住什麼？"
+          "text": "這節來談大數據在生成式 AI 中的應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2468,7 +2684,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22403.mp3",
+        "voice": "曉臻",
+        "duration": 76.9,
+        "sha256": "ceaac51c30089fd7a7c72b35158f52c190fda488daa98bce47af89d8fc4131d4"
+      }
     },
     "L22404": {
       "title": "大數據隱私保護、安全與合規",
@@ -2496,7 +2718,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的大數據隱私保護、安全與合規，我先抓住什麼？"
+          "text": "這節來談大數據隱私保護、安全與合規。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2528,7 +2750,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L22404.mp3",
+        "voice": "曉臻",
+        "duration": 80.5,
+        "sha256": "1fb27fc09b01ee3294b176ce24a0438b99989286d1a9cfe330edb6885340c027"
+      }
     },
     "L23101": {
       "title": "機率／統計之機器學習基礎應用",
@@ -2556,7 +2784,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的機率／統計之機器學習基礎應用，我先抓住什麼？"
+          "text": "這節來談機率／統計之機器學習基礎應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2588,7 +2816,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23101.mp3",
+        "voice": "曉臻",
+        "duration": 76.2,
+        "sha256": "d64c79b65baf4d3a9f845247a66de959d5d9118333f7f8874002e24d0643c16a"
+      }
     },
     "L23102": {
       "title": "線性代數之機器學習基礎應用",
@@ -2616,7 +2850,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的線性代數之機器學習基礎應用，我先抓住什麼？"
+          "text": "這節來談線性代數之機器學習基礎應用。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2648,7 +2882,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23102.mp3",
+        "voice": "曉臻",
+        "duration": 75.4,
+        "sha256": "e660aab5bb2a15987a85f896244b13536c6fdb22eff8a4395de3091d8ff54181"
+      }
     },
     "L23103": {
       "title": "數值優化技術與方法",
@@ -2676,7 +2916,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的數值優化技術與方法，我先抓住什麼？"
+          "text": "這節來談數值優化技術與方法。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2708,7 +2948,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23103.mp3",
+        "voice": "曉臻",
+        "duration": 74.1,
+        "sha256": "430c283c5d43bad63f3239248967c55f1cb7de66edae390c6c636eae3be49615"
+      }
     },
     "L23201": {
       "title": "機器學習原理與技術",
@@ -2729,7 +2975,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的機器學習原理與技術，我先抓住什麼？"
+          "text": "這節來談機器學習原理與技術。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2761,7 +3007,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23201.mp3",
+        "voice": "曉臻",
+        "duration": 71.0,
+        "sha256": "60f69cc7ab896672cba17a1446ef4730276678d2d96a7da371bd67b5574a215c"
+      }
     },
     "L23202": {
       "title": "常見機器學習演算法",
@@ -2789,7 +3041,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的常見機器學習演算法，我先抓住什麼？"
+          "text": "這節來談常見機器學習演算法。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2821,7 +3073,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23202.mp3",
+        "voice": "曉臻",
+        "duration": 74.2,
+        "sha256": "ae5c50058f638890a1b094a46f9d1d1647b5eb5204cad5271da5826dcb3ef030"
+      }
     },
     "L23203": {
       "title": "深度學習原理與框架",
@@ -2849,7 +3107,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的深度學習原理與框架，我先抓住什麼？"
+          "text": "這節來談深度學習原理與框架。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2881,7 +3139,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23203.mp3",
+        "voice": "曉臻",
+        "duration": 73.7,
+        "sha256": "9293411d8ef2f618e7d3ce30ccfdf1dbbce03e3ceba8395547a35cdd5363fb4c"
+      }
     },
     "L23301": {
       "title": "數據準備與特徵工程",
@@ -2909,7 +3173,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的數據準備與特徵工程，我先抓住什麼？"
+          "text": "這節來談數據準備與特徵工程。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -2941,7 +3205,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23301.mp3",
+        "voice": "曉臻",
+        "duration": 72.1,
+        "sha256": "8067f1a151faf5e9ddd956f8ddb1fa2fcab664e849c003bcc8aca8d2eba5e9f7"
+      }
     },
     "L23302": {
       "title": "模型選擇與架構設計",
@@ -2969,7 +3239,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的模型選擇與架構設計，我先抓住什麼？"
+          "text": "這節來談模型選擇與架構設計。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -3001,7 +3271,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23302.mp3",
+        "voice": "曉臻",
+        "duration": 75.3,
+        "sha256": "0772dd878f0110a351fcf262d66f867041342f7a0babe9efb076fdf135ba17cf"
+      }
     },
     "L23303": {
       "title": "模型訓練、評估與驗證",
@@ -3029,7 +3305,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的模型訓練、評估與驗證，我先抓住什麼？"
+          "text": "這節來談模型訓練、評估與驗證。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -3061,7 +3337,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23303.mp3",
+        "voice": "曉臻",
+        "duration": 73.0,
+        "sha256": "1cc093f60b900032c208dc3f01ebfa1c2c19d88ed79e0c5866fba472325322ae"
+      }
     },
     "L23304": {
       "title": "模型調整與優化",
@@ -3087,7 +3369,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的模型調整與優化，我先抓住什麼？"
+          "text": "這節來談模型調整與優化。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -3119,7 +3401,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23304.mp3",
+        "voice": "曉臻",
+        "duration": 70.9,
+        "sha256": "71838352e98e5ec2bee4232bffbece7f9d433decc04686ad0b4ced9a1df5bcec"
+      }
     },
     "L23401": {
       "title": "數據隱私、安全與合規",
@@ -3145,7 +3433,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的數據隱私、安全與合規，我先抓住什麼？"
+          "text": "這節來談數據隱私、安全與合規。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -3177,7 +3465,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23401.mp3",
+        "voice": "曉臻",
+        "duration": 75.5,
+        "sha256": "9cdbd62c4db9b742ce53c277afb471be8f685a8a28b06e7fd079dcb8fc2478d0"
+      }
     },
     "L23402": {
       "title": "演算法偏見與公平性",
@@ -3204,7 +3498,7 @@
       "dialogue": [
         {
           "role": "學習者",
-          "text": "這一節的演算法偏見與公平性，我先抓住什麼？"
+          "text": "這節來談演算法偏見與公平性。先抓住哪個重點呢？"
         },
         {
           "role": "導讀",
@@ -3236,7 +3530,13 @@
         }
       ],
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
-      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿"
+      "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
+      "audio": {
+        "file": "audio/hsiaochen/L23402.mp3",
+        "voice": "曉臻",
+        "duration": 80.6,
+        "sha256": "b1f2120e56397a09b2ef6c987452783f13700f4b27acccd1fb6a71e13035a9f5"
+      }
     }
   },
   "exams": {
