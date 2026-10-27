@@ -23,7 +23,7 @@ try{
   const download=page.waitForEvent('download');await page.locator('#studyDownload').click();
   const file=await download;assert.equal(file.suggestedFilename(),'L11102-文字與通勤稿.txt');
   const stream=await file.createReadStream();let text='';for await(const chunk of stream)text+=chunk.toString('utf8');assert.match(text,/本站原創/);assert.match(text,/治理先問/);
-  const mp3Event=page.waitForEvent('download');await page.locator('a[download="L11102-曉臻.mp3"]').click();assert.equal((await mp3Event).suggestedFilename(),'L11102-曉臻.mp3');
+  const mp3Event=page.waitForEvent('download');await page.locator('a[download="L11102.mp3"]').click();assert.equal((await mp3Event).suggestedFilename(),'L11102.mp3');
   await page.locator('.study-resources summary').click();assert.ok(await page.locator('.study-source a[href^="https://"]').count()>=3);assert.ok(await page.locator('.q .meta a[href*="#page="]').count()>0);
   assert.equal(await page.evaluate(()=>JSON.stringify(window.IPAS_BRIDGE.snapshot())),before,'audio and downloads must not rewrite study records');
   await page.locator('#studyText').scrollIntoViewIfNeeded();await page.screenshot({path:'study-lesson-'+width+'.png',fullPage:false});
