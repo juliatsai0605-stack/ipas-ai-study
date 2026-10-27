@@ -297,7 +297,7 @@
         },
         {
           "role": "導讀",
-          "text": "不一定耶。假如只是設定星期一早上寄出，那可能就是固定規則。我比較想知道，它有沒有從資料裡學到東西。"
+          "text": "不一定。假如只是設定星期一早上寄出，那可能就是固定規則。我比較想知道，它有沒有從資料裡學到東西。"
         },
         {
           "role": "學習者",
@@ -327,10 +327,10 @@
       "mediaPriority": "先讀文字；卡住再看延伸影片",
       "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
       "audio": {
-        "file": "audio/podcast-mf/L11101.mp3",
+        "file": "audio/podcast-mf/L11101-plain.mp3",
         "voice": "女聲導讀 × 男聲學習者",
-        "duration": 75.06,
-        "sha256": "1697aadd6f603531170988c02e746755caf814c801abae22391775a13d808bc6",
+        "duration": 74.84,
+        "sha256": "03f288a9d2fc825a66887a8d128c49d47eca4ac99592f2557d2a5cb0f8c3bbf4",
         "speakers": {
           "導讀": {
             "voice": "zh-TW-HsiaoChenNeural",
@@ -1667,7 +1667,7 @@
         },
         {
           "role": "學習者",
-          "text": "喔，原來都是看圖片，輸出也能差那麼多。"
+          "text": "原來都是看圖片，輸出也能差那麼多。"
         },
         {
           "role": "導讀",
@@ -1693,10 +1693,10 @@
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
       "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
       "audio": {
-        "file": "audio/podcast-mf/L21102.mp3",
+        "file": "audio/podcast-mf/L21102-plain.mp3",
         "voice": "女聲導讀 × 男聲學習者",
-        "duration": 64.38,
-        "sha256": "2502fe4034f31fab7ebbfbc78032a42a81474bc2664b3bf8f464800b948f568f",
+        "duration": 63.66,
+        "sha256": "798fbe8b40713295dc91b02622dd42365a94b984160d5e82e294d25f3c7dca13",
         "speakers": {
           "導讀": {
             "voice": "zh-TW-HsiaoChenNeural",
@@ -2536,7 +2536,7 @@
         },
         {
           "role": "學習者",
-          "text": "對耶，我以前還以為多出來的都是新資料。"
+          "text": "對，我以前還以為多出來的都是新資料。"
         },
         {
           "role": "導讀",
@@ -2562,10 +2562,10 @@
       "mediaPriority": "先讀文字與公式／程式；需要時看延伸講解",
       "contentType": "本站原創教學與通勤導讀；非第三方影片逐字稿",
       "audio": {
-        "file": "audio/podcast-mf/L22201.mp3",
+        "file": "audio/podcast-mf/L22201-plain.mp3",
         "voice": "女聲導讀 × 男聲學習者",
-        "duration": 65.89,
-        "sha256": "63c76c07ed468a5bc88caf0c401446c5fe2dc3d2e4ad61bce7a66b548da0edc0",
+        "duration": 65.82,
+        "sha256": "6acff180c03331eb2b9edbc5e55e461ef6f93795b97ecc4c562b678fed51347c",
         "speakers": {
           "導讀": {
             "voice": "zh-TW-HsiaoChenNeural",
