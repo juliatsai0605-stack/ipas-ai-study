@@ -12,7 +12,7 @@ try{
   await page.locator('#studySearch').fill('L11102');await page.locator('#studySearch').press('Enter');
   await page.locator('#studyText').waitFor();assert.match(await page.locator('#studyText').innerText(),/治理先問/);
   const before=await page.evaluate(()=>JSON.stringify(window.IPAS_BRIDGE.snapshot()));
-  const audio=page.locator('#studyAudio');assert.match(await audio.getAttribute('src'),/audio\/hsiaochen\/L11102\.mp3$/);
+  const audio=page.locator('#studyAudio');assert.match(await audio.getAttribute('src'),/audio\/podcast\/L11102\.mp3$/);
   await page.locator('#studySpeak').click();await page.waitForFunction(()=>document.querySelector('#studyAudio').currentTime>0.15);
   assert.match(await page.locator('#studyAudioStatus').innerText(),/播放中/);
   await page.locator('#studyPause').click();assert.equal(await audio.evaluate(a=>a.paused),true);
