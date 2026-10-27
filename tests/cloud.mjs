@@ -22,7 +22,9 @@ export function createClient(){
   auth:{
    onAuthStateChange(cb){listener=cb;return {data:{subscription:{unsubscribe(){}}}};},
    async getSession(){return {data:{session}};},
+   async resend(payload){window.__lastResend=payload;return {error:null};},
    async signInWithPassword({email}){
+    if(email==="unconfirmed@example.test")return {data:{session:null},error:{code:"email_not_confirmed",message:"Email not confirmed"}};
     const id=email.startsWith("a")?"test-a":"test-b";
     session={user:{id,email}};queueMicrotask(()=>listener?.("SIGNED_IN",session));
     return {data:{session},error:null};
@@ -97,6 +99,13 @@ try{
    await page.locator("#cloudClose").click();
  }
  await page.locator(".cloud-account-host button").click();
+ await page.locator("#cloudEmail").fill("unconfirmed@example.test");
+ await page.locator("#cloudResend").click();
+ assert.equal(await page.evaluate(()=>window.__lastResend.type),"signup","resend must work without a password");
+ assert.match(await page.locator("#cloudMessage").innerText(),/驗證信已送出/);
+ await page.locator("#cloudPassword").fill("password123");
+ await page.locator("#cloudSignIn").click();
+ assert.match(await page.locator("#cloudMessage").innerText(),/不必再註冊/,"explain unconfirmed email recovery");
  await page.locator("#cloudEmail").fill("a@example.test");
  await page.locator("#cloudPassword").fill("password123");
  await page.locator("#cloudSignUp").click();
