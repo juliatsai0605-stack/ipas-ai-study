@@ -53,6 +53,8 @@ try{
   page.on("pageerror",e=>failures.push(label+": "+e.message));
   try{
    await page.goto(BASE,{waitUntil:"networkidle"});
+  // Isolated frontend fixture only; real Auth/RLS E2E is a separate release gate.
+  await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("ui-test-account",{}));
    await page.locator("#dashContinue").waitFor({timeout:20000});
    await inspect(page,label+" home");
    const tabs=["home","units","drill","mock","me"];
