@@ -108,14 +108,6 @@ if(cfg?.configured&&cfg.url&&cfg.publishableKey){
       if(error?.status===429||/after \\d+ seconds|rate limit/i.test(text)){const n=Number(text.match(/after (\\d+) seconds/i)?.[1]||60);resendUntil=Date.now()+n*1000;return "寄信次數受到限制，請等 "+n+" 秒後再試；不要重複按註冊。";}
       return "操作未完成："+text;
     }
-    q("cloudVerify").onclick=async()=>{
-      const email=q("cloudEmail").value.trim(),token=q("cloudVerifyCode").value.trim();
-      if(!email||!q("cloudEmail").checkValidity()||!/^\\d{6,10}$/.test(token)){msg("請輸入電子郵件及最新信件中的驗證碼。");return;}
-      if(authBusy)return;authBusy=true;q("cloudVerify").disabled=true;msg("正在確認信箱…");
-      try{const {error}=await supabase.auth.verifyOtp({email,token,type:"signup"});if(error)throw error;q("cloudVerifyCode").value="";msg("信箱驗證成功，正在載入個人進度。");}
-      catch(error){msg(/expired|invalid|not found/i.test(error.message)?"驗證碼已失效，請重寄驗證信並使用最新一封的驗證碼。":authMessage(error));}
-      finally{authBusy=false;q("cloudVerify").disabled=false;}
-    };
     q("cloudResend").onclick=async()=>{
       if(authBusy)return;
       const email=q("cloudEmail").value.trim();
