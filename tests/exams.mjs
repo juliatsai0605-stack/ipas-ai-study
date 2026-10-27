@@ -7,6 +7,8 @@ const errors=[];
 page.on("pageerror",e=>errors.push(e.message));
 try{
  await page.goto("http://127.0.0.1:4173/",{waitUntil:"networkidle"});
+  // Isolated frontend fixture only; real Auth/RLS E2E is a separate release gate.
+  await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("ui-test-account",{}));
  await page.locator("#dashContinue").waitFor({timeout:15000});
  await page.locator('.tabs [data-v="drill"]').click();
  await page.locator("#dK").selectOption("10");
@@ -49,6 +51,7 @@ try{
  assert.ok(snapshot.mocks.length>=1,"mock exam score must persist in local state");
  assert.ok(Object.keys(snapshot.q).length>=1,"question history must persist");
  await page.reload({waitUntil:"networkidle"});
+ await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("ui-test-account",{}));
  const reloaded=await page.evaluate(()=>window.IPAS_BRIDGE.snapshot());
  assert.ok(reloaded.mocks.length>=1,"mock result must survive reload");
  assert.deepEqual(errors,[],"unexpected JavaScript errors");

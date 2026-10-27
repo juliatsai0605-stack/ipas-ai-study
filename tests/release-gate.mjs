@@ -2,6 +2,7 @@
 import assert from "node:assert/strict";
 import {readdirSync} from "node:fs";
 import {chromium} from "playwright";
+import {decodePageImages} from './images.mjs';
 
 const BASE="http://127.0.0.1:4173/";
 const assets=readdirSync("img",{withFileTypes:true})
@@ -12,6 +13,7 @@ assert.ok(assets.length>=25,"image inventory unexpectedly small");
 const browser=await chromium.launch({headless:true,args:["--no-sandbox"]});
 const failures=[];
 async function inspect(page,label){
+ await decodePageImages(page);
  const report=await page.evaluate(()=>{
    const vw=innerWidth;
    const doc=Math.max(document.documentElement.scrollWidth,document.body.scrollWidth);
@@ -53,6 +55,8 @@ try{
   page.on("pageerror",e=>failures.push(label+": "+e.message));
   try{
    await page.goto(BASE,{waitUntil:"networkidle"});
+  // Isolated frontend fixture only; real Auth/RLS E2E is a separate release gate.
+  await page.evaluate(()=>window.IPAS_BRIDGE.attachUser("ui-test-account",{}));
    await page.locator("#dashContinue").waitFor({timeout:20000});
    await inspect(page,label+" home");
    const tabs=["home","units","drill","mock","me"];
