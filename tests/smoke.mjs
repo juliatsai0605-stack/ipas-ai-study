@@ -40,6 +40,6 @@ assert.match(sql,/public = excluded\.public/,"storage bucket must remain private
 assert.match(html,/href="roadmap\.html"/,"sidebar must link to the learning roadmap");
 const roadmap=read("roadmap.html");
 assert.match(roadmap,/學習路線與官方資料/);
-for(const id of ["rules","path","foundation","l22","sources"])assert.match(roadmap,new RegExp(`id="${id}"`),`roadmap section ${id} missing`);
+for(const id of ["rules","path","foundation","l22","sources","laws"])assert.match(roadmap,new RegExp(`id="${id}"`),`roadmap section ${id} missing`);
 assert.equal((roadmap.match(/%E5%85%AC%E5%91%8A[^"]*\.pdf"/g)||[]).length,14,"roadmap must link all 14 official exam papers");
 console.log("PASS: HTML, JS parse, "+bank.length+" questions, "+codes.size+" sections, six Aiya assets and RLS setup");
