@@ -873,9 +873,9 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
 }
 
 </style>
-<link rel="stylesheet" href="visual-polish.css">
-<link rel="stylesheet" href="study-reader.css">
-<script src="study-reader.js"></script>
+<link rel="stylesheet" href="visual-polish.css?v=20261028b">
+<link rel="stylesheet" href="study-reader.css?v=20261028b">
+<script src="study-reader.js?v=20261028b"></script>
 </head>
 <body>
 <header class="top">
@@ -1434,7 +1434,7 @@ document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{if(b.dataset
 $("#tocBtn").onclick=()=>{if(window.matchMedia("(min-width:901px)").matches){S.toc=!S.toc;save();render();}else{$("#toc").classList.add("open");$("#drawerBg").classList.add("open");}};
 $("#drawerBg").onclick=closeDrawer;
 window.matchMedia("(min-width:901px)").addEventListener("change",()=>{closeDrawer();render();});
-Promise.all([fetch("course.json").then(r=>r.json()),fetch("bank.json").then(r=>r.json()),fetch("study-content.json").then(r=>{if(!r.ok)throw new Error("study content");return r.json();}).catch(()=>null)]).then(([c,b,study])=>{
+Promise.all([fetch("course.json",{cache:"no-cache"}).then(r=>r.json()),fetch("bank.json",{cache:"no-cache"}).then(r=>r.json()),fetch("study-content.json",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("study content");return r.json();}).catch(()=>null)]).then(([c,b,study])=>{
   window.IPAS_STUDY?.setData(study);
   COURSE=c;BANK=b;
   for(const lv of COURSE.levels)for(const s of lv.subjects)for(const ch of s.chapters)for(const sec of ch.sections){SECS[sec.code]={sec,ch,subj:s,lv:lv.id};ORDER.push(sec.code);}
@@ -1443,6 +1443,6 @@ Promise.all([fetch("course.json").then(r=>r.json()),fetch("bank.json").then(r=>r
 }).catch(()=>{$("#main").innerHTML=`<div class="card">題庫載入失敗，請重新整理頁面。</div>`;});
 })();
 </script>
-<script type="module" src="cloud.js"></script>
+<script type="module" src="cloud.js?v=20261028b"></script>
 </body>
 </html>

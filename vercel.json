@@ -4,5 +4,25 @@
     "deploymentEnabled": {
       "feature/aiya-free-anime-v1": false
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/(.*)\\.(html|js|css|json)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ]
 }
