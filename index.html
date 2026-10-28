@@ -1034,7 +1034,7 @@ function renderToc(){
   <button data-go="me">${navSvg("me")} <span>學習檔案庫</span></button>
   <button data-go="badges">${navSvg("badges")} <span>成就徽章</span></button>
   <button data-go="mentor">${navSvg("mentor")} <span>AI 助教 愛芽</span></button>
-  </nav><div class="studio-free"><b>✦ 免費學習網站</b><p>完整課程與練習皆免費。愛芽陪你一步一步前進！</p></div><div class="toc-head"><span>目次・${lv.name}</span><button class="iconbtn" id="tocHide" title="隱藏目次">隱藏</button></div>`;
+  </nav><div class="studio-free"><b>✦ 免費學習網站</b><p>完整課程與練習皆免費。愛芽陪你一步一步前進！</p><p><a href="roadmap.html">學習路線與官方資料 →</a></p></div><div class="toc-head"><span>目次・${lv.name}</span><button class="iconbtn" id="tocHide" title="隱藏目次">隱藏</button></div>`;
   for(const s of lv.subjects){
     h+=`<div class="subj"><div><span>${s.code}　${esc(s.name)}</span>${S.status[s.code]==="pass"?'<span class="tag pass">已通過</span>':(s.note?`<span class="tag">${esc(s.note.replace(/（.*）/,""))}</span>`:"")}</div>`;
     for(const ch of s.chapters){
