@@ -18,16 +18,9 @@ const sections=course.levels.flatMap(l=>l.subjects.flatMap(s=>s.chapters.flatMap
 assert.equal(sections.length,50);
 for(const sec of sections){
  const x=study.lessons[sec.code];assert.ok(x,'missing lesson '+sec.code);
- assert.doesNotMatch(x.dialogue.map(t=>t.text).join(' '),/不一定耶|對耶|喔，/,'avoid the rejected forced interjections');
- assert.doesNotMatch(x.dialogue.map(t=>t.text).join(' '),/先停一下|回到本節自我檢查|先抓住哪個重點|想好後/,'old didactic script must not be served');
- assert.deepEqual([...new Set(x.dialogue.map(t=>t.role))].sort(),['學習者','導讀'].sort(),'roles must match the requested guide and learner');
- assert.equal(x.audio.speakers['導讀'].gender,'female');assert.equal(x.audio.speakers['學習者'].gender,'male');
- assert.notEqual(x.audio.speakers['導讀'].voice,x.audio.speakers['學習者'].voice);
  assert.ok(x.explain.length>=2&&x.example.length>20&&x.memory.length>5);
- assert.ok(x.sources.length&&x.dialogue.length>=3);
- assert.match(x.audio.file,/^audio\/podcast-mf\/L[12]\d{4}(?:-plain)?\.mp3$/);
- assert.ok(x.audio.duration>30);
- assert.equal(createHash('sha256').update(readFileSync(x.audio.file)).digest('hex'),x.audio.sha256);
+ assert.ok(x.sources.length);
+ assert.ok(!('audio' in x)&&!('dialogue' in x),'audio narration was removed at the user request');
  for(const id of x.practiceIds)assert.ok(bank.some(q=>q.id===id&&q.sec===sec.code),id);
  for(const id of x.sources)assert.ok(study.sources[id],id);
 }
