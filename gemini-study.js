@@ -28,7 +28,7 @@ answer從0起算，複選列出所有索引。資料不足時不要輸出虛構�
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const bridge=()=>window.IPAS_BRIDGE;
 const state=()=>bridge()?.snapshot()||{};
-const host=document.querySelector('.top-in');
+const host=document.querySelector('.study-search');
 if(host){
 const btn=document.createElement('button');btn.type='button';btn.className='iconbtn';btn.textContent='Gemini共學';btn.id='geminiStudyOpen';host.append(btn);
 const d=document.createElement('dialog');d.id='geminiStudyDialog';d.style.cssText='width:min(94vw,760px);max-height:90vh;overflow:auto;border:1px solid #ccd6e8;border-radius:18px;padding:22px;color:#263451;background:#fff';
