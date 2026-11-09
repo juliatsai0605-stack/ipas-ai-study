@@ -31,6 +31,7 @@ jobs:
           node tests/exams.mjs
           node tests/release-gate.mjs
           node tests/study-browser.mjs
+          node tests/gemini-study.mjs
       - name: Upload visual test screenshots
         if: always()
         uses: actions/upload-artifact@v4
