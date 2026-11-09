@@ -1398,12 +1398,24 @@ function mergeStudyState(a,b){
   const localStamp=a.lastSecUpdated||0,remoteStamp=b.lastSecUpdated||0;
   if(remoteStamp>localStamp){out.lastSec=b.lastSec;out.lastSecUpdated=remoteStamp;}
   out.attachments=a.attachments||b.attachments||[]; // Remote snapshots exclude binary attachments; retain account-local metadata.
+  for(const key of ["studyQuestions","studyAttempts"]){
+    const rows=new Map();
+    for(const row of [...(b[key]||[]),...(a[key]||[])]){
+      const prev=rows.get(row.id);
+      if(!prev||Number(row.updatedAt||0)>=Number(prev.updatedAt||0))rows.set(row.id,row);
+    }
+    out[key]=[...rows.values()];
+  }
   return out;
 }
 window.IPAS_BRIDGE={
-  setAuthState:(ready)=>{authenticated=!!ready;authReady=true;if(!ready){clearInterval(mockTimer);quiz=drill=mock=diag=null;S=blank();V={view:"home",sec:null,subj:null};render();}else if(pendingRoute){const r=pendingRoute;pendingRoute=null;go(r.view,r.extra);}},
+  isAuthenticated:()=>authenticated,
+  saveStudyQuestions:(rows)=>{if(!authenticated)throw Error("請先登入");S.studyQuestions=rows;save();},
+  addStudyAttempt:(row)=>{if(!authenticated)throw Error("請先登入");S.studyAttempts=[...(S.studyAttempts||[]).filter(x=>x.id!==row.id),row];save();},
+  setAuthState:(ready)=>{document.dispatchEvent(new Event("ipas:identity-changing"));authenticated=!!ready;authReady=true;if(!ready){clearInterval(mockTimer);quiz=drill=mock=diag=null;S=blank();V={view:"home",sec:null,subj:null};render();}else if(pendingRoute){const r=pendingRoute;pendingRoute=null;go(r.view,r.extra);}},
   snapshot:()=>{const data=JSON.parse(JSON.stringify(S));delete data.attachments;return data;},
   attachUser:(uid,remote)=>{
+    document.dispatchEvent(new Event("ipas:identity-changing"));
     // Account isolation: never import another signed-in account's live state.
     const userKey=KEY+"-account-"+uid;
     const claimKey=KEY+"-anonymous-claimed-by";
@@ -1420,6 +1432,7 @@ window.IPAS_BRIDGE={
     activeSaveKey=userKey;authenticated=true;save();render();
   },
   signOut:()=>{
+    document.dispatchEvent(new Event("ipas:identity-changing"));
     // Keep the anonymous progress intact for this device; never erase prior work.
     activeSaveKey=KEY;
     authenticated=false;S=blank();V={view:"home",sec:null,subj:null};clearInterval(mockTimer);quiz=drill=mock=diag=null;render();
@@ -1444,5 +1457,6 @@ Promise.all([fetch("course.json",{cache:"no-cache"}).then(r=>r.json()),fetch("ba
 })();
 </script>
 <script type="module" src="cloud.js?v=20261028b"></script>
+<script type="module" src="gemini-study.js?v=20261109"></script>
 </body>
 </html>

@@ -1,0 +1,36 @@
+import {chromium} from 'playwright';
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+try{
+ const page=await browser.newPage({viewport:{width:390,height:844}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/api/cloud-config',r=>r.fulfill({json:{configured:false}}));
+ await page.goto('http://127.0.0.1:4173/',{waitUntil:'networkidle'});
+ await page.locator('#geminiStudyOpen').click();
+ assert.match(await page.locator('#gsList').innerText(),/登入後/);
+ await page.locator('#gsPrompt').click();assert.match(await page.locator('#gsPromptText').inputValue(),/公務AI認證全名尚未確認/);
+ await page.evaluate(()=>{window.IPAS_BRIDGE.attachUser('test-unified',{});window.IPAS_BRIDGE.setAuthState(true);});
+ assert.equal(await page.locator('#geminiStudyDialog').isVisible(),false);
+ await page.locator('#geminiStudyOpen').click();
+ const question={id:'shared-rag-1',topic:'RAG',tracks:['公務AI','iPAS初級'],stem:'檢索資料的用途？',options:['提供參考脈絡','保證答案正確'],answer:[0],explanation:'資料仍須查核。',sources:[{title:'測試來源',url:'https://example.org/source',locator:'第1頁',version:'測試版本'}],verified:true};
+ await page.locator('#gsImport').evaluate(el=>el.closest('details').open=true);
+ await page.locator('#gsImport').fill(JSON.stringify([question]));await page.locator('#gsImportBtn').click();
+ assert.match(await page.locator('#gsMessage').innerText(),/已匯入1題/);
+ assert.equal(await page.locator('.gsAnswer').isDisabled(),true,'import cannot self-verify');
+ await page.locator('.gsVerified').check();
+ await page.locator('.gsOptions input').nth(1).check();await page.locator('.gsAnswer').click();
+ assert.match(await page.locator('.gsResult').innerText(),/需要訂正/);
+ await page.locator('.gsResult input').fill('把檢索當成正確保證');await page.locator('.gsResult button').click();
+ assert.equal(await page.evaluate(()=>window.IPAS_BRIDGE.snapshot().studyAttempts.length),1,'correction updates same attempt');
+ await page.locator('#gsTrack').selectOption('iPAS初級');assert.equal(await page.locator('.gsAnswer').count(),1,'shared question is reused');
+ await page.locator('#gsImport').fill(JSON.stringify([question]));await page.locator('#gsImportBtn').click();assert.match(await page.locator('#gsMessage').innerText(),/略過1筆/);
+ const invalid={...question,id:'unsafe',sources:[{...question.sources[0],url:'javascript:alert(1)'}]};
+ await page.locator('#gsImport').fill(JSON.stringify([invalid]));await page.locator('#gsImportBtn').click();assert.match(await page.locator('#gsMessage').innerText(),/未匯入/);
+ await page.evaluate(()=>window.IPAS_BRIDGE.signOut());assert.equal(await page.locator('#geminiStudyDialog').isVisible(),false);
+ await page.evaluate(()=>{window.IPAS_BRIDGE.attachUser('test-other',{});window.IPAS_BRIDGE.setAuthState(true);});
+ await page.locator('#geminiStudyOpen').click();assert.equal(await page.locator('.gsAnswer').count(),0,'other identity must not see old questions');
+ await page.evaluate(()=>{window.IPAS_BRIDGE.attachUser('test-unified',{});window.IPAS_BRIDGE.setAuthState(true);});
+ await page.locator('#geminiStudyOpen').click();assert.equal(await page.locator('.gsAnswer').count(),1,'account-local reload preserves questions');
+ assert.equal(await page.evaluate(()=>window.IPAS_BRIDGE.snapshot().studyAttempts[0].reason),'把檢索當成正確保證');
+ const geometry=await page.evaluate(()=>({w:innerWidth,scroll:document.documentElement.scrollWidth}));assert.ok(geometry.scroll<=geometry.w+2,JSON.stringify(geometry));
+ assert.deepEqual(errors,[]);console.log('PASS unified study: import, validation, source gate, shared tags, answers, correction, persistence, account isolation, mobile');
+}finally{await browser.close();}
