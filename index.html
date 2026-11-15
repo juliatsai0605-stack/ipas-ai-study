@@ -876,6 +876,8 @@ repeating-linear-gradient(90deg,transparent 0 20px,#b7ccf6 20px 35px,transparent
 <link rel="stylesheet" href="visual-polish.css?v=20261028b">
 <link rel="stylesheet" href="study-reader.css?v=20261028b">
 <script src="study-reader.js?v=20261028b"></script>
+<link rel="stylesheet" href="question-notes.css?v=20261115">
+<script src="question-notes.js?v=20261115"></script>
 </head>
 <body>
 <header class="top">
@@ -1210,7 +1212,7 @@ function qHTML(q,idx){
 }
 function expHTML(q,j){
   const ok=j===q.a; const sec=q.sec&&SECS[q.sec]?SECS[q.sec].sec:null;
-  return `<div class="exp"><b class="${ok?"ok":"ng"}">${ok?"答對":(j<0?"未作答，":"答錯，")+"正解 "+L[q.a]}</b>　${esc(q.e)}${sec?`<div class="row" style="margin-top:6px"><button class="btn soft sm" data-goto="${sec.code}">回看 ${sec.code} ${esc(sec.name)}</button></div>`:""}</div>`;
+  return `<div class="exp"><b class="${ok?"ok":"ng"}">${ok?"答對":(j<0?"未作答，":"答錯，")+"正解 "+L[q.a]}</b>　${esc(q.e)}${sec?`<div class="row" style="margin-top:6px"><button class="btn soft sm" data-goto="${sec.code}">回看 ${sec.code} ${esc(sec.name)}</button></div>`:""}${window.IPAS_NOTES?window.IPAS_NOTES.html(q.id):""}</div>`;
 }
 function showAnswered(el,q,j){
   el.querySelectorAll(".opt").forEach(x=>{x.disabled=true;const k=+x.dataset.j;if(k===q.a)x.classList.add("right");else if(k===j)x.classList.add("wrong");});
@@ -1316,8 +1318,11 @@ function mockResult(){
   ${weak.length?`<div class="row" style="margin-top:8px"><span class="small">錯最多的單元：</span>${weak.map(([s,n])=>`<button class="btn soft sm" data-goto="${s}">${s} ${esc(SECS[s].sec.name)}（${n}）</button>`).join("")}</div>`:""}
   <div class="row" style="margin-top:12px"><button class="btn" id="mBack">回模擬考列表</button></div></div>
   <div class="card"><h3>錯題與解析（${wrong.length} 題）</h3><div style="display:grid;gap:18px">${wrong.map(x=>qHTML(x.q,x.k)).join("")}</div></div>`;
+  // Correctly answered questions that carry a personal note are listed too, so every note stays reachable after submitting.
+  const noted=m.list.map((q,k)=>({q,k})).filter(x=>m.ans[x.k]===x.q.a&&window.IPAS_NOTES?.has(x.q.id));
+  if(noted.length)h+=`<div class="card"><h3>📝 答對但有註解的題目（${noted.length} 題）</h3><div style="display:grid;gap:18px">${noted.map(x=>qHTML(x.q,x.k)).join("")}</div></div>`;
   $("#main").innerHTML=`<div class="view">${h}</div>`;
-  wrong.forEach(x=>{const el=document.querySelector(`.q[data-id="${x.q.id}"]`);showAnswered(el,x.q,m.ans[x.k]==null?-1:m.ans[x.k]);});
+  [...wrong,...noted].forEach(x=>{const el=document.querySelector(`.q[data-id="${x.q.id}"]`);showAnswered(el,x.q,m.ans[x.k]==null?-1:m.ans[x.k]);});
   document.querySelectorAll(".card > .row [data-goto]").forEach(b=>b.onclick=()=>openUnit(b.dataset.goto));
   $("#mBack").onclick=()=>{mock=null;render();};
 }
@@ -1363,6 +1368,7 @@ function vMe(){
   h+=`<div class="card"><h3>✦ 我的學習筆記與今日計畫</h3><p class="small muted">免費、無需帳號。儲存於此瀏覽器；請定期匯出備份。</p><label class="study-field">學習顯示名稱 <input id="localName" maxlength="35" placeholder="例如：小明" value="${esc(S.localName||"")}"></label><label class="study-field">我的學習計畫 <textarea id="localPlan" maxlength="2500" placeholder="今天想完成哪些章節、練習與整理？">${esc(S.localPlan||"")}</textarea></label><div class="row"><button class="btn" id="savePersonal">儲存我的設定</button><span class="note" id="personalMessage"></span></div><div class="study-calendar"><h4>近 14 天學習日曆</h4><div class="study-days">${Array.from({length:14},(_,i)=>{const d=new Date(Date.now()-(13-i)*86400000),key=d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()),n=S.days[key]?.a||0;return `<div class="study-day ${n?"active":""}" title="${key}：${n} 題"><b>${d.getMonth()+1}/${d.getDate()}</b><span>${n? n+" 題":"—"}</span></div>`;}).join("")}</div></div></div>`;
   h+=`<div class="card"><h3>▣ 個人學習檔案庫</h3><p class="small muted">可新增個人筆記、儲存網頁連結；資料只保存在目前瀏覽器，不是雲端附件空間。</p><label class="study-field">筆記標題 <input id="vaultTitle" maxlength="100" placeholder="例如：生成式 AI 重點"></label><label class="study-field">筆記內容或參考連結 <textarea id="vaultBody" maxlength="12000" placeholder="輸入文字、整理重點或貼上參考網址"></textarea></label><button class="btn" id="vaultAdd">新增筆記</button><p id="vaultMessage" class="note" aria-live="polite"></p><div class="vault-list">${(S.vault||[]).map((v,i)=>`<div class="vault-entry"><div><b>${esc(v.title)}</b><small>${esc(v.date||"")}</small><p>${esc(v.body)}</p></div><button class="btn ghost sm" data-vault-delete="${i}" aria-label="刪除${esc(v.title)}">刪除</button></div>`).join("")||'<p class="small muted">尚未建立筆記。</p>'}</div></div>`;
   h+=`<div class="card"><h3>◫ 我的附件庫（本機）</h3><p class="small muted">可保存 PDF、文字、Word 或圖片檔，單檔上限 10 MB，最多 20 份。附件僅保存在目前裝置的瀏覽器 IndexedDB，不會上傳到雲端，也不會包含在 JSON 進度備份中。請保留原始檔案。</p><div class="row" style="margin-top:12px"><label class="btn soft" for="attachmentInput" style="cursor:pointer">選擇檔案上傳到本機庫</label><input id="attachmentInput" type="file" accept=".pdf,.txt,.md,.docx,.png,.jpg,.jpeg,application/pdf,text/plain,image/png,image/jpeg" hidden></div><p id="attachmentMessage" class="note" aria-live="polite"></p><div class="vault-list">${(S.attachments||[]).map((a,i)=>`<div class="vault-entry"><div><b>${esc(a.name)}</b><small>${(a.size/1024/1024).toFixed(2)} MB・${esc(a.date||"")}</small></div><div class="row"><button class="btn sm soft" data-attachment-get="${i}">下載</button><button class="btn sm ghost" data-attachment-del="${i}">刪除</button></div></div>`).join("")||'<p class="small muted">目前沒有本機附件。</p>'}</div></div>`;
+  h+=window.IPAS_NOTES?window.IPAS_NOTES.manageHTML():"";
   h+=`<div class="card"><h3>科目狀態</h3><p class="small muted">標記為已通過的科目，總覽會改為建議下一科。</p><div class="tbl" style="margin-top:8px"><table><tbody>${COURSE.levels.map(l=>l.subjects.map(s=>`<tr><td>${l.name}　${s.code} ${esc(s.name)}</td><td><select data-st="${s.code}" aria-label="${esc(s.name)}狀態"><option value="">準備中</option><option value="pass" ${S.status[s.code]==="pass"?"selected":""}>已通過</option></select></td></tr>`).join("")).join("")}</tbody></table></div></div>`;
   h+=`<div class="card"><h3>存檔與換裝置（免費／無帳號）</h3><p class="small">進度自動存在這個瀏覽器，關閉網頁再打開仍會保留。要換手機或電腦時，先在這裡匯出備份檔，到新裝置的同一個網址匯入即可。清除瀏覽器資料或使用無痕視窗會讓進度消失，請定期匯出。</p>
   <div class="row" style="margin-top:10px"><button class="btn" id="exp">匯出備份檔</button><label class="btn soft" for="impF" style="cursor:pointer">匯入備份檔</label><input type="file" id="impF" accept="application/json,.json" hidden></div><p class="small muted" id="bk" style="margin-top:6px"></p>
@@ -1406,10 +1412,17 @@ function mergeStudyState(a,b){
     }
     out[key]=[...rows.values()];
   }
+  // Per-question notes: newest updatedAt wins per question; deletions are kept as tombstones.
+  out.qnotes=window.IPAS_NOTES?window.IPAS_NOTES.merge(b.qnotes||{},a.qnotes||{}):{...(b.qnotes||{}),...(a.qnotes||{})};
   return out;
 }
 window.IPAS_BRIDGE={
   isAuthenticated:()=>authenticated,
+  getNote:(id)=>(S.qnotes&&typeof S.qnotes==="object"?S.qnotes[id]:null)||null,
+  allNotes:()=>(S.qnotes&&typeof S.qnotes==="object"?S.qnotes:{}),
+  setNote:(id,note)=>{if(!authenticated)throw Error("請先登入");if(!S.qnotes||typeof S.qnotes!=="object")S.qnotes={};S.qnotes[id]=note;save();},
+  replaceNotes:(notes)=>{if(!authenticated)throw Error("請先登入");S.qnotes=notes;save();},
+  question:(id)=>BANK.find(q=>q.id===id)||null,
   saveStudyQuestions:(rows)=>{if(!authenticated)throw Error("請先登入");S.studyQuestions=rows;save();},
   addStudyAttempt:(row)=>{if(!authenticated)throw Error("請先登入");S.studyAttempts=[...(S.studyAttempts||[]).filter(x=>x.id!==row.id),row];save();},
   setAuthState:(ready)=>{document.dispatchEvent(new Event("ipas:identity-changing"));authenticated=!!ready;authReady=true;if(!ready){clearInterval(mockTimer);quiz=drill=mock=diag=null;S=blank();V={view:"home",sec:null,subj:null};render();}else if(pendingRoute){const r=pendingRoute;pendingRoute=null;go(r.view,r.extra);}},
